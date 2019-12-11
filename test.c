@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2019/12/11 22:49:14 by rpehkone         ###   ########.fr       */
+/*   Updated: 2019/12/11 22:52:54 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	ft_print(void **mlx, int x, int y)
 	}
 }
 
-int		deal_key(int key, void **mlx)
+/*int		deal_key(int key, void **mlx)
 {
 	static xyz start = {.x = 0, .y = 0};
 	static xyz stop = {.x = 50, .y = 50};
@@ -133,16 +133,9 @@ int		deal_key(int key, void **mlx)
 		stop.y += 50;
 	else if (key == 126)
 		stop.y -= 50;
-	else
-	{
-		ft_print(mlx, 4, 4);
-		return (0);
-	}
-	print_line(&start, &stop, mlx, 0xFF0000);
-	ft_putnbr(key);
-	write(1, ", ", 2);
+	ft_print(mlx, 4, 4);
 	return (0);
-}
+}*/
 
 int		main(void)
 {
@@ -156,5 +149,6 @@ int		main(void)
 	both[0] = mlx_ptr;
 	both[1] = win_ptr;
 	mlx_key_hook(win_ptr, deal_key, both);
+	ft_print(mlx, 4, 4);
 	mlx_loop(mlx_ptr);
 }
