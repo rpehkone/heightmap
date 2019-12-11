@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2019/12/11 21:46:01 by rpehkone         ###   ########.fr       */
+/*   Updated: 2019/12/11 22:49:14 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,6 @@ void	ft_putnbr(int n)
 		write(1, &str[size++], 1);
 }
 
-void	swap(int *x, int *y)
-{
-	int tmp;
-
-	tmp = *x;
-	*x = *y;
-	*y = tmp;
-}
-
 float	ft_abs(float n)
 {
 	if (n < 0)
@@ -85,15 +76,44 @@ void	print_line(xyz *start, xyz *stop, void **mlx, unsigned color)
 	}
 }
 
-void	ft_print(void **mlx, xyz start, xyz stop)
+void	ft_print(void **mlx, int x, int y)
 {
-	print_line(&start, &stop, mlx, 0xFF0000);
+	xyz start = {.x = 50, .y = 50};
+	xyz stop = {.x = 100, .y = 50};
+	int cpy;
+
+	while (y > 0)
+	{
+		cpy = x;
+		while (cpy > 0)
+		{
+			start.x += 50;
+			stop.x += 50;
+			print_line(&start, &stop, mlx, 0xFF0000);
+			stop.x -= 50;
+			stop.y += 50;
+			print_line(&start, &stop, mlx, 0xFF0000);
+			stop.x += 50;
+			stop.y -= 50;
+			cpy--;
+		}
+		start.y += 50;
+		stop.y += 50;
+		cpy = x;
+		while (cpy > 0)
+		{
+			start.x -= 50;
+			stop.x -= 50;
+			cpy--;
+		}
+		y--;
+	}
 }
 
 int		deal_key(int key, void **mlx)
 {
-	static xyz stop = {.x = 500, .y = 500};
-	static xyz start = {.x = 250, .y = 250};
+	static xyz start = {.x = 0, .y = 0};
+	static xyz stop = {.x = 50, .y = 50};
 
 	if (key == 53)
 		exit(0);
@@ -113,7 +133,12 @@ int		deal_key(int key, void **mlx)
 		stop.y += 50;
 	else if (key == 126)
 		stop.y -= 50;
-	ft_print(mlx, start, stop);
+	else
+	{
+		ft_print(mlx, 4, 4);
+		return (0);
+	}
+	print_line(&start, &stop, mlx, 0xFF0000);
 	ft_putnbr(key);
 	write(1, ", ", 2);
 	return (0);
