@@ -6,25 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/27 22:32:02 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:57:31 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "get_next_line.h"
-
-/////////////////////
-#include <stdio.h>
-/////////////////////
-
-typedef struct	coord {
-		float	x;
-		float	y;
-		float	z;
-}				xyz;
+#include "fdf.h"
 
 float	ft_abs(float n)
 {
@@ -101,25 +87,25 @@ void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, i
 			stop.x += angle->z;
 
 			if (cpy > 1)
-				stop.y += map[y - 1][cpy - 2] * angle->z / 10;
-			start.y += map[y - 1][cpy - 1] * angle->z / 10;
+				stop.y -= map[y - 1][cpy - 2] * angle->z / 10;
+			start.y -= map[y - 1][cpy - 1] * angle->z / 10;
 			if (cpy > 1)
 				print_line(&start, &stop, mlx, 0xFF0000);
 			if (cpy > 1)
-				stop.y -= map[y - 1][cpy - 2] * angle->z / 10;
-			start.y -= map[y - 1][cpy - 1] * angle->z / 10;
+				stop.y += map[y - 1][cpy - 2] * angle->z / 10;
+			start.y += map[y - 1][cpy - 1] * angle->z / 10;
 
 			stop.x -= angle->z;
 			stop.y += angle->z;
 
 			if (y > 1)
-				stop.y += map[y - 2][cpy - 1] * angle->z / 10;
-			start.y += map[y - 1][cpy - 1] * angle->z / 10;
-			if (y > 1)
-				print_line(&start, &stop, mlx, 0xFF0000);
+				stop.y -= map[y - 2][cpy - 1] * angle->z / 10;
 			start.y -= map[y - 1][cpy - 1] * angle->z / 10;
 			if (y > 1)
-				stop.y -= map[y - 2][cpy - 1] * angle->z / 10;
+				print_line(&start, &stop, mlx, 0xFF0000);
+			start.y += map[y - 1][cpy - 1] * angle->z / 10;
+			if (y > 1)
+				stop.y += map[y - 2][cpy - 1] * angle->z / 10;
 
 			help_rotate2(&start, &stop, angle);
 			cpy--;
@@ -128,8 +114,6 @@ void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, i
 		y--;
 	}
 }
-
-int		**make_map(char *filename, int *width, int *height);
 
 void		mouse_control(int call, int x, int y, xyz *angle, int *offset_x, int *offset_y)
 {
@@ -144,10 +128,6 @@ void		mouse_control(int call, int x, int y, xyz *angle, int *offset_x, int *offs
 		{
 			angle->y += x - old_x;
 			angle->x += y - old_y;
-
-			//to fake rotation from middle
-			//*offset_x += (x - old_x) * 3;
-			//*offset_y += (y - old_y) * 3;
 		}
 		else if (m3_down)
 		{
@@ -173,10 +153,10 @@ void		mouse_control(int call, int x, int y, xyz *angle, int *offset_x, int *offs
 	if (angle->z < 0)
 		angle->z = 0;
 }
-//probably should make struct for x y and key
-int		deal_key(int call, int x, int y, void **mlx)
+
+int		fdf(int call, int x, int y, void **mlx)
 {
-	static xyz angle = {.x = 0, .y = 0, .z = 50};
+	static xyz angle = {.x = 0, .y = 0, .z = 30};
 	static int **map = NULL;
 	static int width = 0;
 	static int height = 0;

@@ -6,11 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 22:52:45 by rpehkone          #+#    #+#             */
-/*   Updated: 2019/11/14 10:24:27 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/27 22:53:56 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "fdf.h"
 
 char	*ft_join(char *s1, char *s2, char **as)
 {

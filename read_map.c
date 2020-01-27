@@ -6,30 +6,24 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/27 19:24:35 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:44:03 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "get_next_line.h"
-
-#include <stdio.h>
+#include "fdf.h"
 
 void	set_map(int **map, int fd, int width, int height)
 {
-	int	x;
-	int	y;
-	int	i;
+	int		x;
+	int		y;
+	int		i;
 	char	*line;
 
-	x = 0;
-	y = 0;
+	y = height - 1;
 	i = 0;
 	while (get_next_line(fd, &line))
 	{
-		x = 0;
+		x = width - 1;
 		i = 0;
 		while (line[i])
 		{
@@ -38,9 +32,9 @@ void	set_map(int **map, int fd, int width, int height)
 				i++;
 			while (line[i] && line[i] != ' ')
 				i++;
-			x++;
+			x--;
 		}
-		y++;
+		y--;
 		if (line != NULL)
 		{
 			free(line);
@@ -139,6 +133,7 @@ int		**make_map(char *filename, int *width, int *height)
 	fd = open(filename, O_RDONLY);
 	set_map(map, fd, *width, *height);
 	close(fd);
-	//asdasd(map, *height, *width);
+//	asdasd(map, *height, *width);
+//	exit(0);
 	return (map);
 }
