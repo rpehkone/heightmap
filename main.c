@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/27 22:54:16 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 01:08:15 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,33 @@ int		handle_cursor(int x, int y, void **mlx)
 	return (0);
 }
 
+void	screen_size(int *height, int *width, char *filename)
+{
+	*width = get_width(filename) * 50;
+	*height = get_height(filename) * 50;
+	if (*height < 500)
+		*height = 500;
+	if (*width < 500)
+		*width = 500;
+	if (*width > 1000)
+		*width = 1000;
+	if (*height > 1000)
+		*height = 1000;
+}
+
 int		main(int argc, char **argv)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	**mlx;
+	int		width;
+	int		height;
 
 	if (argc != 2)
-		exit (0);
+		exit(0);
 	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 1000, 1000, "fdf");
+	screen_size(&height, &width, argv[1]);
+	win_ptr = mlx_new_window(mlx_ptr, width, height, "fdf");
 	mlx = (void**)malloc(sizeof(void*) * 3);
 	mlx[0] = mlx_ptr;
 	mlx[1] = win_ptr;

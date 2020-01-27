@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/27 23:57:31 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 00:53:34 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,42 @@ void	help_rotate2(xyz *start, xyz *stop, xyz *angle)
 	start->x += angle->y;
 	stop->x += angle->y;
 }
+//remove start and stop by returning double
+void	add_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int cpy, int y)
+{
+	int a;
+	int b;
+
+	a = 2;
+	b = 1;
+	if (call)
+	{
+		a = 1;
+		b = 2;
+	}
+	stop->y -= map[y - a][cpy - b] * angle->z / 10;
+	stop->x -= map[y - a][cpy - b] * angle->z / 10;
+	start->y -= map[y - 1][cpy - 1] * angle->z / 10;
+	start->x -= map[y - 1][cpy - 1] * angle->z / 10;
+}
+//remove start and stop by returning double
+void	remove_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int cpy, int y)
+{
+	int a;
+	int b;
+
+	a = 2;
+	b = 1;
+	if (call)
+	{
+		a = 1;
+		b = 2;
+	}
+	stop->y += map[y - a][cpy - b] * angle->z / 10;
+	stop->x += map[y - a][cpy - b] * angle->z / 10;
+	start->y += map[y - 1][cpy - 1] * angle->z / 10;
+	start->x += map[y - 1][cpy - 1] * angle->z / 10;
+}
 
 void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, int offset_y)
 {
@@ -85,28 +121,20 @@ void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, i
 		{
 			start.x += angle->z;
 			stop.x += angle->z;
-
 			if (cpy > 1)
-				stop.y -= map[y - 1][cpy - 2] * angle->z / 10;
-			start.y -= map[y - 1][cpy - 1] * angle->z / 10;
-			if (cpy > 1)
+			{
+				add_height(map, &start, &stop, angle, 1, cpy, y);
 				print_line(&start, &stop, mlx, 0xFF0000);
-			if (cpy > 1)
-				stop.y += map[y - 1][cpy - 2] * angle->z / 10;
-			start.y += map[y - 1][cpy - 1] * angle->z / 10;
-
+				remove_height(map, &start, &stop, angle, 1, cpy, y);
+			}
 			stop.x -= angle->z;
 			stop.y += angle->z;
-
 			if (y > 1)
-				stop.y -= map[y - 2][cpy - 1] * angle->z / 10;
-			start.y -= map[y - 1][cpy - 1] * angle->z / 10;
-			if (y > 1)
+			{
+				add_height(map, &start, &stop, angle, 0, cpy, y);
 				print_line(&start, &stop, mlx, 0xFF0000);
-			start.y += map[y - 1][cpy - 1] * angle->z / 10;
-			if (y > 1)
-				stop.y += map[y - 2][cpy - 1] * angle->z / 10;
-
+				remove_height(map, &start, &stop, angle, 0, cpy, y);
+			}
 			help_rotate2(&start, &stop, angle);
 			cpy--;
 		}
@@ -117,6 +145,7 @@ void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, i
 
 void		mouse_control(int call, int x, int y, xyz *angle, int *offset_x, int *offset_y)
 {
+	//combine m1 and m3, and move start and stop here
 	static int	m1_down = 0;
 	static int	m3_down = 0;
 	static int	old_x;
@@ -156,15 +185,20 @@ void		mouse_control(int call, int x, int y, xyz *angle, int *offset_x, int *offs
 
 int		fdf(int call, int x, int y, void **mlx)
 {
-	static xyz angle = {.x = 0, .y = 0, .z = 30};
-	static int **map = NULL;
-	static int width = 0;
-	static int height = 0;
+	static xyz	angle = {.x = 2, .y = -5, .z = 30};
+	static int	**map = NULL;
+	static int	width = 0;
+	static int	height = 0;
 	static int	offset_x = 200;
 	static int	offset_y = 200;
 
 	if (!map)
+	{
 		map = make_map((char *)mlx[2], &width, &height);
+		angle.z = width + height;
+		if (angle.z > 100)
+			angle.z > 100;
+	}
 	mouse_control(call, x, y, &angle, &offset_x, &offset_y);
 	mlx_clear_window(mlx[0], mlx[1]);
 	ft_printer(mlx, map, width, height, &angle, offset_x, offset_y);

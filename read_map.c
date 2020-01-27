@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/27 23:44:03 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 01:07:07 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	set_map(int **map, int fd, int width, int height)
 	char	*line;
 
 	y = height - 1;
-	i = 0;
 	while (get_next_line(fd, &line))
 	{
 		x = width - 1;
@@ -35,11 +34,7 @@ void	set_map(int **map, int fd, int width, int height)
 			x--;
 		}
 		y--;
-		if (line != NULL)
-		{
-			free(line);
-			line = NULL;
-		}
+		free(line);
 	}
 }
 
@@ -53,11 +48,7 @@ int		get_height(char *filename)
 	fd = open(filename, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
-		if (line != NULL)
-		{
-			free(line);
-			line = NULL;
-		}
+		free(line);
 		height++;
 	}
 	close(fd);
@@ -83,11 +74,7 @@ int		get_width(char *filename)
 			i++;
 		width++;
 	}
-	if (line != NULL)
-	{
-		free(line);
-		line = NULL;
-	}
+	free(line);
 	close(fd);
 	return (width);
 }
