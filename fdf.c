@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/27 20:20:27 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/27 20:54:54 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	help_rotate2(xyz *start, xyz *stop, xyz *angle)
 
 void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, int offset_y)
 {
-	xyz start = {.x = 200, .y = 200};
-	xyz stop = {.x = 200 + angle->z + angle->y, .y = 200 + angle->x};
+	xyz start = {.x = 0, .y = 0};
+	xyz stop = {.x = angle->z + angle->y, .y = angle->x};
 	int cpy;
 
 	start.x += offset_x;
@@ -176,8 +176,8 @@ int		deal_key(int call, int x, int y, void **mlx)
 	static int **map = NULL;
 	static int width = 0;
 	static int height = 0;
-	static int	offset_x = 0;
-	static int	offset_y = 0;
+	static int	offset_x = 200;
+	static int	offset_y = 200;
 
 	if (!map)
 		map = make_map((char *)mlx[2], &width, &height);
