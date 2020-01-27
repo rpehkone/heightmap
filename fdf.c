@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/27 20:54:54 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/27 22:32:02 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,25 +101,25 @@ void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, i
 			stop.x += angle->z;
 
 			if (cpy > 1)
-				stop.y += map[y - 1][cpy - 2] * 3;
-			start.y += map[y - 1][cpy - 1] * 3;
+				stop.y += map[y - 1][cpy - 2] * angle->z / 10;
+			start.y += map[y - 1][cpy - 1] * angle->z / 10;
 			if (cpy > 1)
 				print_line(&start, &stop, mlx, 0xFF0000);
 			if (cpy > 1)
-				stop.y -= map[y - 1][cpy - 2] * 3;
-			start.y -= map[y - 1][cpy - 1] * 3;
+				stop.y -= map[y - 1][cpy - 2] * angle->z / 10;
+			start.y -= map[y - 1][cpy - 1] * angle->z / 10;
 
 			stop.x -= angle->z;
 			stop.y += angle->z;
 
 			if (y > 1)
-				stop.y += map[y - 2][cpy - 1] * 3;
-			start.y += map[y - 1][cpy - 1] * 3;
+				stop.y += map[y - 2][cpy - 1] * angle->z / 10;
+			start.y += map[y - 1][cpy - 1] * angle->z / 10;
 			if (y > 1)
 				print_line(&start, &stop, mlx, 0xFF0000);
-			start.y -= map[y - 1][cpy - 1] * 3;
+			start.y -= map[y - 1][cpy - 1] * angle->z / 10;
 			if (y > 1)
-				stop.y -= map[y - 2][cpy - 1] * 3;
+				stop.y -= map[y - 2][cpy - 1] * angle->z / 10;
 
 			help_rotate2(&start, &stop, angle);
 			cpy--;
@@ -144,6 +144,10 @@ void		mouse_control(int call, int x, int y, xyz *angle, int *offset_x, int *offs
 		{
 			angle->y += x - old_x;
 			angle->x += y - old_y;
+
+			//to fake rotation from middle
+			//*offset_x += (x - old_x) * 3;
+			//*offset_y += (y - old_y) * 3;
 		}
 		else if (m3_down)
 		{
