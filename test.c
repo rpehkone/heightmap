@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2019/12/11 22:52:54 by rpehkone         ###   ########.fr       */
+/*   Updated: 2019/12/12 00:42:32 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void	print_line(xyz *start, xyz *stop, void **mlx, unsigned color)
 	}
 }
 
-void	ft_print(void **mlx, int x, int y)
+void	ft_print(void **mlx, int x, int y, xyz *angle)
 {
-	xyz start = {.x = 50, .y = 50};
-	xyz stop = {.x = 100, .y = 50};
+	xyz start = {.x = 200, .y = 200};
+	xyz stop = {.x = 200 + angle->z + angle->y, .y = 200 + angle->x};
 	int cpy;
 
 	while (y > 0)
@@ -87,55 +87,64 @@ void	ft_print(void **mlx, int x, int y)
 		cpy = x;
 		while (cpy > 0)
 		{
-			start.x += 50;
-			stop.x += 50;
-			print_line(&start, &stop, mlx, 0xFF0000);
-			stop.x -= 50;
-			stop.y += 50;
-			print_line(&start, &stop, mlx, 0xFF0000);
-			stop.x += 50;
-			stop.y -= 50;
+			start.x += angle->z;
+			stop.x += angle->z;
+			if (cpy > 1)
+				print_line(&start, &stop, mlx, 0xFF0000);
+			stop.x -= angle->z;
+			stop.y += angle->z;
+
+			if (y > 1)
+				print_line(&start, &stop, mlx, 0xFF0000);
+			stop.x += angle->z;
+			stop.y -= angle->z;
+			start.y += angle->x;
+			stop.y += angle->x;
+			start.x += angle->y;
+			stop.x += angle->y;
 			cpy--;
 		}
-		start.y += 50;
-		stop.y += 50;
+		start.x += angle->y;
+		stop.x += angle->y;
+		start.y += angle->z;
+		stop.y += angle->z;
+		start.y -= angle->x * (x - 1);
+		stop.y -= angle->x * (x - 1);
+		start.x -= angle->y * x;
+		stop.x -= angle->y * x;
 		cpy = x;
 		while (cpy > 0)
 		{
-			start.x -= 50;
-			stop.x -= 50;
+			start.x -= angle->z;
+			stop.x -= angle->z;
 			cpy--;
 		}
 		y--;
 	}
 }
 
-/*int		deal_key(int key, void **mlx)
+int		deal_key(int key, void **mlx)
 {
-	static xyz start = {.x = 0, .y = 0};
-	static xyz stop = {.x = 50, .y = 50};
+	static xyz angle = {.x = 0, .y = 0, .z = 50};
 
 	if (key == 53)
 		exit(0);
 	else if (key == 0)
-		start.x -= 50;
+		angle.y -= 2;
 	else if (key == 2)
-		start.x += 50;
+		angle.y += 2;
 	else if (key == 1)
-		start.y += 50;
+		angle.x += 2;
 	else if (key == 13)
-		start.y -= 50;
-	else if (key == 123)
-		stop.x -= 50;
-	else if (key == 124)
-		stop.x += 50;
-	else if (key == 125)
-		stop.y += 50;
+		angle.x -= 2;
 	else if (key == 126)
-		stop.y -= 50;
-	ft_print(mlx, 4, 4);
+		angle.z += 2;
+	else if (key == 125)
+		angle.z -= 2;
+	mlx_clear_window(mlx[0], mlx[1]);
+	ft_print(mlx, 2, 2, &angle);
 	return (0);
-}*/
+}
 
 int		main(void)
 {
@@ -149,6 +158,5 @@ int		main(void)
 	both[0] = mlx_ptr;
 	both[1] = win_ptr;
 	mlx_key_hook(win_ptr, deal_key, both);
-	ft_print(mlx, 4, 4);
 	mlx_loop(mlx_ptr);
 }
