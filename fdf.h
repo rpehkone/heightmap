@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 00:43:29 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 01:35:56 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,19 @@
 # include <fcntl.h>
 # define BUFF_SIZE 42
 
-/////////////////////
-#include <stdio.h>
-/////////////////////
-
 typedef struct	s_xyz {
-	double	x;
-	double	y;
-	double	z;
+	double		x;
+	double		y;
+	double		z;
 }				xyz;
 
-int		get_width(char *filename);
-int		get_height(char *filename);
-void	print_line(xyz *start, xyz *stop, void **mlx, unsigned color);
-int		**make_map(char *filename, int *width, int *height);
-int		fdf(int call, int x, int y, void **mlx);
-int		get_next_line(const int fd, char **line);
+void			ft_printer(void **mlx, int **map, int x, int y,
+				xyz *angle, int offset_x, int offset_y);
+int				get_width(char *filename);
+int				get_height(char *filename);
+void			print_line(xyz *start, xyz *stop, void **mlx, unsigned color);
+int				**make_map(char *filename, int *width, int *height);
+int				fdf(int call, int x, int y, void **mlx);
+int				get_next_line(const int fd, char **line);
 
 #endif

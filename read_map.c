@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 01:07:07 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 01:28:52 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,29 +79,6 @@ int		get_width(char *filename)
 	return (width);
 }
 
-void	asdasd(int **array, signed arr_len, signed str_len)
-{
-	signed	x;
-	signed	y;
-
-	x = 0;
-	y = 0;
-	while (y < arr_len)
-	{
-		x = 0;
-		while (x < str_len)
-		{
-			if (array[y][x] < 10)
-				printf(" ");
-			printf("%d", array[y][x]);
-			printf(" ");
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
-}
-
 int		**make_map(char *filename, int *width, int *height)
 {
 	int		**map;
@@ -120,7 +97,5 @@ int		**make_map(char *filename, int *width, int *height)
 	fd = open(filename, O_RDONLY);
 	set_map(map, fd, *width, *height);
 	close(fd);
-//	asdasd(map, *height, *width);
-//	exit(0);
 	return (map);
 }
