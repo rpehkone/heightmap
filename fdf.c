@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 17:22:33 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:44:47 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ float	ft_abs(float n)
 	return (n);
 }
 
-void	print_line(xyz *start, xyz *stop, void **mlx, unsigned color)
+void	print_line(t_xyz *start, t_xyz *stop, void **mlx, unsigned color)
 {
-	xyz	step;
-	xyz	pos;
+	t_xyz	step;
+	t_xyz	pos;
 
 	pos.x = start->x;
 	pos.y = start->y;
@@ -40,13 +40,13 @@ void	print_line(xyz *start, xyz *stop, void **mlx, unsigned color)
 	}
 }
 
-void	mouse_control(int call, int *x, int *y, xyz *angle)
+void	mouse_control(int call, int *x, int *y, t_xyz *angle)
 {
 	static int	m1_down = 0;
 	static int	m3_down = 0;
 	static int	old_x;
 	static int	old_y;
-	xyz			offset;
+	t_xyz			offset;
 
 	if (call == 6 && m1_down)
 		angle->y += *x - old_x;
@@ -68,7 +68,7 @@ void	mouse_control(int call, int *x, int *y, xyz *angle)
 	*y = offset.y;
 }
 
-void	reset_line(xyz *start, xyz *stop, xyz *offset, xyz *angle)
+void	reset_line(t_xyz *start, t_xyz *stop, t_xyz *offset, t_xyz *angle)
 {
 	start->x = 0;
 	start->y = 0;
@@ -82,10 +82,10 @@ void	reset_line(xyz *start, xyz *stop, xyz *offset, xyz *angle)
 
 int		fdf(int call, int x, int y, void **mlx)
 {
-	static xyz	angle = {.x = 2, .y = -5, .z = 30};
-	static xyz	offset = {.x = 200, .y = 200};
-	xyz			start;
-	xyz			stop;
+	static t_xyz	angle = {.x = 2, .y = -5, .z = 30};
+	static t_xyz	offset = {.x = 200, .y = 200};
+	t_xyz			start;
+	t_xyz			stop;
 
 	if (call == 4 && x == 4)
 		angle.z += 1;

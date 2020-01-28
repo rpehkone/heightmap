@@ -6,13 +6,13 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 17:45:32 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:46:13 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	printer3(xyz *start, xyz *stop, xyz *angle, int x)
+void	printer3(t_xyz *start, t_xyz *stop, t_xyz *angle, int x)
 {
 	start->x += angle->y;
 	stop->x += angle->y;
@@ -30,7 +30,7 @@ void	printer3(xyz *start, xyz *stop, xyz *angle, int x)
 	}
 }
 
-void	printer2(xyz *start, xyz *stop, xyz *angle)
+void	printer2(t_xyz *start, t_xyz *stop, t_xyz *angle)
 {
 	stop->x += angle->z;
 	stop->y -= angle->z;
@@ -40,8 +40,7 @@ void	printer2(xyz *start, xyz *stop, xyz *angle)
 	stop->x += angle->y;
 }
 
-//remove start and stop by returning double
-void	add_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int x, int y)
+void	add_height(int **map, t_xyz *start, t_xyz *stop, t_xyz *angle, int call, int x, int y)
 {
 	int a;
 	int b;
@@ -59,8 +58,7 @@ void	add_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int x, i
 	start->x -= map[y - 1][x - 1] * angle->z / 10;
 }
 
-//remove start and stop by returning double
-void	remove_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int x, int y)
+void	remove_height(int **map, t_xyz *start, t_xyz *stop, t_xyz *angle, int call, int x, int y)
 {
 	int a;
 	int b;
@@ -78,7 +76,7 @@ void	remove_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int x
 	start->x += map[y - 1][x - 1] * angle->z / 10;
 }
 
-void	ft_printer(void **mlx, xyz *angle, xyz start, xyz stop)
+void	ft_printer(void **mlx, t_xyz *angle, t_xyz start, t_xyz stop)
 {
 	static int	**map = NULL;
 	static int	width;
