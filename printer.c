@@ -6,13 +6,13 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 16:47:39 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:45:32 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	help_rotate(xyz *start, xyz *stop, xyz *angle, int x)
+void	printer3(xyz *start, xyz *stop, xyz *angle, int x)
 {
 	start->x += angle->y;
 	stop->x += angle->y;
@@ -30,7 +30,7 @@ void	help_rotate(xyz *start, xyz *stop, xyz *angle, int x)
 	}
 }
 
-void	help_rotate2(xyz *start, xyz *stop, xyz *angle)
+void	printer2(xyz *start, xyz *stop, xyz *angle)
 {
 	stop->x += angle->z;
 	stop->y -= angle->z;
@@ -41,7 +41,7 @@ void	help_rotate2(xyz *start, xyz *stop, xyz *angle)
 }
 
 //remove start and stop by returning double
-void	add_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int cpy, int y)
+void	add_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int x, int y)
 {
 	int a;
 	int b;
@@ -53,14 +53,14 @@ void	add_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int cpy,
 		a = 1;
 		b = 2;
 	}
-	stop->y -= map[y - a][cpy - b] * angle->z / 10;
-	stop->x -= map[y - a][cpy - b] * angle->z / 10;
-	start->y -= map[y - 1][cpy - 1] * angle->z / 10;
-	start->x -= map[y - 1][cpy - 1] * angle->z / 10;
+	stop->y -= map[y - a][x - b] * angle->z / 10;
+	stop->x -= map[y - a][x - b] * angle->z / 10;
+	start->y -= map[y - 1][x - 1] * angle->z / 10;
+	start->x -= map[y - 1][x - 1] * angle->z / 10;
 }
 
 //remove start and stop by returning double
-void	remove_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int cpy, int y)
+void	remove_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int x, int y)
 {
 	int a;
 	int b;
@@ -72,54 +72,44 @@ void	remove_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int c
 		a = 1;
 		b = 2;
 	}
-	stop->y += map[y - a][cpy - b] * angle->z / 10;
-	stop->x += map[y - a][cpy - b] * angle->z / 10;
-	start->y += map[y - 1][cpy - 1] * angle->z / 10;
-	start->x += map[y - 1][cpy - 1] * angle->z / 10;
+	stop->y += map[y - a][x - b] * angle->z / 10;
+	stop->x += map[y - a][x - b] * angle->z / 10;
+	start->y += map[y - 1][x - 1] * angle->z / 10;
+	start->x += map[y - 1][x - 1] * angle->z / 10;
 }
 
-
-void	ft_printer(void **mlx, xyz *angle, int offset_x, int offset_y)
+void	ft_printer(void **mlx, xyz *angle, xyz start, xyz stop)
 {
-	static int **map = NULL;
-	static int width;
-	static int height;
-	xyz start = {.x = 0, .y = 0};
-	xyz stop = {.x = angle->z + angle->y, .y = angle->x};
-	int cpy;
+	static int	**map = NULL;
+	static int	width;
+	static int	height;
+	int			x;
+	int			y;
 
 	if (!map)
 		map = make_map((char *)mlx[2], &width, &height);
-	int y = height;
-	start.x += offset_x;
-	start.y += offset_y;
-	stop.x += offset_x;
-	stop.y += offset_y;
-	while (y > 0)
-	{
-		cpy = width;
-		while (cpy > 0)
+	y = height + 1;
+	while (--y > 0 && (x = width))
+		while (x > 0)
 		{
 			start.x += angle->z;
 			stop.x += angle->z;
-			if (cpy > 1)
+			if (x > 1)
 			{
-				add_height(map, &start, &stop, angle, 1, cpy, y);
+				add_height(map, &start, &stop, angle, 1, x, y);
 				print_line(&start, &stop, mlx, 0xFF0000);
-				remove_height(map, &start, &stop, angle, 1, cpy, y);
+				remove_height(map, &start, &stop, angle, 1, x, y);
 			}
 			stop.x -= angle->z;
 			stop.y += angle->z;
 			if (y > 1)
 			{
-				add_height(map, &start, &stop, angle, 0, cpy, y);
+				add_height(map, &start, &stop, angle, 0, x, y);
 				print_line(&start, &stop, mlx, 0xFF0000);
-				remove_height(map, &start, &stop, angle, 0, cpy, y);
+				remove_height(map, &start, &stop, angle, 0, x, y);
 			}
-			help_rotate2(&start, &stop, angle);
-			cpy--;
+			printer2(&start, &stop, angle);
+			if (!--x)
+				printer3(&start, &stop, angle, width);
 		}
-		help_rotate(&start, &stop, angle, width);
-		y--;
-	}
 }

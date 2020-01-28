@@ -6,11 +6,18 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 01:28:52 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:58:10 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int		handle_keyboard_down(int key, void **mlx)
+{
+	if (key == 53)
+		exit(0);
+	return (0);
+}
 
 void	set_map(int **map, int fd, int width, int height)
 {

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 16:13:55 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:54:23 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct	s_xyz {
 }				xyz;
 
 int				handle_keyboard_down(int key, void **mlx);
-void			ft_printer(void **mlx, xyz *angle, int offset_x, int offset_y);
+void			ft_printer(void **mlx, xyz *angle, xyz start, xyz stop);
 int				get_width(char *filename);
 int				get_height(char *filename);
 void			print_line(xyz *start, xyz *stop, void **mlx, unsigned color);

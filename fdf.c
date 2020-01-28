@@ -6,18 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 16:42:26 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:22:33 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int		handle_keyboard_down(int key, void **mlx)
-{
-	if (key == 53)
-		exit(0);
-	return (0);
-}
 
 float	ft_abs(float n)
 {
@@ -59,9 +52,9 @@ void	mouse_control(int call, int *x, int *y, xyz *angle)
 		angle->y += *x - old_x;
 	if (call == 6 && m1_down)
 		angle->x += *y - old_y;
-	else if (!(offset.x = 0) && call == 6 && m3_down)
+	if (!(offset.x = 0) && call == 6 && m3_down)
 		offset.x += *x - old_x;
-	else if (!(offset.y = 0) && call == 6 && m3_down)
+	if (!(offset.y = 0) && call == 6 && m3_down)
 		offset.y += *y - old_y;
 	if (call == 6)
 		old_x = *x;
@@ -75,11 +68,24 @@ void	mouse_control(int call, int *x, int *y, xyz *angle)
 	*y = offset.y;
 }
 
+void	reset_line(xyz *start, xyz *stop, xyz *offset, xyz *angle)
+{
+	start->x = 0;
+	start->y = 0;
+	stop->x = angle->z + angle->y;
+	stop->y = angle->x;
+	start->x += offset->x;
+	start->y += offset->y;
+	stop->x += offset->x;
+	stop->y += offset->y;
+}
+
 int		fdf(int call, int x, int y, void **mlx)
 {
 	static xyz	angle = {.x = 2, .y = -5, .z = 30};
-	static int	offset_x = 200;
-	static int	offset_y = 200;
+	static xyz	offset = {.x = 200, .y = 200};
+	xyz			start;
+	xyz			stop;
 
 	if (call == 4 && x == 4)
 		angle.z += 1;
@@ -92,9 +98,10 @@ int		fdf(int call, int x, int y, void **mlx)
 	if (angle.z < 10)
 		angle.z = 10;
 	mouse_control(call, &x, &y, &angle);
-	offset_x += x;
-	offset_y += y;
+	offset.x += x;
+	offset.y += y;
+	reset_line(&start, &stop, &offset, &angle);
 	mlx_clear_window(mlx[0], mlx[1]);
-	ft_printer(mlx, &angle, offset_x, offset_y);
+	ft_printer(mlx, &angle, start, stop);
 	return (0);
 }
