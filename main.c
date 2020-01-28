@@ -6,18 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 01:28:26 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 15:56:10 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int		handle_keyboard_down(int key, void **mlx)
-{
-	if (key == 53)
-		exit(0);
-	return (0);
-}
 
 int		handle_mouse_down(int button, int x, int y, void **mlx)
 {

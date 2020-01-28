@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 01:35:10 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:47:39 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	help_rotate2(xyz *start, xyz *stop, xyz *angle)
 	start->x += angle->y;
 	stop->x += angle->y;
 }
+
 //remove start and stop by returning double
 void	add_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int cpy, int y)
 {
@@ -57,6 +58,7 @@ void	add_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int cpy,
 	start->y -= map[y - 1][cpy - 1] * angle->z / 10;
 	start->x -= map[y - 1][cpy - 1] * angle->z / 10;
 }
+
 //remove start and stop by returning double
 void	remove_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int cpy, int y)
 {
@@ -76,19 +78,26 @@ void	remove_height(int **map, xyz *start, xyz *stop, xyz *angle, int call, int c
 	start->x += map[y - 1][cpy - 1] * angle->z / 10;
 }
 
-void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, int offset_y)
+
+void	ft_printer(void **mlx, xyz *angle, int offset_x, int offset_y)
 {
+	static int **map = NULL;
+	static int width;
+	static int height;
 	xyz start = {.x = 0, .y = 0};
 	xyz stop = {.x = angle->z + angle->y, .y = angle->x};
 	int cpy;
 
+	if (!map)
+		map = make_map((char *)mlx[2], &width, &height);
+	int y = height;
 	start.x += offset_x;
 	start.y += offset_y;
 	stop.x += offset_x;
 	stop.y += offset_y;
 	while (y > 0)
 	{
-		cpy = x;
+		cpy = width;
 		while (cpy > 0)
 		{
 			start.x += angle->z;
@@ -110,7 +119,7 @@ void	ft_printer(void **mlx, int **map, int x, int y, xyz *angle, int offset_x, i
 			help_rotate2(&start, &stop, angle);
 			cpy--;
 		}
-		help_rotate(&start, &stop, angle, x);
+		help_rotate(&start, &stop, angle, width);
 		y--;
 	}
 }
