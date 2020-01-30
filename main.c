@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 15:56:10 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/30 20:14:08 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 int		handle_mouse_down(int button, int x, int y, void **mlx)
 {
 	fdf(4, button, 0, mlx);
+	(void)x;
+	(void)y;
 	return (0);
 }
 
 int		handle_mouse_up(int button, int x, int y, void **mlx)
 {
 	fdf(5, button, 0, mlx);
+	(void)x;
+	(void)y;
 	return (0);
 }
 

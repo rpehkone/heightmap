@@ -6,13 +6,13 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/30 19:18:36 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/30 20:13:33 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		handle_keyboard_down(int key, void **mlx)
+int		handle_keyboard_down(int key)
 {
 	if (key == 53)
 		exit(0);
