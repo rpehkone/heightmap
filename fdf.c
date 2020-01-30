@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 19:44:47 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:21:48 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	mouse_control(int call, int *x, int *y, t_xyz *angle)
 	static int	m3_down = 0;
 	static int	old_x;
 	static int	old_y;
-	t_xyz			offset;
+	t_xyz		offset;
 
 	if (call == 6 && m1_down)
 		angle->y += *x - old_x;
