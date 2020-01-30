@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/28 16:58:10 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:18:36 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,25 @@ int		get_width(char *filename)
 	return (width);
 }
 
-int		**make_map(char *filename, int *width, int *height)
+int		**make_map(char *filename)
 {
+	int		width;
+	int		height;
 	int		**map;
 	int		i;
 	int		fd;
 
 	i = 0;
-	*height = get_height(filename);
-	map = (int**)malloc(sizeof(int*) * (*height));
-	*width = get_width(filename);
-	while (i <= *height)
+	height = get_height(filename);
+	map = (int**)malloc(sizeof(int*) * (height));
+	width = get_width(filename);
+	while (i <= height)
 	{
-		map[i] = (int*)malloc(sizeof(int) * (*width));
+		map[i] = (int*)malloc(sizeof(int) * (width));
 		i++;
 	}
 	fd = open(filename, O_RDONLY);
-	set_map(map, fd, *width, *height);
+	set_map(map, fd, width, height);
 	close(fd);
 	return (map);
 }
