@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 16:19:42 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 17:51:16 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int				**make_map(char *filename);
 int				fdf(int call, int x, int y, void **mlx);
 int				get_next_line(const int fd, char **line);
 int				ft_atoi(const char *str);
-
+t_xyz			*get_coord(int x, int y, t_xyz angle);
 #endif

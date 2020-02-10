@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 16:26:18 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 17:50:55 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ void	screen_size(int *height, int *width, char *filename)
 		*width = 1000;
 	if (*height > 1000)
 		*height = 1000;
+}
+
+t_xyz	*get_coord(int x, int y, t_xyz angle)
+{
+	static t_xyz	coord;
+
+	coord.x = x;
+	coord.y = y;
+	coord.z = angle.z;
+	return (&coord);
 }
 
 void	ft_putstr(char *str)
@@ -58,8 +68,11 @@ int		main(int argc, char **argv)
 	int		width;
 	int		height;
 
+	width = 0;
 	if (argc != 2)
 		ft_error(argv[0]);
+	if (open(argv[1], width) < 2)
+		ft_error(NULL);
 	mlx_ptr = mlx_init();
 	screen_size(&height, &width, argv[1]);
 	win_ptr = mlx_new_window(mlx_ptr, width, height, "fdf");

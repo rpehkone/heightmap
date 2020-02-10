@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 16:07:35 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 17:51:22 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,54 @@ void	next_spot(t_xyz *start, t_xyz *stop, t_xyz *angle)
 	stop->x += angle->y;
 }
 
-void	add_height(t_xyz *start, t_xyz *stop, t_xyz *angle, int call, int x, int y, void **mlx)
+void	add_height_horiz(t_xyz *start, t_xyz *stop, t_xyz *coord, void **mlx)
 {
 	static int	**map = NULL;
 
 	if (!map)
 		map = make_map((char *)mlx[2]);
-	stop->y -= map[y + call][x + (call * -1) + 1] * angle->z / 10;
-	stop->x -= map[y + call][x + (call * -1) + 1] * angle->z / 10;
-	start->y -= map[y][x] * angle->z / 10;
-	start->x -= map[y][x] * angle->z / 10;
+	stop->y -= map[(int)coord->y + 0]
+		[(int)coord->x + (0 * -1) + 1] * (int)coord->z / 10;
+	stop->x -= map[(int)coord->y + 0]
+		[(int)coord->x + (0 * -1) + 1] * (int)coord->z / 10;
+	start->y -= map[(int)coord->y]
+		[(int)coord->x] * (int)coord->z / 10;
+	start->x -= map[(int)coord->y]
+		[(int)coord->x] * (int)coord->z / 10;
 	print_line(start, stop, mlx, 0xFF0000);
-	stop->y += map[y + call][x + (call * -1) + 1] * angle->z / 10;
-	stop->x += map[y + call][x + (call * -1) + 1] * angle->z / 10;
-	start->y += map[y][x] * angle->z / 10;
-	start->x += map[y][x] * angle->z / 10;
+	stop->y += map[(int)coord->y + 0]
+		[(int)coord->x + (0 * -1) + 1] * (int)coord->z / 10;
+	stop->x += map[(int)coord->y + 0]
+		[(int)coord->x + (0 * -1) + 1] * (int)coord->z / 10;
+	start->y += map[(int)coord->y]
+		[(int)coord->x] * (int)coord->z / 10;
+	start->x += map[(int)coord->y]
+		[(int)coord->x] * (int)coord->z / 10;
+}
+
+void	add_height_verti(t_xyz *start, t_xyz *stop, t_xyz *coord, void **mlx)
+{
+	static int	**map = NULL;
+
+	if (!map)
+		map = make_map((char *)mlx[2]);
+	stop->y -= map[(int)coord->y + 1]
+		[(int)coord->x + (1 * -1) + 1] * (int)coord->z / 10;
+	stop->x -= map[(int)coord->y + 1]
+		[(int)coord->x + (1 * -1) + 1] * (int)coord->z / 10;
+	start->y -= map[(int)coord->y]
+		[(int)coord->x] * (int)coord->z / 10;
+	start->x -= map[(int)coord->y]
+		[(int)coord->x] * (int)coord->z / 10;
+	print_line(start, stop, mlx, 0xFF0000);
+	stop->y += map[(int)coord->y + 1]
+		[(int)coord->x + (1 * -1) + 1] * (int)coord->z / 10;
+	stop->x += map[(int)coord->y + 1]
+		[(int)coord->x + (1 * -1) + 1] * (int)coord->z / 10;
+	start->y += map[(int)coord->y]
+		[(int)coord->x] * (int)coord->z / 10;
+	start->x += map[(int)coord->y]
+		[(int)coord->x] * (int)coord->z / 10;
 }
 
 void	ft_printer(void **mlx, t_xyz *angle, t_xyz start, t_xyz stop)
@@ -65,28 +98,23 @@ void	ft_printer(void **mlx, t_xyz *angle, t_xyz start, t_xyz stop)
 	int			y;
 
 	if (!width)
-	{
 		width = get_width(mlx[2]);
+	if ((y = -1) && !height)
 		height = get_height(mlx[2]);
-	}
-	y = 0;
-	while (y < height)
+	while (++y < height && (x = -1))
 	{
-		x = 0;
-		while (x < width)
+		while (++x < width)
 		{
 			start.x += angle->z;
 			stop.x += angle->z;
 			if (x < width - 1)
-				add_height(&start, &stop, angle, 0, x, y, mlx);
+				add_height_horiz(&start, &stop, get_coord(x, y, *angle), mlx);
 			stop.x -= angle->z;
 			stop.y += angle->z;
 			if (y < height - 1)
-				add_height(&start, &stop, angle, 1, x, y, mlx);
+				add_height_verti(&start, &stop, get_coord(x, y, *angle), mlx);
 			next_spot(&start, &stop, angle);
-			x++;
 		}
 		row_start(&start, &stop, angle, width);
-		y++;
 	}
 }
