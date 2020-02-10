@@ -6,13 +6,42 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 16:27:25 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 18:27:59 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	set_map(int **map, int fd)
+int		get_smallest(int fd)
+{
+	int		x;
+	int		y;
+	int		i;
+	char	*line;
+	int		smallest;
+
+	y = 0;
+	smallest = 0;
+	while (get_next_line(fd, &line) && !(x = 0))
+	{
+		i = 0;
+		while (line[i])
+		{
+			if (smallest > ft_atoi(&line[i]))
+				smallest = ft_atoi(&line[i]);
+			while (line[i] && line[i] == ' ')
+				i++;
+			while (line[i] && line[i] != ' ')
+				i++;
+			x++;
+		}
+		y++;
+		free(line);
+	}
+	return (smallest * -1);
+}
+
+void	set_map(int **map, int fd, int smallest)
 {
 	int		x;
 	int		y;
@@ -26,7 +55,7 @@ void	set_map(int **map, int fd)
 		i = 0;
 		while (line[i])
 		{
-			map[y][x] = ft_atoi(&line[i]);
+			map[y][x] = ft_atoi(&line[i]) + smallest;
 			while (line[i] && line[i] == ' ')
 				i++;
 			while (line[i] && line[i] != ' ')
@@ -68,9 +97,9 @@ int		get_width(char *filename)
 	get_next_line(fd, &line);
 	while (line[i])
 	{
-		while (line[i] && line[i] >= '0' && line[i] <= '9')
+		while ((line[i] && line[i] >= '0' && line[i] <= '9') || line[i] == '-')
 			i++;
-		while (line[i] && (line[i] < '0' || line[i] > '9'))
+		while (line[i] && (line[i] < '0' || line[i] > '9') && line[i] != '-')
 			i++;
 		width++;
 	}
@@ -97,7 +126,10 @@ int		**make_map(char *filename)
 		i++;
 	}
 	fd = open(filename, O_RDONLY);
-	set_map(map, fd);
+	i = get_smallest(fd);
+	close(fd);
+	fd = open(filename, O_RDONLY);
+	set_map(map, fd, i);
 	close(fd);
 	return (map);
 }
