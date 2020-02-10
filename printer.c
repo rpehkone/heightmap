@@ -6,45 +6,38 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 15:22:14 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:48:24 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	printer3(t_xyz *start, t_xyz *stop, t_xyz *angle, int x)
+void	row_start(t_xyz *start, t_xyz *stop, t_xyz *angle, int width)
 {
 	start->x += angle->y;
 	stop->x += angle->y;
 	start->y += angle->z;
 	stop->y += angle->z;
-	start->y -= angle->x * (x - 1);
-	stop->y -= angle->x * (x - 1);
-	start->x -= angle->y * x;
-	stop->x -= angle->y * x;
-	while (x > 0)
+	start->y -= angle->x * (width - 1);
+	stop->y -= angle->x * (width - 1);
+	start->x -= angle->y * width;
+	stop->x -= angle->y * width;
+	while (width > 0)
 	{
 		start->x -= angle->z;
 		stop->x -= angle->z;
-		x--;
+		width--;
 	}
 }
 
-void	printer2(t_xyz *start, t_xyz *stop, t_xyz *angle, int width)
+void	next_spot(t_xyz *start, t_xyz *stop, t_xyz *angle)
 {
-	static int counter = 0;
-
 	stop->x += angle->z;
 	stop->y -= angle->z;
 	start->y += angle->x;
 	stop->y += angle->x;
 	start->x += angle->y;
 	stop->x += angle->y;
-	if (!counter)
-		counter = width;
-	counter--;
-	if (!counter)
-		printer3(start, stop, angle, width);
 }
 
 void	add_height(t_xyz *start, t_xyz *stop, t_xyz *angle, int call, int x, int y, void **mlx)
@@ -63,6 +56,7 @@ void	add_height(t_xyz *start, t_xyz *stop, t_xyz *angle, int call, int x, int y,
 	start->y += map[y - 1][x - 1] * angle->z / 10;
 	start->x += map[y - 1][x - 1] * angle->z / 10;
 }
+
 #include <stdio.h>
 void	ft_printer(void **mlx, t_xyz *angle, t_xyz start, t_xyz stop)
 {
@@ -94,9 +88,10 @@ void	ft_printer(void **mlx, t_xyz *angle, t_xyz start, t_xyz stop)
 			if (y < height - 1)
 				print_line(&start, &stop, mlx, 0xFF0000);
 			//	add_height(&start, &stop, angle, 0, x, y, mlx);
-			printer2(&start, &stop, angle, width);
+			next_spot(&start, &stop, angle);
 			x++;
 		}
+		row_start(&start, &stop, angle, width);
 		y++;
 	}
 }
