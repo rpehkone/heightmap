@@ -6,33 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 13:47:52 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:26:18 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int		handle_mouse_down(int button, int x, int y, void **mlx)
-{
-	fdf(4, button, 0, mlx);
-	(void)x;
-	(void)y;
-	return (0);
-}
-
-int		handle_mouse_up(int button, int x, int y, void **mlx)
-{
-	fdf(5, button, 0, mlx);
-	(void)x;
-	(void)y;
-	return (0);
-}
-
-int		handle_cursor(int x, int y, void **mlx)
-{
-	fdf(6, x, y, mlx);
-	return (0);
-}
 
 void	screen_size(int *height, int *width, char *filename)
 {
@@ -47,7 +25,31 @@ void	screen_size(int *height, int *width, char *filename)
 	if (*height > 1000)
 		*height = 1000;
 }
-#include <stdio.h>
+
+void	ft_putstr(char *str)
+{
+	while (*str)
+	{
+		write(1, &(*str), 1);
+		str++;
+	}
+}
+
+void	ft_error(char *str)
+{
+	if (str)
+	{
+		ft_putstr("usage: ");
+		ft_putstr(str);
+		ft_putstr(" [source_file]\n");
+	}
+	else
+	{
+		ft_putstr("error\n");
+	}
+	exit(0);
+}
+
 int		main(int argc, char **argv)
 {
 	void	*mlx_ptr;
@@ -57,10 +59,7 @@ int		main(int argc, char **argv)
 	int		height;
 
 	if (argc != 2)
-	{
-		printf("usage: %s [source_file]\n", argv[0]);
-		return (-1);
-	}
+		ft_error(argv[0]);
 	mlx_ptr = mlx_init();
 	screen_size(&height, &width, argv[1]);
 	win_ptr = mlx_new_window(mlx_ptr, width, height, "fdf");

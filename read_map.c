@@ -6,18 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 16:06:35 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:27:25 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int		handle_keyboard_down(int key)
-{
-	if (key == 53)
-		exit(0);
-	return (0);
-}
 
 void	set_map(int **map, int fd)
 {
@@ -86,31 +79,6 @@ int		get_width(char *filename)
 	return (width);
 }
 
-/*
-void	asdasd(int **array, signed arr_len, signed str_len)
-{
-	signed	x;
-	signed	y;
-
-	x = 0;
-	y = 0;
-	while (y < arr_len)
-	{
-		x = 0;
-		while (x < str_len)
-		{
-			if (array[y][x] < 10)
-				printf(" ");
-			printf("%d", array[y][x]);
-			printf(" ");
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
-}
-*/
-#include <stdio.h>
 int		**make_map(char *filename)
 {
 	int		width;
@@ -131,9 +99,5 @@ int		**make_map(char *filename)
 	fd = open(filename, O_RDONLY);
 	set_map(map, fd);
 	close(fd);
-	printf("width = %d\n", width);
-	printf("height = %d\n", height);
-	//asdasd(map, height, width);
-//	exit(0);
 	return (map);
 }
