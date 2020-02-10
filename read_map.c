@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 15:29:10 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:06:35 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ int		**make_map(char *filename)
 	printf("width = %d\n", width);
 	printf("height = %d\n", height);
 	//asdasd(map, height, width);
-	exit(0);
+//	exit(0);
 	return (map);
 }
