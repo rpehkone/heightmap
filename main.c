@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/30 20:14:08 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 13:47:52 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	screen_size(int *height, int *width, char *filename)
 	if (*height > 1000)
 		*height = 1000;
 }
-
+#include <stdio.h>
 int		main(int argc, char **argv)
 {
 	void	*mlx_ptr;
@@ -57,7 +57,10 @@ int		main(int argc, char **argv)
 	int		height;
 
 	if (argc != 2)
-		exit(0);
+	{
+		printf("usage: %s [source_file]\n", argv[0]);
+		return (-1);
+	}
 	mlx_ptr = mlx_init();
 	screen_size(&height, &width, argv[1]);
 	win_ptr = mlx_new_window(mlx_ptr, width, height, "fdf");

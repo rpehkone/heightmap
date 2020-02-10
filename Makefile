@@ -6,12 +6,12 @@
 #    By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/30 20:09:24 by rpehkone          #+#    #+#              #
-#    Updated: 2020/01/30 20:12:26 by rpehkone         ###   ########.fr        #
+#    Updated: 2020/02/10 13:49:46 by rpehkone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
-FILES = fdf.c printer.c main.c get_next_line.c read_map.c
+FILES = fdf.c printer.c main.c get_next_line.c read_map.c ft_atoi.c
 .PHONY: clean fclean re all
 
 all: $(NAME)

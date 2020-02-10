@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/30 20:13:33 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 13:50:12 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,28 @@ int		handle_keyboard_down(int key)
 	return (0);
 }
 
-void	set_map(int **map, int fd, int width, int height)
+void	set_map(int **map, int fd)
 {
 	int		x;
 	int		y;
 	int		i;
 	char	*line;
 
-	y = height - 1;
+	y = 0;
 	while (get_next_line(fd, &line))
 	{
-		x = width - 1;
+		x = 0;
 		i = 0;
 		while (line[i])
 		{
-			map[y][x] = atoi(&line[i]);
+			map[y][x] = ft_atoi(&line[i]);
 			while (line[i] && line[i] == ' ')
 				i++;
 			while (line[i] && line[i] != ' ')
 				i++;
-			x--;
+			x++;
 		}
-		y--;
+		y++;
 		free(line);
 	}
 }
@@ -86,6 +86,31 @@ int		get_width(char *filename)
 	return (width);
 }
 
+/*
+void	asdasd(int **array, signed arr_len, signed str_len)
+{
+	signed	x;
+	signed	y;
+
+	x = 0;
+	y = 0;
+	while (y < arr_len)
+	{
+		x = 0;
+		while (x < str_len)
+		{
+			if (array[y][x] < 10)
+				printf(" ");
+			printf("%d", array[y][x]);
+			printf(" ");
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}
+*/
+
 int		**make_map(char *filename)
 {
 	int		width;
@@ -98,13 +123,15 @@ int		**make_map(char *filename)
 	height = get_height(filename);
 	map = (int**)malloc(sizeof(int*) * (height));
 	width = get_width(filename);
-	while (i <= height)
+	while (i < height)
 	{
 		map[i] = (int*)malloc(sizeof(int) * (width));
 		i++;
 	}
 	fd = open(filename, O_RDONLY);
-	set_map(map, fd, width, height);
+	set_map(map, fd);
 	close(fd);
+	//asdasd(map, height, width);
+	exit(0);
 	return (map);
 }
