@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 13:50:16 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:36:01 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <time.h>
 # include <stdio.h>
 # include <fcntl.h>
-# define BUFF_SIZE 42
+# define BUFF_SIZE 1
 
 typedef struct	s_xyz {
 	double		x;

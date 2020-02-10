@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 13:50:12 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:29:10 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int		get_width(char *filename)
 	get_next_line(fd, &line);
 	while (line[i])
 	{
-		while (line[i] && line[i] == ' ')
+		while (line[i] && line[i] >= '0' && line[i] <= '9')
 			i++;
-		while (line[i] && line[i] != ' ')
+		while (line[i] && (line[i] < '0' || line[i] > '9'))
 			i++;
 		width++;
 	}
@@ -110,7 +110,7 @@ void	asdasd(int **array, signed arr_len, signed str_len)
 	}
 }
 */
-
+#include <stdio.h>
 int		**make_map(char *filename)
 {
 	int		width;
@@ -131,6 +131,8 @@ int		**make_map(char *filename)
 	fd = open(filename, O_RDONLY);
 	set_map(map, fd);
 	close(fd);
+	printf("width = %d\n", width);
+	printf("height = %d\n", height);
 	//asdasd(map, height, width);
 	exit(0);
 	return (map);
