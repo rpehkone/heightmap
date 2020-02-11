@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 18:29:15 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/11 22:05:25 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	add_height_horiz(t_xyz *start, t_xyz *stop, t_xyz *coord, void **mlx)
 		[(int)coord->x] * (int)coord->z / 10;
 	start->x -= map[(int)coord->y]
 		[(int)coord->x] * (int)coord->z / 10;
-	print_line(start, stop, mlx, 0xFFFFFF);
+	print_line(start, stop, mlx);
 	stop->y += map[(int)coord->y + 0]
 		[(int)coord->x + (0 * -1) + 1] * (int)coord->z / 10;
 	stop->x += map[(int)coord->y + 0]
@@ -79,7 +79,7 @@ void	add_height_verti(t_xyz *start, t_xyz *stop, t_xyz *coord, void **mlx)
 		[(int)coord->x] * (int)coord->z / 10;
 	start->x -= map[(int)coord->y]
 		[(int)coord->x] * (int)coord->z / 10;
-	print_line(start, stop, mlx, 0xFFFFFF);
+	print_line(start, stop, mlx);
 	stop->y += map[(int)coord->y + 1]
 		[(int)coord->x + (1 * -1) + 1] * (int)coord->z / 10;
 	stop->x += map[(int)coord->y + 1]

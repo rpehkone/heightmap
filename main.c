@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 17:50:55 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/11 19:21:55 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int		main(int argc, char **argv)
 	void	**mlx;
 	int		width;
 	int		height;
+	int		color = 0xFFFFFF;
 
 	width = 0;
 	if (argc != 2)
@@ -76,15 +77,17 @@ int		main(int argc, char **argv)
 	mlx_ptr = mlx_init();
 	screen_size(&height, &width, argv[1]);
 	win_ptr = mlx_new_window(mlx_ptr, width, height, "fdf");
-	mlx = (void**)malloc(sizeof(void*) * 3);
+	mlx = (void**)malloc(sizeof(void*) * 4);
 	mlx[0] = mlx_ptr;
 	mlx[1] = win_ptr;
 	mlx[2] = argv[1];
+	mlx[3] = &color;
 	fdf(0, 0, 0, mlx);
 	mlx_hook(win_ptr, 2, 0, handle_keyboard_down, mlx);
 	mlx_hook(win_ptr, 4, 0, handle_mouse_down, mlx);
 	mlx_hook(win_ptr, 5, 0, handle_mouse_up, mlx);
 	mlx_hook(win_ptr, 6, 0, handle_cursor, mlx);
+	mlx_loop_hook(mlx_ptr, handle_loop, mlx);
 	mlx_loop(mlx_ptr);
 	return (1);
 }

@@ -6,42 +6,13 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 13:06:47 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/11 22:10:34 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		get_smallest(int fd)
-{
-	int		x;
-	int		y;
-	int		i;
-	char	*line;
-	int		smallest;
-
-	y = 0;
-	smallest = 0;
-	while (get_next_line(fd, &line) && !(x = 0))
-	{
-		i = 0;
-		while (line[i])
-		{
-			if (smallest > ft_atoi(&line[i]))
-				smallest = ft_atoi(&line[i]);
-			while (line[i] && line[i] == ' ')
-				i++;
-			while (line[i] && line[i] != ' ')
-				i++;
-			x++;
-		}
-		y++;
-		free(line);
-	}
-	return (smallest * -1);
-}
-
-void	set_map(int **map, int fd, int smallest)
+void	set_map(int **map, int fd)
 {
 	int		x;
 	int		y;
@@ -55,7 +26,7 @@ void	set_map(int **map, int fd, int smallest)
 		i = 0;
 		while (line[i])
 		{
-			map[y][x] = ft_atoi(&line[i]) + smallest;
+			map[y][x] = ft_atoi(&line[i]);
 			while (line[i] && line[i] == ' ')
 				i++;
 			while (line[i] && line[i] != ' ')
@@ -126,10 +97,9 @@ int		**make_map(char *filename)
 		i++;
 	}
 	fd = open(filename, O_RDONLY);
-	i = get_smallest(fd);
 	close(fd);
 	fd = open(filename, O_RDONLY);
-	set_map(map, fd, i);
+	set_map(map, fd);
 	close(fd);
 	return (map);
 }

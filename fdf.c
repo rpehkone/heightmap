@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/01/30 19:49:21 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/11 22:04:39 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ float	ft_abs(float n)
 	return (n);
 }
 
-void	print_line(t_xyz *start, t_xyz *stop, void **mlx, unsigned color)
+void	print_line(t_xyz *start, t_xyz *stop, void **mlx)
 {
 	t_xyz	step;
 	t_xyz	pos;
@@ -33,7 +33,7 @@ void	print_line(t_xyz *start, t_xyz *stop, void **mlx, unsigned color)
 	step.y = (stop->y - start->y) / (float)step.z;
 	while (pos.z <= step.z)
 	{
-		mlx_pixel_put(mlx[0], mlx[1], pos.x, pos.y, color);
+		mlx_pixel_put(mlx[0], mlx[1], pos.x, pos.y, *(int *)mlx[3]);
 		pos.x += step.x;
 		pos.y += step.y;
 		pos.z++;
