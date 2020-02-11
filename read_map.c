@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/10 18:27:59 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/11 13:06:47 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ int		**make_map(char *filename)
 
 	i = 0;
 	height = get_height(filename);
-	map = (int**)malloc(sizeof(int*) * (height));
+	map = (int**)malloc(sizeof(int*) * (height + 1));
 	width = get_width(filename);
 	while (i < height)
 	{
-		map[i] = (int*)malloc(sizeof(int) * (width));
+		map[i] = (int*)malloc(sizeof(int) * (width + 1));
 		i++;
 	}
 	fd = open(filename, O_RDONLY);
