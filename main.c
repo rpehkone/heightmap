@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 19:21:55 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:39:09 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int		main(int argc, char **argv)
 	void	**mlx;
 	int		width;
 	int		height;
-	int		color = 0xFFFFFF;
 
 	width = 0;
 	if (argc != 2)
@@ -81,8 +80,6 @@ int		main(int argc, char **argv)
 	mlx[0] = mlx_ptr;
 	mlx[1] = win_ptr;
 	mlx[2] = argv[1];
-	mlx[3] = &color;
-	fdf(0, 0, 0, mlx);
 	mlx_hook(win_ptr, 2, 0, handle_keyboard_down, mlx);
 	mlx_hook(win_ptr, 4, 0, handle_mouse_down, mlx);
 	mlx_hook(win_ptr, 5, 0, handle_mouse_up, mlx);

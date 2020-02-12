@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 22:04:39 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:40:47 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,11 @@ int		fdf(int call, int x, int y, void **mlx)
 {
 	static t_xyz	angle = {.x = 2, .y = -5, .z = 30};
 	static t_xyz	offset = {.x = 200, .y = 200};
+	static int		color = 0xFFFFFF;
 	t_xyz			start;
 	t_xyz			stop;
 
+	mlx[3] = &color;
 	if (call == 4 && x == 4)
 		angle.z += 1;
 	if (call == 4 && x == 5)

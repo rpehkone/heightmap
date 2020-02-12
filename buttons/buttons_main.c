@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 22:03:29 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/11 22:20:13 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int			buttons_main(int call, int x, int y, void **mlx)
 	if (call == 6)
 		oldy = y;
 	mouse_movement(call, x, y);
-	mlx_clear_window(mlx[0], mlx[1]);
 	if (grd)
 	{
 		gradient(mlx);
