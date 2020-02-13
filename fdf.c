@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 15:57:20 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:19:18 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		fdf(int call, int x, int y, void **mlx)
 	offset.y += y;
 	reset_line(&start, &stop, &offset, &angle);
 	mlx_clear_window(mlx[0], mlx[1]);
-	ft_printer(mlx, &angle, start, stop);
 	mlx_put_image_to_window(mlx[0], mlx[1], mlx[4], 0, 0);
+	ft_printer(mlx, &angle, start, stop);
 	return (0);
 }
