@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 22:05:25 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:53:48 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ void	ft_printer(void **mlx, t_xyz *angle, t_xyz start, t_xyz stop)
 	int			x;
 	int			y;
 
-	if (!width)
-		width = get_width(mlx[2]);
+	width = width ? width : get_width(mlx[2]);
 	if ((y = -1) && !height)
 		height = get_height(mlx[2]);
+	mlx_clear_image(mlx);
 	while (++y < height && (x = -1))
 	{
 		while (++x < width)

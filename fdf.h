@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 15:04:52 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:33:10 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_xyz			*get_coord(int x, int y, t_xyz angle);
 int				buttons_main(int call, int x, int y, void **mlx);
 void			image_pixel_put(void **mlx, int x, int y, int color);
 void			*ft_memset(void *b, int c, size_t len);
-void			mlx_clear_image(void **mlx, int width, int height);
+void			mlx_clear_image(void **mlx);
+void			init_image(void **mlx);
 
 #endif

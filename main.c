@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 13:54:29 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:56:49 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	ft_error(char *str)
 	}
 	exit(0);
 }
+//add libft
 
 int		main(int argc, char **argv)
 {
@@ -76,10 +77,13 @@ int		main(int argc, char **argv)
 	mlx_ptr = mlx_init();
 	screen_size(&height, &width, argv[1]);
 	win_ptr = mlx_new_window(mlx_ptr, width, height, "fdf");
-	mlx = (void**)malloc(sizeof(void*) * 5);
+	mlx = (void**)malloc(sizeof(void*) * 7);
 	mlx[0] = mlx_ptr;
 	mlx[1] = win_ptr;
 	mlx[2] = argv[1];
+	mlx[5] = &width;
+	mlx[6] = &height;
+	init_image(mlx);
 	mlx_hook(win_ptr, 2, 0, handle_keyboard_down, mlx);
 	mlx_hook(win_ptr, 4, 0, handle_mouse_down, mlx);
 	mlx_hook(win_ptr, 5, 0, handle_mouse_up, mlx);
