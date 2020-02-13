@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 22:05:01 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:04:52 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ int				ft_atoi(const char *str);
 int				handle_loop(void **mlx);
 t_xyz			*get_coord(int x, int y, t_xyz angle);
 int				buttons_main(int call, int x, int y, void **mlx);
+void			image_pixel_put(void **mlx, int x, int y, int color);
+void			*ft_memset(void *b, int c, size_t len);
+void			mlx_clear_image(void **mlx, int width, int height);
 
 #endif

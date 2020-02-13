@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/12 17:40:47 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:04:33 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_line(t_xyz *start, t_xyz *stop, void **mlx)
 	step.y = (stop->y - start->y) / (float)step.z;
 	while (pos.z <= step.z)
 	{
-		mlx_pixel_put(mlx[0], mlx[1], pos.x, pos.y, *(int *)mlx[3]);
+		image_pixel_put(mlx, pos.x, pos.y, *(int *)mlx[3]);
 		pos.x += step.x;
 		pos.y += step.y;
 		pos.z++;
@@ -103,7 +103,9 @@ int		fdf(int call, int x, int y, void **mlx)
 	offset.x += x;
 	offset.y += y;
 	reset_line(&start, &stop, &offset, &angle);
-	mlx_clear_window(mlx[0], mlx[1]);
 	ft_printer(mlx, &angle, start, stop);
+	mlx_clear_window(mlx[0], mlx[1]);
+	//mlx_clear_image(mlx, 100, 100);
+	mlx_put_image_to_window(mlx[0], mlx[1], mlx[4], 0, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/12 17:39:09 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 13:54:29 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		main(int argc, char **argv)
 	mlx_ptr = mlx_init();
 	screen_size(&height, &width, argv[1]);
 	win_ptr = mlx_new_window(mlx_ptr, width, height, "fdf");
-	mlx = (void**)malloc(sizeof(void*) * 4);
+	mlx = (void**)malloc(sizeof(void*) * 5);
 	mlx[0] = mlx_ptr;
 	mlx[1] = win_ptr;
 	mlx[2] = argv[1];

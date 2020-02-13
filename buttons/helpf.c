@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 21:40:47 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 13:51:29 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	gradient(void **mlx)
 		j = 0;
 		while (j < 310)
 		{
-			mlx_pixel_put(mlx[0], mlx[1], i, 60 + j,
+			image_pixel_put(mlx, i, 60 + j,
 					(int)red * 65536 + (int)grn * 256 + (int)blu);
 			j++;
 		}
