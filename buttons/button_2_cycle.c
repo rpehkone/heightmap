@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 19:39:03 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:45:11 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void		cycle_colors(void **mlx)
 	if (*(int*)mlx[3] != old && *(int*)mlx[3] != 0xFFFFFF)
 		while (*(int*)mlx[3] != old)
 		{
+			if (i > 310)
+				i = 0;
 			red = sin(0.02 * i + 0) * 127 + 128;
 			grn = sin(0.02 * i + 2) * 127 + 128;
 			blu = sin(0.02 * i + 4) * 127 + 128;

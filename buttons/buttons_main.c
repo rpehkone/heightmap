@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 19:36:57 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:43:35 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_button	*set_b_color(void)
 	return (&b_color);
 }
 
-int			button1_main(int call, int x, int y, void **mlx)
+void		button1_main(int call, int x, int y, void **mlx)
 {
 	static t_button	*b_color = NULL;
 	static int		oldy = 0;
@@ -64,11 +64,7 @@ int			button1_main(int call, int x, int y, void **mlx)
 	static int		grd = 0;
 	static int		i;
 
-	if (call == 10)
-	{
-		grd = 0;
-		return (0);
-	}
+	grd = call == 10 ? 0 : grd;
 	if (!b_color)
 		b_color = set_b_color();
 	oldx = call == 6 ? x : oldx;
@@ -87,12 +83,10 @@ int			button1_main(int call, int x, int y, void **mlx)
 			(b_color->tc_color = i ? 0xFFFFFF : 0))
 		if (call == 4 && x == 1)
 			grd = grd ? 0 : 1;
-	return (grd);
 }
 
 int			buttons_main(int call, int x, int y, void **mlx)
 {
-	// make only one button at time
 	button1_main(call, x, y, mlx);
 	button2_main(call, x, y, mlx);
 	return (0);
