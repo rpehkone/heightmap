@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 22:10:47 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:37:22 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int				asd(int call, int xd, int yd, void **mlx);
 int				deal_key(int call, int c, int y, void **mlx);
 void			gradient(void **mlx);
 int				get_color(int x, int y);
+int				button2_main(int call, int x, int y, void **mlx);
 
 #endif
