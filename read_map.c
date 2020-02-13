@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 22:10:34 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:26:41 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	set_map(int **map, int fd)
 	{
 		x = 0;
 		i = 0;
+		//while i < width
 		while (line[i])
 		{
 			map[y][x] = ft_atoi(&line[i]);
@@ -78,7 +79,7 @@ int		get_width(char *filename)
 	close(fd);
 	return (width);
 }
-
+// read longest line instead of first
 int		**make_map(char *filename)
 {
 	int		width;
