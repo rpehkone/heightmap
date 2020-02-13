@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 16:55:30 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 18:03:14 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	print_button(t_button *b, void **mlx)
 		stop.y++;
 	}
 	mlx_string_put(mlx[0], mlx[1],
-			b->x + b->size_x / 2 - (ft_strlen(b->text) / 2 * 9),
-			b->y + b->size_y / 2 - 11, b->t_color, b->text);
+			b->x + b->size_x / 2 - (ft_strlen(b->text) / 2 * 9) - 5,
+			b->y + b->size_y / 2 - 12, b->t_color, b->text);
 }
 
 int		handle_button(void **mlx, t_button b, int x, int y)

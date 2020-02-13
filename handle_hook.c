@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:17:33 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/11 18:44:36 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 18:21:14 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		handle_loop(void **mlx)
 	static int i = 0;
 
 	i++;
-	if (i < 200)
+	if (i < 100)
 		return (0);
 	i = 0;
 	fdf(1, 0, 0, mlx);

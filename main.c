@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 16:13:41 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:34:01 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_putstr(char *str)
 		str++;
 	}
 }
+//add libft
 
 void	ft_error(char *str)
 {
@@ -59,7 +60,6 @@ void	ft_error(char *str)
 	}
 	exit(0);
 }
-//add libft
 
 void	main2(char *argv)
 {
