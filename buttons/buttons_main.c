@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 19:17:14 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:20:43 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,25 @@ t_button	*set_b_cycle(void)
 	return (&b);
 }
 
+void		edit_button2(t_button *b_cycle, int cycle, void **mlx)
+{
+	if (cycle)
+	{
+		b_cycle->b_color = *(int*)mlx[3];
+		b_cycle->bc_color = *(int*)mlx[3];
+		b_cycle->t_color = 0;
+		b_cycle->tc_color = 0xFFFFFF;
+		cycle_colors(mlx);
+	}
+	else
+	{
+		b_cycle->b_color = 0;
+		b_cycle->bc_color = 0xFFFFFF;
+		b_cycle->t_color = 0xFFFFFF;
+		b_cycle->tc_color = 0;
+	}
+}
+
 int			button2_main(int call, int x, int y, void **mlx)
 {
 	static t_button	*b_cycle = NULL;
@@ -140,21 +159,7 @@ int			button2_main(int call, int x, int y, void **mlx)
 	if (handle_button(mlx, *b_cycle, oldx, oldy) && call == 4 && x == 1)
 		cycle = cycle ? 0 : 1;
 	b_cycle->tc_color = 0;
-	if (cycle)
-	{
-		b_cycle->b_color = *(int*)mlx[3];
-		b_cycle->bc_color = *(int*)mlx[3];
-		b_cycle->t_color = 0;
-		b_cycle->tc_color = 0xFFFFFF;
-		cycle_colors(mlx);
-	}
-	else
-	{
-		b_cycle->b_color = 0;
-		b_cycle->bc_color = 0xFFFFFF;
-		b_cycle->t_color = 0xFFFFFF;
-		b_cycle->tc_color = 0;
-	}
+	edit_button2(b_cycle, cycle, mlx);
 	return (cycle);
 }
 

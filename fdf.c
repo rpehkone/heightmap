@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 16:19:18 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:27:28 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	mouse_control(int call, int *x, int *y, t_xyz *angle)
 	t_xyz		offset;
 
 	if (call == 6 && m1_down)
-		angle->y += *x - old_x;
+		angle->y += ((float)*x - old_x) / 10;
 	if (call == 6 && m1_down)
-		angle->x += *y - old_y;
+		angle->x += ((float)*y - old_y) / 10;
 	if (!(offset.x = 0) && call == 6 && m3_down)
-		offset.x += *x - old_x;
+		offset.x += ((float)*x - old_x);
 	if (!(offset.y = 0) && call == 6 && m3_down)
-		offset.y += *y - old_y;
+		offset.y += ((float)*y - old_y);
 	if (call == 6)
 		old_x = *x;
 	if (call == 6)
@@ -90,15 +90,13 @@ int		fdf(int call, int x, int y, void **mlx)
 
 	mlx[3] = &color;
 	if (call == 4 && x == 4)
-		angle.z += 1;
+		angle.z += (float)angle.z / 10;
 	if (call == 4 && x == 5)
-		angle.z -= 1;
-	if (angle.z < 0)
-		angle.z = 0;
-	if (angle.z > 50)
-		angle.z = 50;
-	if (angle.z < 10)
-		angle.z = 10;
+		angle.z -= (float)angle.z / 10;
+	if (angle.z > 70)
+		angle.z = 69;
+	if (angle.z < 5)
+		angle.z = 6;
 	mouse_control(call, &x, &y, &angle);
 	offset.x += x;
 	offset.y += y;
