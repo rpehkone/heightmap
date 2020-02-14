@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 13:12:10 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 13:58:56 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int				matrix(int call, int new_x, int new_y, void **mlx);
 int				handle_button(void **mlx, t_button b, int x, int y);
 int				asd(int call, int xd, int yd, void **mlx);
 int				deal_key(int call, int c, int y, void **mlx);
-void			gradient(void **mlx);
+int				gradient(void **mlx);
 int				get_color(int x, int y);
 int				button2_main(int call, int x, int y, void **mlx);
 int				button3_main(int call, int x, int y, void **mlx);
-void			draw_slider(int call, int x, int y, void **mlx);
+int				draw_slider(int call, int x, int y, void **mlx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 11:05:16 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 13:49:37 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	mouse_control(int call, int *x, int *y, t_xyz *angle)
 	static int	old_y;
 	t_xyz		offset;
 
+	if (call == 10)
+		m1_down = 0;
 	if (call == 6 && m1_down)
 		angle->y += ((float)*x - old_x) / 10;
 	if (call == 6 && m1_down)
@@ -110,8 +112,13 @@ int		fdf_main(int call, int x, int y, void **mlx)
 
 int		fdf(int call, int x, int y, void **mlx)
 {
-	fdf_main(call, x, y, mlx);
-	buttons_main(call, x, y, mlx);
+	static int	allow_rotate = 1;
+
+	if (allow_rotate)
+		fdf_main(10, x, y, mlx);
+	else
+		fdf_main(call, x, y, mlx);
+	allow_rotate = buttons_main(call, x, y, mlx);
 	help_text(mlx);
 	return (0);
 }

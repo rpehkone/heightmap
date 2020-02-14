@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 16:34:23 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 13:58:24 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	make_gradient(void *image_ptr)
 	}
 }
 
-void	gradient(void **mlx)
+int		gradient(void **mlx)
 {
 	static void *gradient = NULL;
 
@@ -68,6 +68,7 @@ void	gradient(void **mlx)
 	}
 	else
 		mlx_put_image_to_window(mlx[0], mlx[1], gradient, 0, 40);
+	return (1);
 }
 
 int		get_color(int x, int y)

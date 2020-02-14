@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 11:35:52 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 13:59:32 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_button	*set_b_color(void)
 	return (&b_color);
 }
 
-void		button1_main(int call, int x, int y, void **mlx)
+int			button1_main(int call, int x, int y, void **mlx)
 {
 	static t_button	*b_color = NULL;
 	static int		oldy = 0;
@@ -69,26 +69,25 @@ void		button1_main(int call, int x, int y, void **mlx)
 		b_color = set_b_color();
 	oldx = call == 6 ? x : oldx;
 	oldy = call == 6 ? y : oldy;
-	if (grd)
-	{
-		gradient(mlx);
-		if (call == 4 && x == 1)
-			if ((i = get_color(oldx, oldy - 60)))
-				*(int*)mlx[3] = i;
-	}
+	if (grd && gradient(mlx) && call == 4 && x == 1)
+		if ((i = get_color(oldx, oldy - 60)))
+			*(int*)mlx[3] = i;
 	i = mouse_movement(call, x, y);
 	b_color->b_color = grd ? 0xFFFFFF : 0;
 	b_color->t_color = !grd ? 0xFFFFFF : 0;
-	if (handle_button(mlx, *b_color, oldx, oldy) &&
+	if ((y = handle_button(mlx, *b_color, oldx, oldy)) &&
 			(b_color->tc_color = i ? 0xFFFFFF : 0))
 		if (call == 4 && x == 1)
 			grd = grd ? 0 : 1;
+	return (grd + y);
 }
 
 int			buttons_main(int call, int x, int y, void **mlx)
 {
-	button1_main(call, x, y, mlx);
-	button2_main(call, x, y, mlx);
-	button3_main(call, x, y, mlx);
-	return (0);
+	int res;
+
+	res = button1_main(call, x, y, mlx);
+	res += button2_main(call, x, y, mlx);
+	res += button3_main(call, x, y, mlx);
+	return (res);
 }

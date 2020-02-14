@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 13:12:12 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 13:55:51 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,17 @@ int			button3_main(int call, int x, int y, void **mlx)
 	static int		oldy = 0;
 	static int		oldx = 0;
 	static int		draw = 0;
+	int				ret;
 
 	oldx = call == 6 ? x : oldx;
 	oldy = call == 6 ? y : oldy;
 	if (!b_height)
 		b_height = set_b_height();
-	if (handle_button(mlx, *b_height, oldx, oldy) && call == 5 && x == 1)
+	if ((ret = handle_button(mlx, *b_height, oldx, oldy)) &&
+	call == 5 && x == 1)
 		draw = draw ? 0 : 1;
 	if (draw)
-		draw_slider(call, x, y, mlx);
+		ret += draw_slider(call, x, y, mlx);
 	edit_button3(b_height, draw);
-	return (0);
+	return (ret);
 }

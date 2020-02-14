@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 13:21:00 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 13:56:51 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_button	*set_slider(void)
 	return (&b);
 }
 
-void		draw_slider(int call, int x, int y, void **mlx)
+int			draw_slider(int call, int x, int y, void **mlx)
 {
 	static t_button	*slider_back = NULL;
 	static t_button	*slider = NULL;
@@ -62,8 +62,7 @@ void		draw_slider(int call, int x, int y, void **mlx)
 		slider = set_slider();
 	handle_button(mlx, *slider_back, oldx, oldy);
 	slider->x = move ? oldx : slider->x;
-	if (slider->x < 250)
-		slider->x = 250;
+	slider->x = slider->x < 250 ? 250 : slider->x;
 	if (slider->x > 450 - 4)
 		slider->x = 450 - 4;
 	if (slider->x < 353 && slider->x > 347)
@@ -71,4 +70,5 @@ void		draw_slider(int call, int x, int y, void **mlx)
 	*(float*)mlx[7] = move ? ((float)slider->x - 350) / 100 : *(float*)mlx[7];
 	if (handle_button(mlx, *slider, oldx, oldy) && call == 4 && x == 1)
 		move = 1;
+	return (move);
 }
