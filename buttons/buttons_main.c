@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 19:43:35 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 11:35:52 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ int			buttons_main(int call, int x, int y, void **mlx)
 {
 	button1_main(call, x, y, mlx);
 	button2_main(call, x, y, mlx);
+	button3_main(call, x, y, mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 19:52:13 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 11:52:43 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ int			button2_main(int call, int x, int y, void **mlx)
 	static int		oldx = 0;
 	static int		cycle = 0;
 
-	if (call == 10)
-		cycle = 0;
 	oldx = call == 6 ? x : oldx;
 	oldy = call == 6 ? y : oldy;
 	if (!b_cycle)

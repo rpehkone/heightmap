@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 10:59:13 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 11:34:06 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 11:50:06 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	help_text(void **mlx)
 
 	if (!color)
 		return ;
-	if (fade > 300)
+	if (fade > 500)
 	{
 		color -= 0xF0000;
 		color -= 0xF00;

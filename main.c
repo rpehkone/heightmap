@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 17:34:01 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 12:50:05 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,24 +61,25 @@ void	ft_error(char *str)
 	exit(0);
 }
 
-void	main2(char *argv)
+void	main2(char *argv, int width)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	**mlx;
-	int		width;
 	int		height;
+	float	height_multiplier;
 
-	width = 0;
+	height_multiplier = .1;
 	mlx_ptr = mlx_init();
 	screen_size(&height, &width, argv);
 	win_ptr = mlx_new_window(mlx_ptr, width, height, "fdf");
-	mlx = (void**)malloc(sizeof(void*) * 7);
+	mlx = (void**)malloc(sizeof(void*) * 8);
 	mlx[0] = mlx_ptr;
 	mlx[1] = win_ptr;
 	mlx[2] = argv;
 	mlx[5] = &width;
 	mlx[6] = &height;
+	mlx[7] = &height_multiplier;
 	init_image(mlx);
 	mlx_hook(win_ptr, 2, 0, handle_keyboard_down, mlx);
 	mlx_hook(win_ptr, 4, 0, handle_mouse_down, mlx);
@@ -94,6 +95,6 @@ int		main(int argc, char **argv)
 		ft_error(argv[0]);
 	if (open(argv[1], O_RDONLY) < 2)
 		ft_error(NULL);
-	main2(argv[1]);
+	main2(argv[1], 0);
 	return (1);
 }
