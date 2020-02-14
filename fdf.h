@@ -6,19 +6,19 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 11:05:38 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 15:04:20 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # include "mlx.h"
+# include "libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <time.h>
 # include <stdio.h>
 # include <fcntl.h>
-# define BUFF_SIZE 1
 
 typedef struct	s_xyz {
 	double		x;
@@ -36,13 +36,10 @@ int				get_height(char *filename);
 void			print_line(t_xyz *start, t_xyz *stop, void **mlx);
 int				**make_map(char *filename);
 int				fdf(int call, int x, int y, void **mlx);
-int				get_next_line(const int fd, char **line);
-int				ft_atoi(const char *str);
 int				handle_loop(void **mlx);
 t_xyz			*get_coord(int x, int y, t_xyz angle);
 int				buttons_main(int call, int x, int y, void **mlx);
 void			image_pixel_put(void **mlx, int x, int y, int color);
-void			*ft_memset(void *b, int c, size_t len);
 void			mlx_clear_image(void **mlx);
 void			init_image(void **mlx);
 float			ft_abs(float n);

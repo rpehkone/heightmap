@@ -6,21 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 18:03:14 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 15:02:16 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buttons.h"
-
-int		ft_strlen(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 void	print_button2(t_xyz *start, t_xyz *stop, int color, void **mlx)
 {

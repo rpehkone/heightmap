@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 12:50:05 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 15:02:00 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,6 @@ t_xyz	*get_coord(int x, int y, t_xyz angle)
 	coord.z = angle.z;
 	return (&coord);
 }
-
-void	ft_putstr(char *str)
-{
-	while (*str)
-	{
-		write(1, &(*str), 1);
-		str++;
-	}
-}
-//add libft
 
 void	ft_error(char *str)
 {
