@@ -6,13 +6,13 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 17:26:41 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 15:46:23 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	set_map(int **map, int fd)
+void	set_map(int **map, int fd, int width)
 {
 	int		x;
 	int		y;
@@ -24,7 +24,6 @@ void	set_map(int **map, int fd)
 	{
 		x = 0;
 		i = 0;
-		//while i < width
 		while (line[i])
 		{
 			map[y][x] = ft_atoi(&line[i]);
@@ -34,6 +33,8 @@ void	set_map(int **map, int fd)
 				i++;
 			x++;
 		}
+		while (x++ < width)
+			map[y][x - 1] = 0;
 		y++;
 		free(line);
 	}
@@ -59,27 +60,32 @@ int		get_height(char *filename)
 int		get_width(char *filename)
 {
 	int		i;
+	int		j;
 	int		fd;
-	char	*line;
+	char	*lne;
 	int		width;
 
 	i = 0;
 	width = 0;
 	fd = open(filename, O_RDONLY);
-	get_next_line(fd, &line);
-	while (line[i])
+	while (get_next_line(fd, &lne))
 	{
-		while ((line[i] && line[i] >= '0' && line[i] <= '9') || line[i] == '-')
-			i++;
-		while (line[i] && (line[i] < '0' || line[i] > '9') && line[i] != '-')
-			i++;
-		width++;
+		j = 0;
+		while (lne[i])
+		{
+			while ((lne[i] && lne[i] >= '0' && lne[i] <= '9') || lne[i] == '-')
+				i++;
+			while (lne[i] && (lne[i] < '0' || lne[i] > '9') && lne[i] != '-')
+				i++;
+			j++;
+		}
+		if (j > width)
+			width = j;
+		free(lne);
 	}
-	free(line);
-	close(fd);
 	return (width);
 }
-// read longest line instead of first
+
 int		**make_map(char *filename)
 {
 	int		width;
@@ -100,7 +106,7 @@ int		**make_map(char *filename)
 	fd = open(filename, O_RDONLY);
 	close(fd);
 	fd = open(filename, O_RDONLY);
-	set_map(map, fd);
+	set_map(map, fd, width);
 	close(fd);
 	return (map);
 }

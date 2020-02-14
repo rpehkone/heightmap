@@ -6,7 +6,7 @@
 #    By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/30 20:09:24 by rpehkone          #+#    #+#              #
-#    Updated: 2020/02/14 15:22:14 by rpehkone         ###   ########.fr        #
+#    Updated: 2020/02/14 15:47:36 by rpehkone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ clean:
 	rm -f $(NAME)
 
 fclean: clean
+	make fclean -C libft
 	rm -f $(NAME)
 
 re: fclean
