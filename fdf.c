@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 15:24:17 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 17:10:50 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ int		fdf_main(int call, int x, int y, void **mlx)
 		angle.z += (float)angle.z / 5;
 	if (call == 4 && x == 5)
 		angle.z -= (float)angle.z / 5;
-	if (angle.z > 70)
-		angle.z = 69;
-	if (angle.z < 5)
-		angle.z = 5;
+	angle.z = angle.z > 70 ? 70 : angle.z;
+	if (angle.z > 67)
+		angle.z -= .5;
+	angle.z = angle.z < 1 ? 1 : angle.z;
+	if (angle.z < 2)
+		angle.z += .2;
 	mouse_control(call, &x, &y, &angle);
 	offset.x += x;
 	offset.y += y;
