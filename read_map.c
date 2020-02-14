@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 15:46:23 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 16:24:18 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,32 @@ int		get_height(char *filename)
 	}
 	close(fd);
 	return (height);
+}
+
+int		check_file(char *filename)
+{
+	int		i;
+	int		fd;
+	char	*line;
+	char	c;
+	int		width;
+
+	width = 0;
+	fd = open(filename, O_RDONLY);
+	while (get_next_line(fd, &line))
+	{
+		i = 0;
+		while (line[i])
+		{
+			c = line[i];
+			if (!(c >= '0' && c <= '9') &&
+			(c != ' ' && c != '-' && c != '+' && c != '\t'))
+				ft_error(NULL);
+			i++;
+		}
+		free(line);
+	}
+	return (width);
 }
 
 int		get_width(char *filename)

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 15:04:20 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 16:24:26 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <time.h>
-# include <stdio.h>
 # include <fcntl.h>
 
 typedef struct	s_xyz {
@@ -44,5 +43,7 @@ void			mlx_clear_image(void **mlx);
 void			init_image(void **mlx);
 float			ft_abs(float n);
 void			help_text(void **mlx);
+int				check_file(char *filename);
+void			ft_error(char *str);
 
 #endif

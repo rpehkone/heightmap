@@ -6,25 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 15:02:00 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 16:14:41 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	screen_size(int *height, int *width, char *filename)
-{
-	*width = get_width(filename) * 50;
-	*height = get_height(filename) * 50;
-	if (*height < 500)
-		*height = 500;
-	if (*width < 500)
-		*width = 500;
-	if (*width > 1000)
-		*width = 1000;
-	if (*height > 1000)
-		*height = 1000;
-}
 
 t_xyz	*get_coord(int x, int y, t_xyz angle)
 {
@@ -51,12 +37,35 @@ void	ft_error(char *str)
 	exit(0);
 }
 
-void	main2(char *argv, int width)
+void	screen_size(int *height, int *width, char *filename)
+{
+	check_file(filename);
+	*width = get_width(filename) * 50;
+	*height = get_height(filename) * 50;
+
+	if (!*width || !*height)
+		ft_error(NULL);
+	if (*width == 1 && *height == 1)
+		ft_error(NULL);
+	if (*width > 5 && *height == 1)
+		ft_error(NULL);
+	if (*width == 1 && *height > 5)
+		ft_error(NULL);
+	if (*height < 500)
+		*height = 500;
+	if (*width < 500)
+		*width = 500;
+	if (*width > 1000)
+		*width = 1000;
+	if (*height > 1000)
+		*height = 1000;
+}
+
+void	main2(char *argv, int width, int height)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	**mlx;
-	int		height;
 	float	height_multiplier;
 
 	height_multiplier = .1;
@@ -85,6 +94,6 @@ int		main(int argc, char **argv)
 		ft_error(argv[0]);
 	if (open(argv[1], O_RDONLY) < 2)
 		ft_error(NULL);
-	main2(argv[1], 0);
+	main2(argv[1], 0, 0);
 	return (1);
 }
