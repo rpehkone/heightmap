@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 19:27:28 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 11:05:16 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	reset_line(t_xyz *start, t_xyz *stop, t_xyz *offset, t_xyz *angle)
 	stop->y += offset->y;
 }
 
-int		fdf(int call, int x, int y, void **mlx)
+int		fdf_main(int call, int x, int y, void **mlx)
 {
 	static t_xyz	angle = {.x = 2, .y = -5, .z = 30};
 	static t_xyz	offset = {.x = 200, .y = 200};
@@ -90,13 +90,14 @@ int		fdf(int call, int x, int y, void **mlx)
 
 	mlx[3] = &color;
 	if (call == 4 && x == 4)
-		angle.z += (float)angle.z / 10;
+		angle.z += (float)angle.z / 5;
 	if (call == 4 && x == 5)
-		angle.z -= (float)angle.z / 10;
+		angle.z -= (float)angle.z / 5;
+	//make bounce back function
 	if (angle.z > 70)
 		angle.z = 69;
 	if (angle.z < 5)
-		angle.z = 6;
+		angle.z = 5;
 	mouse_control(call, &x, &y, &angle);
 	offset.x += x;
 	offset.y += y;
@@ -104,5 +105,13 @@ int		fdf(int call, int x, int y, void **mlx)
 	mlx_clear_window(mlx[0], mlx[1]);
 	mlx_put_image_to_window(mlx[0], mlx[1], mlx[4], 0, 0);
 	ft_printer(mlx, &angle, start, stop);
+	return (0);
+}
+
+int		fdf(int call, int x, int y, void **mlx)
+{
+	fdf_main(call, x, y, mlx);
+	buttons_main(call, x, y, mlx);
+	help_text(mlx);
 	return (0);
 }

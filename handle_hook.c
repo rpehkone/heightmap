@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:17:33 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 18:21:14 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 11:03:50 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		handle_loop(void **mlx)
 		return (0);
 	i = 0;
 	fdf(1, 0, 0, mlx);
-	buttons_main(1, 0, 0, mlx);
 	return (0);
 }
 
@@ -35,7 +34,6 @@ int		handle_keyboard_down(int key)
 int		handle_mouse_down(int button, int x, int y, void **mlx)
 {
 	fdf(4, button, 0, mlx);
-	buttons_main(4, button, 0, mlx);
 	(void)x;
 	(void)y;
 	return (0);
@@ -44,7 +42,6 @@ int		handle_mouse_down(int button, int x, int y, void **mlx)
 int		handle_mouse_up(int button, int x, int y, void **mlx)
 {
 	fdf(5, button, 0, mlx);
-	buttons_main(5, button, 0, mlx);
 	(void)x;
 	(void)y;
 	return (0);
@@ -53,6 +50,5 @@ int		handle_mouse_up(int button, int x, int y, void **mlx)
 int		handle_cursor(int x, int y, void **mlx)
 {
 	fdf(6, x, y, mlx);
-	buttons_main(6, x, y, mlx);
 	return (0);
 }

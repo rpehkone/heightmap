@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 19:45:11 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:52:13 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			button2_main(int call, int x, int y, void **mlx)
 	oldy = call == 6 ? y : oldy;
 	if (!b_cycle)
 		b_cycle = set_b_cycle();
-	if (handle_button(mlx, *b_cycle, oldx, oldy) && call == 4 && x == 1)
+	if (handle_button(mlx, *b_cycle, oldx, oldy) && call == 5 && x == 1)
 		cycle = cycle ? 0 : 1;
 	b_cycle->tc_color = 0;
 	edit_button2(b_cycle, cycle, mlx);

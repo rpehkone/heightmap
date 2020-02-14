@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/13 16:56:08 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 11:05:38 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void			*ft_memset(void *b, int c, size_t len);
 void			mlx_clear_image(void **mlx);
 void			init_image(void **mlx);
 float			ft_abs(float n);
+void			help_text(void **mlx);
 
 #endif
