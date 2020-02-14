@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 16:14:41 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/14 16:26:17 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	screen_size(int *height, int *width, char *filename)
 	check_file(filename);
 	*width = get_width(filename) * 50;
 	*height = get_height(filename) * 50;
-
 	if (!*width || !*height)
 		ft_error(NULL);
 	if (*width == 1 && *height == 1)
