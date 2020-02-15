@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 16:24:18 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/15 13:16:37 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,15 @@ int		check_file(char *filename)
 	fd = open(filename, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
-		i = 0;
+		if (!(i = 0) && !line)
+			ft_error(NULL);
 		while (line[i])
 		{
 			c = line[i];
-			if (!(c >= '0' && c <= '9') &&
-			(c != ' ' && c != '-' && c != '+' && c != '\t'))
+			if (!(c >= '0' && c <= '9') && (c != ' ' && c != '-' && c != '+' &&
+			c != 'a' && c != 'b' && c != 'c' && c != 'd' && c != 'e' &&
+			c != 'f' && c != 'A' && c != 'B' && c != 'C' && c != 'D' &&
+			c != 'E' && c != 'F' && c != 'x' && c != '\t' && c != ','))
 				ft_error(NULL);
 			i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 16:29:16 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/15 13:10:37 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FDF_H
 # include "mlx.h"
 # include "libft/libft.h"
+# include "buttons/buttons.h"
 # include <stdlib.h>
 # include <fcntl.h>
 

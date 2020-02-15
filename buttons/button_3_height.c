@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 16:48:48 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/15 12:55:41 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_button	*set_b_middle(void)
 	static t_button	b = {.text = ""};
 
 	b.x = 352;
-	b.y = 16;
+	b.y = 15;
 	b.size_x = 3;
 	b.size_y = 11;
 	b.b_color = 0xFFFFFF;

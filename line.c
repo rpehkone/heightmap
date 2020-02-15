@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:19:28 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 15:21:52 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/15 12:56:26 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_line(t_xyz *start, t_xyz *stop, void **mlx)
 	step.y = (stop->y - start->y) / (float)step.z;
 	while (pos.z <= step.z)
 	{
-		image_pixel_put(mlx, pos.x, pos.y, *(int *)mlx[3]);
+		image_pixel_put(mlx, pos.x, pos.y, *(int*)mlx[3]);
 		pos.x += step.x;
 		pos.y += step.y;
 		pos.z++;
