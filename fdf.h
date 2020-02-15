@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/15 13:10:37 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/15 14:18:22 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void			ft_printer(void **mlx, t_xyz *angle, t_xyz start, t_xyz stop);
 void			image_pixel_put(void **mlx, int x, int y, int color);
 void			print_line(t_xyz *start, t_xyz *stop, void **mlx);
 int				buttons_main(int call, int x, int y, void **mlx);
+
+int				fdf_main(int call, int x, int y, void **mlx);
+
 int				fdf(int call, int x, int y, void **mlx);
 t_xyz			*get_coord(int x, int y, t_xyz angle);
 void			mlx_clear_image(void **mlx);
@@ -44,5 +47,6 @@ void			init_image(void **mlx);
 void			help_text(void **mlx);
 void			ft_error(char *str);
 float			ft_abs(float n);
+void	mouse_control(int call, int *x, int *y, t_xyz *angle);
 
 #endif

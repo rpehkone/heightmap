@@ -6,37 +6,20 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 13:59:32 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/15 14:35:28 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buttons.h"
 
-int			mouse_movement(int call, int x, int y)
+int			mouse_movement(int call, int x)
 {
 	static int	m1_down = 0;
-	static int	oldy = 0;
-	static int	oldx = 0;
-	static int	asd = 0;
 
-	if (asd == 1)
-	{
-		oldx = x;
-		oldy = y;
-		asd = 0;
-	}
 	if (call == 4 && x == 1)
-	{
 		m1_down = 1;
-		asd = 1;
-	}
 	if (call == 5 && x == 1)
 		m1_down = 0;
-	if (call == 6 && m1_down == 1)
-	{
-		oldx = x;
-		oldy = y;
-	}
 	return (m1_down);
 }
 
@@ -62,17 +45,20 @@ int			button1_main(int call, int x, int y, void **mlx)
 	static int		oldy = 0;
 	static int		oldx = 0;
 	static int		grd = 0;
-	static int		i;
+	int				i;
 
 	grd = call == 10 ? 0 : grd;
-	if (!b_color)
-		b_color = set_b_color();
+	b_color = !b_color ? set_b_color() : b_color;
 	oldx = call == 6 ? x : oldx;
 	oldy = call == 6 ? y : oldy;
-	if (grd && gradient(mlx) && call == 4 && x == 1)
+	if (grd && gradient(mlx) && call == 4)
+	{
 		if ((i = get_color(oldx, oldy - 60)))
 			*(int*)mlx[3] = i;
-	i = mouse_movement(call, x, y);
+		else if (!(grd = 0) && !fdf_main(6, oldx, oldy, mlx))
+			fdf_main(5, 1, 0, mlx);
+	}
+	i = mouse_movement(call, x);
 	b_color->b_color = grd ? 0xFFFFFF : 0;
 	b_color->t_color = !grd ? 0xFFFFFF : 0;
 	if ((y = handle_button(mlx, *b_color, oldx, oldy)) &&
