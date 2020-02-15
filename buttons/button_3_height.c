@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/15 12:55:41 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:16:10 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ t_button	*set_b_height(void)
 	return (&b);
 }
 
-void		edit_button3(t_button *b, int i)
+void		edit_button3(t_button *b, int i, int call, int x)
 {
+	static int	m1_down = 0;
+
 	if (i)
 	{
 		b->b_color = 0xFFFFFF;
@@ -73,6 +75,14 @@ void		edit_button3(t_button *b, int i)
 		b->t_color = 0xFFFFFF;
 		b->tc_color = 0;
 	}
+	if (call == 4 && x == 1)
+		m1_down = 1;
+	if (call == 5 && x == 1)
+		m1_down = 0;
+	if (m1_down && call == 22)
+		b->tc_color = 0xFFFFFF;
+	else
+		b->tc_color = 0;
 }
 
 int			button3_main(int call, int x, int y, void **mlx)
@@ -94,6 +104,9 @@ int			button3_main(int call, int x, int y, void **mlx)
 		ret += draw_slider(call, x, y, mlx);
 	if (draw)
 		draw_middle(call, x, y, mlx);
-	edit_button3(b_height, draw);
+	if (ret && call != 4 && call != 5)
+		edit_button3(b_height, draw, 22, x);
+	else
+		edit_button3(b_height, draw, call, x);
 	return (ret);
 }
