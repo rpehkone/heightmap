@@ -6,7 +6,7 @@
 #    By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 18:37:33 by rpehkone          #+#    #+#              #
-#    Updated: 2020/02/14 14:56:46 by rpehkone         ###   ########.fr        #
+#    Updated: 2020/02/19 21:02:10 by rpehkone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,15 +22,15 @@ HEADERS = libft.h
 all: $(NAME)
 
 $(NAME):
-	gcc -c -Wall -Wextra -Werror $(SRCS) -I $(HEADERS)
-	ar rc $(NAME) $(OFILES)
-	ranlib $(NAME) 
+	@gcc -c -Wall -Wextra -Werror $(SRCS) -I $(HEADERS)
+	@ar rc $(NAME) $(OFILES)
+	@ranlib $(NAME) 
 
 clean:
-	rm -f $(OFILES)
+	@rm -f $(OFILES)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 	
 re: fclean
 	make all
