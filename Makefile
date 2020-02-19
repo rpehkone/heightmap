@@ -6,7 +6,7 @@
 #    By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/30 20:09:24 by rpehkone          #+#    #+#              #
-#    Updated: 2020/02/19 20:28:47 by rpehkone         ###   ########.fr        #
+#    Updated: 2020/02/19 20:58:48 by rpehkone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,10 @@ all: $(NAME)
 
 $(NAME):
 	make re -C libft
-	gcc -Wall -Wextra -Werror $(addprefix src/, $(FILES)) libft/libft.a -I includes/ -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $(NAME)
+	gcc -Wall -Wextra -Werror $(addprefix src/, $(FILES)) libft/libft.a -I src/ -I libft/ -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $(NAME)
 
 clean:
-	rm -f $(NAME)
+	make clean -C libft
 
 fclean: clean
 	make fclean -C libft

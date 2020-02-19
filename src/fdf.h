@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/19 20:30:12 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/19 20:35:00 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <unistd.h>
 # include <time.h>
 # include <math.h>
-# include <stdio.h>
 
 typedef struct	s_xyz {
 	double		x;
