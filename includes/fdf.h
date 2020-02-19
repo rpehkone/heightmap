@@ -6,15 +6,15 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/15 14:18:22 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/19 18:46:21 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # include "mlx.h"
-# include "libft/libft.h"
-# include "buttons/buttons.h"
+# include "libft.h"
+# include "buttons.h"
 # include <stdlib.h>
 # include <fcntl.h>
 
@@ -41,12 +41,12 @@ t_xyz			*get_coord(int x, int y, t_xyz angle);
 void			mlx_clear_image(void **mlx);
 int				get_height(char *filename);
 int				**make_map(char *filename);
-int				check_file(char *filename);
+void			check_file(char *filename);
 int				get_width(char *filename);
 void			init_image(void **mlx);
 void			help_text(void **mlx);
 void			ft_error(char *str);
 float			ft_abs(float n);
-void	mouse_control(int call, int *x, int *y, t_xyz *angle);
+void			mouse_control(int call, int *x, int *y, t_xyz *angle);
 
 #endif

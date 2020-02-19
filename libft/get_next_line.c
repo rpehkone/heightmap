@@ -6,11 +6,13 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 22:52:45 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 14:57:23 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/19 18:04:39 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#define BUFF_SIZE 1000
+#define MAXFD_SIZE 100
 
 char	*ft_join(char *s1, char *s2, char **as)
 {
@@ -39,17 +41,6 @@ char	*ft_join(char *s1, char *s2, char **as)
 	if (as)
 		*as = NULL;
 	return (fresh);
-}
-
-int		ft_has_newline(char *str)
-{
-	while (*str)
-	{
-		if (*str == '\n')
-			return (1);
-		str++;
-	}
-	return (0);
 }
 
 int		ft_set_value(char **line, char *tmp, size_t size)
@@ -86,7 +77,7 @@ int		ft_make_line(char **line, char **tmp, int fd, int res)
 		tmp[fd] = tmp2;
 		return (1);
 	}
-	if (res == 1)
+	if (res == BUFF_SIZE)
 		return (get_next_line(fd, line));
 	*line = ft_join(tmp[fd], NULL, &tmp[fd]);
 	return (1);
@@ -94,27 +85,26 @@ int		ft_make_line(char **line, char **tmp, int fd, int res)
 
 int		get_next_line(const int fd, char **line)
 {
-	static char	*tmp[4863];
-	char		buff[2];
+	static char	*tmp[MAXFD_SIZE];
+	char		buff[BUFF_SIZE + 1];
 	char		*tmp2;
 	int			res;
+	int			i;
 
-	if (fd < 0 || !line)
+	if ((i = 0) && (fd < 0 || !line))
 		return (-1);
-	while (0 < (res = read(fd, buff, 1)))
+	while (0 < (res = read(fd, buff, BUFF_SIZE)))
 	{
-		buff[res] = '\0';
-		if (tmp[fd] == NULL)
-		{
-			tmp[fd] = (char*)malloc(sizeof(char) * 2);
-			tmp[fd][0] = 0;
-			tmp[fd][1] = '\0';
-		}
+		if ((buff[res] = '\0') && tmp[fd] == NULL)
+			if ((tmp[fd] = (char*)malloc(sizeof(char) * 2)))
+				if (!(tmp[fd][0] = 0))
+					tmp[fd][1] = '\0';
 		tmp2 = ft_join(tmp[fd], buff, NULL);
 		free(tmp[fd]);
 		tmp[fd] = tmp2;
-		if (ft_has_newline(buff))
-			break ;
+		while (buff[i])
+			if (buff[i++] == '\n')
+				break ;
 	}
 	if ((res < 0) || (!res && (!tmp[fd] || !tmp[fd][0])))
 		return (res);

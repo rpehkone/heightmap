@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/15 13:16:37 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/19 18:19:23 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ void	set_map(int **map, int fd, int width)
 
 int		get_height(char *filename)
 {
-	char	*line;
-	int		height;
-	int		fd;
+	char		*line;
+	int			fd;
+	static int	height = 0;
 
-	height = 0;
+	if (height)
+		return (height);
 	fd = open(filename, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
@@ -57,15 +58,13 @@ int		get_height(char *filename)
 	return (height);
 }
 
-int		check_file(char *filename)
+void	check_file(char *filename)
 {
 	int		i;
 	int		fd;
 	char	*line;
 	char	c;
-	int		width;
 
-	width = 0;
 	fd = open(filename, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
@@ -83,35 +82,32 @@ int		check_file(char *filename)
 		}
 		free(line);
 	}
-	return (width);
 }
 
 int		get_width(char *filename)
 {
-	int		i;
-	int		j;
-	int		fd;
-	char	*lne;
-	int		width;
+	int			i;
+	int			j;
+	int			fd;
+	char		*line;
+	static int	width = 0;
 
+	if (width)
+		return (width);
 	i = 0;
-	width = 0;
+	j = 0;
 	fd = open(filename, O_RDONLY);
-	while (get_next_line(fd, &lne))
+	get_next_line(fd, &line);
+	while (line[i])
 	{
-		j = 0;
-		while (lne[i])
-		{
-			while ((lne[i] && lne[i] >= '0' && lne[i] <= '9') || lne[i] == '-')
-				i++;
-			while (lne[i] && (lne[i] < '0' || lne[i] > '9') && lne[i] != '-')
-				i++;
-			j++;
-		}
-		if (j > width)
-			width = j;
-		free(lne);
+		while (line[i] && line[i] == ' ')
+			i++;
+		while (line[i] && line[i] != ' ')
+			i++;
+		j++;
 	}
+	free(line);
+	width = j;
 	return (width);
 }
 
