@@ -6,12 +6,12 @@
 #    By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/30 20:09:24 by rpehkone          #+#    #+#              #
-#    Updated: 2020/02/19 18:48:46 by rpehkone         ###   ########.fr        #
+#    Updated: 2020/02/19 20:28:47 by rpehkone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
-FILES = fdf.c help_text.c printer.c image.c line.c main.c read_map.c handle_hook.c buttons/*.c
+FILES = fdf.c help_text.c printer.c image.c line.c main.c read_map.c handle_hook.c buttons.c buttons_main.c button_2_cycle.c button_3_height.c button_3_slider.c colors.c
 .PHONY: clean fclean re all
 
 all: $(NAME)

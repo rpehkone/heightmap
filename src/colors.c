@@ -6,11 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/15 14:10:12 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/19 20:25:59 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buttons.h"
+#include "fdf.h"
 
 void	put_gradient(void *gradient, int x, int y, int color)
 {

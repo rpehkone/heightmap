@@ -6,11 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 13:56:51 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/19 20:26:42 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buttons.h"
+#include "fdf.h"
 
 t_button	*set_slider_back(void)
 {

@@ -6,11 +6,11 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/14 15:02:16 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/19 20:26:12 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buttons.h"
+#include "fdf.h"
 
 void	print_button2(t_xyz *start, t_xyz *stop, int color, void **mlx)
 {
