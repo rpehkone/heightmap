@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/19 20:26:24 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/21 13:15:32 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int			button1_main(int call, int x, int y, void **mlx)
 	{
 		if ((i = get_color(oldx, oldy - 60)))
 			*(int*)mlx[3] = i;
-		else if (!(grd = 0) && !fdf_main(6, oldx, oldy, mlx) &&
-		!fdf_main(5, x, 0, mlx))
+		else if (!(grd = 0))
 			return (0);
 	}
 	b_color->b_color = grd ? 0xFFFFFF : 0;

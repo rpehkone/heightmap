@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/19 18:19:23 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:42:50 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,15 @@ int		get_height(char *filename)
 	int			fd;
 	static int	height = 0;
 
-	if (height)
-		return (height);
+	if (height != 0)
+	{
+		if (height * 50 < 500)
+			return (500);
+		else if (height * 50 > 1000)
+			return (1000);
+		else
+			return (height * 50);
+	}
 	fd = open(filename, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
@@ -58,67 +65,45 @@ int		get_height(char *filename)
 	return (height);
 }
 
-void	check_file(char *filename)
-{
-	int		i;
-	int		fd;
-	char	*line;
-	char	c;
-
-	fd = open(filename, O_RDONLY);
-	while (get_next_line(fd, &line))
-	{
-		if (!(i = 0) && !line)
-			ft_error(NULL);
-		while (line[i])
-		{
-			c = line[i];
-			if (!(c >= '0' && c <= '9') && (c != ' ' && c != '-' && c != '+' &&
-			c != 'a' && c != 'b' && c != 'c' && c != 'd' && c != 'e' &&
-			c != 'f' && c != 'A' && c != 'B' && c != 'C' && c != 'D' &&
-			c != 'E' && c != 'F' && c != 'x' && c != '\t' && c != ','))
-				ft_error(NULL);
-			i++;
-		}
-		free(line);
-	}
-}
-
 int		get_width(char *filename)
 {
 	int			i;
-	int			j;
-	int			fd;
 	char		*line;
 	static int	width = 0;
 
-	if (width)
-		return (width);
-	i = 0;
-	j = 0;
-	fd = open(filename, O_RDONLY);
-	get_next_line(fd, &line);
+	if (!(i = 0) && width != 0)
+	{
+		if (width * 50 < 500)
+			return (500);
+		else if (width * 50 > 1000)
+			return (1000);
+		else
+			return (width * 50);
+	}
+	open(filename, O_RDONLY);
+	get_next_line(3, &line);
 	while (line[i])
 	{
 		while (line[i] && line[i] == ' ')
 			i++;
 		while (line[i] && line[i] != ' ')
 			i++;
-		j++;
+		width++;
 	}
 	free(line);
-	width = j;
 	return (width);
 }
 
 int		**make_map(char *filename)
 {
-	int		width;
-	int		height;
-	int		**map;
-	int		i;
-	int		fd;
+	int				width;
+	int				height;
+	static int		**map = NULL;
+	int				i;
+	int				fd;
 
+	if (map)
+		return (map);
 	i = 0;
 	height = get_height(filename);
 	map = (int**)malloc(sizeof(int*) * (height + 1));
