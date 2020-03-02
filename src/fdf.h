@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/21 17:00:01 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:25:45 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 # include "mlx.h"
 # include "libft.h"
 # include <stdlib.h>
-# include <fcntl.h>
-# include <stdlib.h>
 # include <unistd.h>
-# include <time.h>
+# include <fcntl.h>
 # include <math.h>
+#include <stdio.h>
 
 typedef struct	s_xyz {
 	double		x;
@@ -57,9 +56,11 @@ void			print_line(t_xyz start, t_xyz stop, void **mlx);
 int				fdf(int call, int x, int y, void **mlx);
 void			mlx_clear_image(void **mlx);
 int				get_height(char *filename);
-int				**make_map(char *filename);
+t_xyz			*make_map(char *filename);
 int				get_width(char *filename);
 void			init_image(void **mlx);
 void			help_text(void **mlx);
+int				get_map_len(int n);
+int				get_map_width(int n);
 
 #endif

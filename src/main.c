@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/21 16:39:32 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:32:28 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	win_init(char *filename, void **mlx_ptr, void **win_ptr, void **img_ptr)
 	int		width;
 	int		height;
 
-	width = get_width(filename) * 50;
-	height = get_height(filename) * 50;
+	width = get_width(filename);
+	height = get_height(filename);
 	if (!width || !height)
 		ft_error(NULL);
 	if (width == 1 && height == 1)
@@ -91,6 +91,8 @@ int		main(int argc, char **argv)
 
 	if (argc != 2)
 		ft_error(argv[0]);
+	make_map(argv[1]);
+	//////////
 	check_file(argv[1]);
 	mlx_ptr = mlx_init();
 	win_init(argv[1], &mlx_ptr, &win_ptr, &img_ptr);

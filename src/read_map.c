@@ -6,38 +6,44 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/21 16:42:50 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:39:42 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	set_map(int **map, int fd, int width)
+void	set_map(t_xyz *map, int fd, int width)
 {
 	int		x;
+	int		x2;
 	int		y;
 	int		i;
 	char	*line;
 
+	x = 0;
 	y = 0;
 	while (get_next_line(fd, &line))
 	{
-		x = 0;
+		x2 = 0;
 		i = 0;
 		while (line[i])
 		{
-			map[y][x] = ft_atoi(&line[i]);
+			map[x].x = 50 * x2;
+			map[x].y = 50 * y;
+			map[x].z = ft_atoi(&line[i]);
 			while (line[i] && line[i] == ' ')
 				i++;
 			while (line[i] && line[i] != ' ')
 				i++;
 			x++;
+			x2++;
 		}
-		while (x++ < width)
-			map[y][x - 1] = 0;
 		y++;
+		//while (x++ < width )
+		//	map[y][x - 1] = 0;
 		free(line);
 	}
+	width++;
 }
 
 int		get_height(char *filename)
@@ -94,28 +100,41 @@ int		get_width(char *filename)
 	return (width);
 }
 
-int		**make_map(char *filename)
+int		get_map_len(int n)
+{
+	static int	len = 0;
+	
+	if (!n)
+		return (len);
+	len = n;
+	return (0);
+}
+
+int		get_map_width(int n)
+{
+	static int	len = 0;
+	
+	if (!n)
+		return (len);
+	len = n;
+	return (0);
+}
+
+t_xyz	*make_map(char *filename)
 {
 	int				width;
 	int				height;
-	static int		**map = NULL;
-	int				i;
+	static t_xyz		*map = NULL;
 	int				fd;
 
 	if (map)
 		return (map);
-	i = 0;
-	height = get_height(filename);
-	map = (int**)malloc(sizeof(int*) * (height + 1));
 	width = get_width(filename);
-	while (i < height)
-	{
-		map[i] = (int*)malloc(sizeof(int) * (width + 1));
-		i++;
-	}
+	height = get_height(filename);
+	map = (t_xyz*)malloc(sizeof(t_xyz) * (width * height));
 	fd = open(filename, O_RDONLY);
-	close(fd);
-	fd = open(filename, O_RDONLY);
+	get_map_len(width * height);
+	get_map_width(width);
 	set_map(map, fd, width);
 	close(fd);
 	return (map);
