@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 18:43:18 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 21:23:58 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_map(t_xyz *map, int fd, int width)
 		{
 			map[x].x = 50 * ((x - (y * width)) - width / 2);
 			map[x].y = 50 * (y - height);
-			map[x].z = ft_atoi(&line[i]);
+			map[x].z = 10 * ft_atoi(&line[i]);
 			while (line[i] && line[i] == ' ')
 				i++;
 			while (line[i] && line[i] != ' ')

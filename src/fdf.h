@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 18:23:22 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 23:30:33 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct	s_xyz {
 	double		z;
 }				t_xyz;
 
-/*
 typedef struct	s_button {
 	int			x;
 	int			y;
@@ -37,13 +36,12 @@ typedef struct	s_button {
 	int			t_color;
 	int			tc_color;
 	int			type;
+	int			edge;
+	int			edge_color;
+	int			stay_down;
+	int			is_down;
 	char		text[20];
 }				t_button;
-int				handle_button(void **mlx, t_button b, int x, int y);
-int				buttons_main(int call, int x, int y, void **mlx);
-int				button2_main(int call, int x, int y, void **mlx);
-int				button3_main(int call, int x, int y, void **mlx);
-*/
 
 int				handle_loop(void **mlx);
 int				handle_keyboard_down(int key);
@@ -61,5 +59,16 @@ void			init_image(void **mlx);
 void			help_text(void **mlx);
 int				get_map_len(int n);
 int				get_map_width(int n);
+double			ft_abs(double n);
+
+int				buttons_loop(int call, int x, int y, void **mlx);
+int				button_1(int call, int x, int y, void **mlx);
+int				button_2(int call, int x, int y, void **mlx);
+int				button_3(int call, int x, int y, void **mlx);
+int				button_4(int call, int x, int y, void **mlx);
+int				button_5(int call, int x, int y, void **mlx);
+
+int				handle_button(void **mlx, t_button b, int x, int y);
+int				*get_settings(void);
 
 #endif
