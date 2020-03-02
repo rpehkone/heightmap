@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 16:32:28 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 19:14:40 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,13 @@ void	win_init(char *filename, void **mlx_ptr, void **win_ptr, void **img_ptr)
 {
 	int		width;
 	int		height;
+	int		i;
 
 	width = get_width(filename);
 	height = get_height(filename);
 	if (!width || !height)
 		ft_error(NULL);
-	if (width == 1 && height == 1)
-		ft_error(NULL);
-	if (width > 5 && height == 1)
+	if ((width == 1 && height == 1) || (width > 5 && height == 1))
 		ft_error(NULL);
 	if (width == 1 && height > 5)
 		ft_error(NULL);
@@ -78,7 +77,10 @@ void	win_init(char *filename, void **mlx_ptr, void **win_ptr, void **img_ptr)
 		width = 1000;
 	if (height > 1000)
 		height = 1000;
-	*win_ptr = mlx_new_window(*mlx_ptr, width, height, "fdf");
+	i = ft_strlen(filename);
+	while (i > 0 && filename[i] != '/')
+		i--;
+	*win_ptr = mlx_new_window(*mlx_ptr, width, height, &filename[i + 1]);
 	*img_ptr = mlx_new_image(*mlx_ptr, width, height);
 }
 
@@ -92,7 +94,6 @@ int		main(int argc, char **argv)
 	if (argc != 2)
 		ft_error(argv[0]);
 	make_map(argv[1]);
-	//////////
 	check_file(argv[1]);
 	mlx_ptr = mlx_init();
 	win_init(argv[1], &mlx_ptr, &win_ptr, &img_ptr);

@@ -6,71 +6,71 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 18:18:28 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 19:11:18 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	rotateX(float theta, t_xyz *nodes, int amount)
+void	rotate_x(float angle, t_xyz *nodes, int amount)
 {
-    double	sinTheta;
-    double	cosTheta;
+	double	sin_angle;
+	double	cos_angle;
 	float	y;
 	float	z;
 	int		n;
 
 	n = 0;
-    sinTheta = sin(theta);
-    cosTheta = cos(theta);
+	sin_angle = sin(angle);
+	cos_angle = cos(angle);
 	while (n < amount)
 	{
-        y = nodes[n].y;
-        z = nodes[n].z;
-        nodes[n].y = y * cosTheta - z * sinTheta;
-        nodes[n].z = z * cosTheta + y * sinTheta;
-		n++;
-    }
-}
-
-void	rotateY(float theta, t_xyz *nodes, int amount)
-{
-    double	sinTheta;
-    double	cosTheta;
-	float	x;
-	float	z;
-	int		n;
-
-	n = 0;
-    sinTheta = sin(theta);
-    cosTheta = cos(theta);
-	while (n < amount)
-	{
-		x = nodes[n].x;
+		y = nodes[n].y;
 		z = nodes[n].z;
-		nodes[n].x = x * cosTheta + z * sinTheta;
-		nodes[n].z = z * cosTheta - x * sinTheta;
+		nodes[n].y = y * cos_angle - z * sin_angle;
+		nodes[n].z = z * cos_angle + y * sin_angle;
 		n++;
 	}
 }
 
-void	rotateZ(float theta, t_xyz *nodes, int amount)
+void	rotate_y(float angle, t_xyz *nodes, int amount)
 {
-	double	sinTheta;
-	double	cosTheta;
+	double	sin_angle;
+	double	cos_angle;
+	float	x;
+	float	z;
+	int		n;
+
+	n = 0;
+	sin_angle = sin(angle);
+	cos_angle = cos(angle);
+	while (n < amount)
+	{
+		x = nodes[n].x;
+		z = nodes[n].z;
+		nodes[n].x = x * cos_angle + z * sin_angle;
+		nodes[n].z = z * cos_angle - x * sin_angle;
+		n++;
+	}
+}
+
+void	rotate_z(float angle, t_xyz *nodes, int amount)
+{
+	double	sin_angle;
+	double	cos_angle;
 	float	x;
 	float	y;
 	int		n;
 
 	n = 0;
-    sinTheta = sin(theta);
-    cosTheta = cos(theta);
+	sin_angle = sin(angle);
+	cos_angle = cos(angle);
 	while (n < amount)
 	{
 		x = nodes[n].x;
 		y = nodes[n].y;
-		nodes[n].x = x * cosTheta - y * sinTheta;
-		nodes[n].y = y * cosTheta + x * sinTheta;
+		nodes[n].x = x * cos_angle - y * sin_angle;
+		nodes[n].y = y * cos_angle + x * sin_angle;
 		n++;
 	}
 }
@@ -148,19 +148,21 @@ int		mouse_movement(int call, int x, int y, t_xyz *nodes)
 		m1_down = 1;
 		asd = 1;
 	}
-	if (call == 5 && x == 1)
+	if (call == 10 || (call == 5 && x == 1))
 		m1_down = 0;
 	if (call == 6 && m1_down == 1)
 	{
 		if (!amount)
 			amount = get_map_len(0);
-		rotateY(-1 * (float)0.01 * (oldx - x), nodes, amount);
-		rotateX((float)0.01 * (oldy - y), nodes, amount);
+		rotate_y(-1 * (float)0.01 * (oldx - x), nodes, amount);
+		rotate_x((float)0.01 * (oldy - y), nodes, amount);
 		oldx = x;
 		oldy = y;
 	}
 	//auto rotate;
-//	rotateY(0.01, nodes, amount);
+	//rotate_x(0.01, nodes, amount);
+	//rotate_y(0.01, nodes, amount);
+	//rotate_z(0.01, nodes, amount);
 	return (asd);
 }
 
@@ -170,8 +172,7 @@ int		matrix(int call, int x, int y, void **mlx)
 
 	if (!nodes)
 		nodes = make_map(NULL);
-	if (call != 10)
-		mouse_movement(call, x, y, nodes);
+	mouse_movement(call, x, y, nodes);
 	mlx_clear_window(mlx[0], mlx[1]);
 	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
 	mlx_clear_image(mlx);
@@ -189,6 +190,6 @@ int		fdf(int call, int x, int y, void **mlx)
 		matrix(10, x, y, mlx);
 	//allow_rotate = buttons_main(call, x, y, mlx);
 	//wront w * h
-	//help_text(mlx);
+	help_text(mlx);
 	return (0);
 }

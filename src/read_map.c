@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 17:52:45 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:43:18 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,19 @@
 void	set_map(t_xyz *map, int fd, int width)
 {
 	int		x;
-	int		x2;
 	int		y;
 	int		i;
 	char	*line;
+	int		height;
 
 	x = 0;
 	y = 0;
-	int width2 = 0;
-	int height = 0;
-	width2 = get_map_width(0);
-	height = get_map_len(0) / width2;
-	height /= 2;
-	width2 /= 2;
-	while (get_next_line(fd, &line))
+	height = get_map_len(0) / width / 2;
+	while (!(i = 0) && get_next_line(fd, &line))
 	{
-		x2 = 0;
-		i = 0;
 		while (line[i])
 		{
-			map[x].x = 50 * (x2 - width2);
+			map[x].x = 50 * ((x - (y * width)) - width / 2);
 			map[x].y = 50 * (y - height);
 			map[x].z = ft_atoi(&line[i]);
 			while (line[i] && line[i] == ' ')
@@ -42,14 +35,10 @@ void	set_map(t_xyz *map, int fd, int width)
 			while (line[i] && line[i] != ' ')
 				i++;
 			x++;
-			x2++;
 		}
 		y++;
-		//while (x++ < width )
-		//	map[y][x - 1] = 0;
 		free(line);
 	}
-	width++;
 }
 
 int		get_height(char *filename)
@@ -109,7 +98,7 @@ int		get_width(char *filename)
 int		get_map_len(int n)
 {
 	static int	len = 0;
-	
+
 	if (!n)
 		return (len);
 	len = n;
@@ -119,7 +108,7 @@ int		get_map_len(int n)
 int		get_map_width(int n)
 {
 	static int	len = 0;
-	
+
 	if (!n)
 		return (len);
 	len = n;
@@ -130,7 +119,7 @@ t_xyz	*make_map(char *filename)
 {
 	int				width;
 	int				height;
-	static t_xyz		*map = NULL;
+	static t_xyz	*map = NULL;
 	int				fd;
 
 	if (map)

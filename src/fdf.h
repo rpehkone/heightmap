@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 17:25:45 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:23:22 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int				buttons_main(int call, int x, int y, void **mlx);
 int				button2_main(int call, int x, int y, void **mlx);
 int				button3_main(int call, int x, int y, void **mlx);
 */
-
 
 int				handle_loop(void **mlx);
 int				handle_keyboard_down(int key);
