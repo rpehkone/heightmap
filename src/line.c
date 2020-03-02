@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:19:28 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 16:22:41 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:02:24 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_line(t_xyz start, t_xyz stop, void **mlx)
 		i++;
 	}
 }
-
+//laita etta jos pixeli menee samaan kohtaan break
 /*
 void	print_line(t_xyz *start, t_xyz *stop, void **mlx)
 {

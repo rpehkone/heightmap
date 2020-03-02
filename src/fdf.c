@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 17:39:20 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:18:28 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,22 @@ void	rotateZ(float theta, t_xyz *nodes, int amount)
 
 /*tee dolly zoom*/
 
-void	draw(t_xyz *nodes, void **mlx)
+void	draw(t_xyz *nodes, void **mlx, int perspective)
 {
 	t_xyz		start;
 	t_xyz		stop;
 	static int	map_len = 0;
 	static int	width = 0;
 
+	int focal_len = 1000;
+	int origo_len = 1000;
 	if (!map_len)
 		map_len = get_map_len(0);
 	if(!width)
 		width = get_map_width(0);
 	for (int i = 0; i < map_len; i++)
 	{
-		nodes[i].z += 7000;
+		nodes[i].z += origo_len;
 	}
 	for (int i = 0; i < map_len - 1; i++)
 	{
@@ -98,26 +100,32 @@ void	draw(t_xyz *nodes, void **mlx)
 		{
 			start = nodes[i];
 			stop = nodes[i + 1];
-	//		start.x /= ((start.z) / 1000);
-	//		start.y /= ((start.z) / 1000);
-	//		stop.x /= ((stop.z) / 1000);
-	//		stop.y /= ((stop.z) / 1000);
+			if (perspective)
+			{
+				start.x /= ((start.z) / focal_len);
+				start.y /= ((start.z) / focal_len);
+				stop.x /= ((stop.z) / focal_len);
+				stop.y /= ((stop.z) / focal_len);
+			}
 			print_line(start, stop, mlx);
 		}
 		if (i + width < map_len)
 		{
 			start = nodes[i];
 			stop = nodes[i + width];
-	//		start.x /= ((start.z) / 1000);
-	//		start.y /= ((start.z) / 1000);
-	//		stop.x /= ((stop.z) / 1000);
-	//		stop.y /= ((stop.z) / 1000);
+			if (perspective)
+			{
+				start.x /= ((start.z) / focal_len);
+				start.y /= ((start.z) / focal_len);
+				stop.x /= ((stop.z) / focal_len);
+				stop.y /= ((stop.z) / focal_len);
+			}
 			print_line(start, stop, mlx);
 		}
 	}
 	for (int i = 0; i < map_len; i++)
 	{
-		nodes[i].z -= 7000;
+		nodes[i].z -= origo_len;
 	}
 }
 
@@ -152,7 +160,7 @@ int		mouse_movement(int call, int x, int y, t_xyz *nodes)
 		oldy = y;
 	}
 	//auto rotate;
-	rotateY(0.01, nodes, amount);
+//	rotateY(0.01, nodes, amount);
 	return (asd);
 }
 
@@ -167,7 +175,7 @@ int		matrix(int call, int x, int y, void **mlx)
 	mlx_clear_window(mlx[0], mlx[1]);
 	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
 	mlx_clear_image(mlx);
-	draw(nodes, mlx);
+	draw(nodes, mlx, 0);
 	return (0);
 }
 
