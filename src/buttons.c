@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 23:48:34 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:13:00 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int		*get_settings(void)
 			st[i] = 0;
 			i++;
 		}
+		st[0] = 1;
 	}
 	return (st);
 }
@@ -106,12 +107,19 @@ int		handle_button(void **mlx, t_button b, int x, int y)
 		tmp *= 2;
 		tmp2 *= 2;
 	}
+	if (b.is_down)
+	{
+		b.b_color = b.bc_color;
+		b.t_color = b.tc_color;
+	}
 	if (x > b.x && x < b.x + tmp &&
 	y > b.y && y < b.y + tmp2)
 	{
 		b.b_color = b.bc_color;
 		b.t_color = b.tc_color;
 		ret = 1;
+		if (b.is_down)
+			b.t_color = 0x707070;
 	}
 	if (b.type == 0)
 		print_button(&b, mlx);
@@ -121,13 +129,12 @@ int		handle_button(void **mlx, t_button b, int x, int y)
 t_button	set_b_spin(void)
 {
 	static int	i = 0;
-	static int	x = 75;
+	static int	x = 0;
 	t_button	b;
 
 	b.x = x;
 	b.y = 0;
-	b.size_x = 75;
-	b.size_y = 40;
+	b.size_y = 30;
 	b.b_color = 0x000000;
 	b.bc_color = 0xFFFFFF;
 	b.t_color = 0xFFFFFF;
@@ -137,12 +144,24 @@ t_button	set_b_spin(void)
 	b.edge_color = 0xFFFFFF;
 	b.stay_down = 1;
 	b.is_down = 0;
-	ft_strcpy(b.text, "asd");
 	if (i == 1)
 		ft_strcpy(b.text, "projection");
+	if (i == 2)
+		ft_strcpy(b.text, "depth");
 	if (i == 3)
 		ft_strcpy(b.text, "spin");
-	x += 75;
+	if (i == 4)
+		ft_strcpy(b.text, "focal lenght");
+	if (i == 5)
+		ft_strcpy(b.text, "color");
+	if (i == 6)
+		ft_strcpy(b.text, "cycle colors");
+	if (i == 7)
+		ft_strcpy(b.text, "height coloring");
+	if (i == 8)
+		ft_strcpy(b.text, "reset");
+	b.size_x = ft_strlen(b.text) * 12;
+	x += ft_strlen(b.text) * 12;
 	i++;
 	return (b);
 }
@@ -160,8 +179,8 @@ int			buttons_loop(int call, int x, int y, void **mlx)
 		settings = get_settings();
 	if (!all_b)
 	{
-		all_b = (t_button*)malloc(sizeof(t_button) * 10);
-		while (i < 10)
+		all_b = (t_button*)malloc(sizeof(t_button) * 9);
+		while (i < 9)
 		{
 			all_b[i] = set_b_spin();
 			i++;
@@ -169,21 +188,34 @@ int			buttons_loop(int call, int x, int y, void **mlx)
 	}
 	oldx = call == 6 ? x : oldx;
 	oldy = call == 6 ? y : oldy;
-
 	i = 1;
-	while (i < 10)
+	while (i < 9)
 	{
 		if (handle_button(mlx, all_b[i], oldx, oldy))
 		{
 			if (call == 4 && x == 1)
 			{
+				if (i == 8)
+					exit(0);
+				if (all_b[i].is_down == 0 && (i == 2 || i == 4 | i == 5))
+				{
+					settings[2] = 0;
+					settings[4] = 0;
+					settings[5] = 0;
+					all_b[2].is_down = 0;
+					all_b[4].is_down = 0;
+					all_b[5].is_down = 0;
+				}
 				all_b[i].is_down = all_b[i].is_down ? 0 : 1;
 				settings[i] = settings[i] ? 0 : 1;
+				settings[0] = 0;
 			}
 		}
+		if (call == 5 && x == 1)
+			settings[0] = 1;
 		i++;
 	}
 	//laita settings[0] ei saa liikuttaa
 	//tai return settings[0]
-	return (1);
+	return (settings[0]);
 }

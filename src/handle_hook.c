@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:17:33 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 17:41:29 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:30:50 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ int		handle_loop(void **mlx)
 	return (0);
 }
 
-int		handle_keyboard_down(int key)
+int		handle_keyboard_down(int key, void **mlx)
 {
 	if (key == 53)
 		exit(0);
+	(void)mlx;
 	return (0);
 }
 

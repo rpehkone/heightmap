@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/02/19 20:25:59 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:23:12 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		gradient(void **mlx)
 		make_gradient(gradient);
 	}
 	else
-		mlx_put_image_to_window(mlx[0], mlx[1], gradient, 0, 40);
+		mlx_put_image_to_window(mlx[0], mlx[1], gradient, 0, 31);
 	return (1);
 }
 

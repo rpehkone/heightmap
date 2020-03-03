@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 23:45:50 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:34:46 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void	rotate_z(float angle, t_xyz *nodes, int amount)
 	}
 }
 
-/*tee dolly zoom*/
-
 void	draw(t_xyz *nodes, void **mlx)
 {
 	t_xyz		start;
@@ -88,7 +86,7 @@ void	draw(t_xyz *nodes, void **mlx)
 	if (!settings)
 		settings = get_settings();
 	int focal_len = 1000;
-	int origo_len = 700;
+	int origo_len = 900;
 	if (!map_len)
 		map_len = get_map_len(0);
 	if(!width)
@@ -130,6 +128,8 @@ void	draw(t_xyz *nodes, void **mlx)
 	{
 		nodes[i].z -= origo_len;
 	}
+	if (settings[5])
+		gradient(mlx);
 }
 
 int		mouse_movement(int call, int x, int y, t_xyz *nodes)
@@ -141,6 +141,8 @@ int		mouse_movement(int call, int x, int y, t_xyz *nodes)
 	static int	asd = 0;
 	static int	amount = 0;
 
+	if (!amount)
+		amount = get_map_len(0);
 	if (asd == 1)
 	{
 		oldx = x;
@@ -158,8 +160,12 @@ int		mouse_movement(int call, int x, int y, t_xyz *nodes)
 		m3_down = 1;
 	if (call == 10 || (call == 5 && x == 3))
 		m3_down = 0;
-	if (!amount)
-		amount = get_map_len(0);
+	if (call == 4 && x == 5)
+		for (int i = 0; i < amount; i++)
+			nodes[i].z += 50;
+	if (call == 4 && x == 4)
+		for (int i = 0; i < amount; i++)
+			nodes[i].z -= 50;
 	if (call == 6 && m3_down)
 	{
 		for (int i = 0; i < amount; i++)
@@ -177,7 +183,6 @@ int		mouse_movement(int call, int x, int y, t_xyz *nodes)
 		oldx = x;
 		oldy = y;
 	}
-	//auto rotate;
 	static int *settings = NULL;
 	if (!settings)
 		settings = get_settings();
@@ -208,7 +213,6 @@ int		fdf(int call, int x, int y, void **mlx)
 {
 	static int	allow_rotate = 1;
 
-	allow_rotate = 1;
 	if (allow_rotate)
 		matrix(call, x, y, mlx);
 	else

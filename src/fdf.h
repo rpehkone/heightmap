@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 23:30:33 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:16:11 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ typedef struct	s_button {
 	int			edge_color;
 	int			stay_down;
 	int			is_down;
+	int			mouse_down;
 	char		text[20];
 }				t_button;
 
 int				handle_loop(void **mlx);
-int				handle_keyboard_down(int key);
+int				handle_keyboard_down(int key, void **mlx);
 int				handle_mouse_down(int button, int x, int y, void **mlx);
 int				handle_mouse_up(int button, int x, int y, void **mlx);
 int				handle_cursor(int x, int y, void **mlx);
@@ -70,5 +71,6 @@ int				button_5(int call, int x, int y, void **mlx);
 
 int				handle_button(void **mlx, t_button b, int x, int y);
 int				*get_settings(void);
+int		gradient(void **mlx);
 
 #endif
