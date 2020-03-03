@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/03 18:34:46 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:43:52 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	draw(t_xyz *nodes, void **mlx)
 	static int	map_len = 0;
 	static int	width = 0;
 	static int	*settings = NULL;
+	static t_xyz	color = {.x = 0xFFFFFF, .y = 0xFF0000};
 
 	if (!settings)
 		settings = get_settings();
@@ -108,7 +109,7 @@ void	draw(t_xyz *nodes, void **mlx)
 				stop.x /= ((stop.z) / focal_len);
 				stop.y /= ((stop.z) / focal_len);
 			}
-			print_line(start, stop, mlx);
+			print_line(start, stop, color, mlx);
 		}
 		if (i + width < map_len)
 		{
@@ -121,7 +122,7 @@ void	draw(t_xyz *nodes, void **mlx)
 				stop.x /= ((stop.z) / focal_len);
 				stop.y /= ((stop.z) / focal_len);
 			}
-			print_line(start, stop, mlx);
+			print_line(start, stop, color, mlx);
 		}
 	}
 	for (int i = 0; i < map_len; i++)
@@ -130,6 +131,10 @@ void	draw(t_xyz *nodes, void **mlx)
 	}
 	if (settings[5])
 		gradient(mlx);
+	if (settings[6])
+		cycle_colors(&color);
+	if (settings[2] || settings[4])
+		slider(mlx);
 }
 
 int		mouse_movement(int call, int x, int y, t_xyz *nodes)

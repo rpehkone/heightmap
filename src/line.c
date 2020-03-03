@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:19:28 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 18:02:24 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:37:45 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ double	ft_abs(double n)
 	return (n);
 }
 
-void	print_line(t_xyz start, t_xyz stop, void **mlx)
+void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 {
 	t_xyz	step;
 	t_xyz	pos;
 	int		i;
 
 	i = 0;
-	start.x += 500;
+	/*start.x += 500;
 	start.y += 500;
 	stop.x += 500;
-	stop.y += 500;
+	stop.y += 500;*/
 	pos.x = start.x;
 	pos.y = start.y;
 	pos.z = 0;
@@ -39,7 +39,7 @@ void	print_line(t_xyz start, t_xyz stop, void **mlx)
 	step.y = (stop.y - start.y) / (float)step.z;
 	while (pos.z <= step.z && i < 1000)
 	{
-		image_pixel_put(mlx, pos.x, pos.y - 200, 0x00FF00);
+		image_pixel_put(mlx, pos.x, pos.y/* - 200*/, color.x);
 		pos.x += step.x;
 		pos.y += step.y;
 		pos.z++;

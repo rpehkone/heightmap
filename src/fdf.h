@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/03 18:16:11 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:33:01 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int				handle_mouse_down(int button, int x, int y, void **mlx);
 int				handle_mouse_up(int button, int x, int y, void **mlx);
 int				handle_cursor(int x, int y, void **mlx);
 void			image_pixel_put(void **mlx, int x, int y, unsigned color);
-void			print_line(t_xyz start, t_xyz stop, void **mlx);
+void			print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx);
 int				fdf(int call, int x, int y, void **mlx);
 void			mlx_clear_image(void **mlx);
 int				get_height(char *filename);
@@ -71,6 +71,8 @@ int				button_5(int call, int x, int y, void **mlx);
 
 int				handle_button(void **mlx, t_button b, int x, int y);
 int				*get_settings(void);
-int		gradient(void **mlx);
+int				gradient(void **mlx);
+void			cycle_colors(t_xyz *color);
+void			slider(void **mlx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/03 18:23:12 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:27:37 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,33 @@ int		get_color(int x, int y)
 		i++;
 	}
 	return (0);
+}
+
+void		cycle_colors(t_xyz *color)
+{
+	static int	i = 0;
+	static int	old = 0;
+	double		red;
+	double		grn;
+	double		blu;
+
+	if (color->x != old && color->x != 0xFFFFFF)
+		while (color->x != old)
+		{
+			if (i > 310)
+				i = 0;
+			red = sin(0.02 * i + 0) * 127 + 128;
+			grn = sin(0.02 * i + 2) * 127 + 128;
+			blu = sin(0.02 * i + 4) * 127 + 128;
+			old = ((int)red * 65536 + (int)grn * 256 + (int)blu);
+			i++;
+		}
+	if (i > 310)
+		i = 0;
+	red = sin(0.02 * i + 0) * 127 + 128;
+	grn = sin(0.02 * i + 2) * 127 + 128;
+	blu = sin(0.02 * i + 4) * 127 + 128;
+	old = ((int)red * 65536 + (int)grn * 256 + (int)blu);
+	color->x = old;
+	i++;
 }
