@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 00:27:15 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 01:21:51 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ void		print_button(t_button *b, void **mlx)
 		start.y++;
 		stop.y++;
 	}
-	mlx_string_put(mlx[0], mlx[1],
-			b->x + b->size_x / 2 - (ft_strlen(b->text) / 2 * 9) - 5,
-			b->y + b->size_y / 2 - 12, b->t_color, b->text);
+	//if (i == 1 || i == 4 || i == 5)
+	//	;//b.size_x -= 5;
+	mlx_string_put(mlx[0], mlx[1], b->x + 6,
+			b->y + 3, b->t_color, b->text);
 	if (b->edge)
 		print_edge(start, stop, b, mlx);
 }
@@ -114,7 +115,10 @@ int			handle_button(void **mlx, t_button b)
 	{
 		b.b_color = b.bd_color;
 		b.t_color = b.td_color;
+		b.edge_color = b.edgec_color;
 	}
+	if (res)
+		b.t_color = b.tc_color;
 	print_button(&b, mlx);
 	return (res);
 }
@@ -123,6 +127,8 @@ void		set_button_text(t_button *b)
 {
 	static int	i = 0;
 
+	if (i == 0)
+		ft_strcpy(b->text, "");
 	if (i == 1)
 		ft_strcpy(b->text, "projection");
 	if (i == 2)
@@ -150,19 +156,21 @@ t_button	init_buttons(void)
 	b.x = x;
 	b.y = 0;
 	b.size_y = 30;
-	b.b_color = 0x000000;
+	b.b_color = 0xFFFFFF;
 	b.bc_color = 0;
-	b.bd_color = 0xFFFFFF;
-	b.t_color = 0xFFFFFF;
+	b.bd_color = 0x000000;
+	b.t_color = 0;
 	b.tc_color = 0x707070;
-	b.td_color = 0;
+	b.td_color = 0xFFFFFF;
 	b.edge = 1;
 	b.edge_color = 0xFFFFFF;
+	b.edgec_color = 0x707070;
 	b.stay_down = 1;
 	b.is_down = 0;
 	set_button_text(&b);
+	//b.size_x = ft_strlen(b.text) * 11.5;
 	b.size_x = ft_strlen(b.text) * 12;
-	x += ft_strlen(b.text) * 12;
+	x += b.size_x + 1;
 	return (b);
 }
 

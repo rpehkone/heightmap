@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 00:11:20 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 01:31:00 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_button {
 	int			td_color;
 	int			edge;
 	int			edge_color;
+	int			edgec_color;
 	int			stay_down;
 	int			is_down;
 	int			mouse_down;
@@ -74,5 +75,8 @@ t_xyz			get_cursor(int x, int y, void **mlx);
 int				is_mouse_down(int call, int button);
 int				is_key_down(int call, int key);
 void			ft_error(char *str);
+void			rotate_x(float angle, t_xyz *nodes, int amount);
+void			rotate_y(float angle, t_xyz *nodes, int amount);
+void			rotate_z(float angle, t_xyz *nodes, int amount);
 
 #endif

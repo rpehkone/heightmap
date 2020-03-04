@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 21:23:58 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 01:34:18 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ t_xyz	*make_map(char *filename)
 	get_map_len(width * height);
 	get_map_width(width);
 	set_map(map, fd, width);
+	rotate_x(-1, map, width * height);
+	rotate_y(1, map, width * height);
 	close(fd);
 	return (map);
 }
