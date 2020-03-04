@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/03 19:33:01 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 17:50:01 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int				handle_button(void **mlx, t_button b, int x, int y);
 int				*get_settings(void);
 int				gradient(void **mlx);
 void			cycle_colors(t_xyz *color);
-void			slider(void **mlx);
+void			slider(void **mlx, int *n, int move);
+t_xyz			get_cursor(int x, int y, void **mlx);
+int		handle_keyboard_up(int key, void **mlx);
 
 #endif

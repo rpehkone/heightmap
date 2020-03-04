@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/03 19:43:52 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/03 20:10:51 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void	draw(t_xyz *nodes, void **mlx)
 	static int	width = 0;
 	static int	*settings = NULL;
 	static t_xyz	color = {.x = 0xFFFFFF, .y = 0xFF0000};
+	static int focal_len = 1000;
 
 	if (!settings)
 		settings = get_settings();
-	int focal_len = 1000;
 	int origo_len = 900;
 	if (!map_len)
 		map_len = get_map_len(0);
@@ -133,8 +133,10 @@ void	draw(t_xyz *nodes, void **mlx)
 		gradient(mlx);
 	if (settings[6])
 		cycle_colors(&color);
-	if (settings[2] || settings[4])
-		slider(mlx);
+	if (settings[2])
+		slider(mlx, NULL, 0);
+	else if (settings[4])
+		slider(mlx, &focal_len, 0);
 }
 
 int		mouse_movement(int call, int x, int y, t_xyz *nodes)
