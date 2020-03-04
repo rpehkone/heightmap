@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 17:50:01 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 21:15:37 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,19 @@ typedef struct	s_button {
 	char		text[20];
 }				t_button;
 
+typedef struct	s_bool {
+	unsigned	ean:1;
+}				t_bool;
+
 int				handle_loop(void **mlx);
 int				handle_keyboard_down(int key, void **mlx);
+int				handle_keyboard_up(int key, void **mlx);
 int				handle_mouse_down(int button, int x, int y, void **mlx);
 int				handle_mouse_up(int button, int x, int y, void **mlx);
 int				handle_cursor(int x, int y, void **mlx);
 void			image_pixel_put(void **mlx, int x, int y, unsigned color);
 void			print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx);
-int				fdf(int call, int x, int y, void **mlx);
+int				fdf(void **mlx);
 void			mlx_clear_image(void **mlx);
 int				get_height(char *filename);
 t_xyz			*make_map(char *filename);
@@ -62,12 +67,7 @@ int				get_map_len(int n);
 int				get_map_width(int n);
 double			ft_abs(double n);
 
-int				buttons_loop(int call, int x, int y, void **mlx);
-int				button_1(int call, int x, int y, void **mlx);
-int				button_2(int call, int x, int y, void **mlx);
-int				button_3(int call, int x, int y, void **mlx);
-int				button_4(int call, int x, int y, void **mlx);
-int				button_5(int call, int x, int y, void **mlx);
+int				buttons_loop(void **mlx);
 
 int				handle_button(void **mlx, t_button b, int x, int y);
 int				*get_settings(void);
@@ -75,6 +75,7 @@ int				gradient(void **mlx);
 void			cycle_colors(t_xyz *color);
 void			slider(void **mlx, int *n, int move);
 t_xyz			get_cursor(int x, int y, void **mlx);
-int		handle_keyboard_up(int key, void **mlx);
+int		is_mouse_down(int call, int button);
+int		is_key_down(int call, int key);
 
 #endif

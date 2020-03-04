@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 17:49:02 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 19:08:02 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		main(int argc, char **argv)
 	mlx_ptr = mlx_init();
 	win_init(argv[1], &mlx_ptr, &win_ptr, &img_ptr);
 	mlx = (void **)malloc(sizeof(void *) * 3);
+	//protect
 	mlx[0] = mlx_ptr;
 	mlx[1] = win_ptr;
 	mlx[2] = img_ptr;

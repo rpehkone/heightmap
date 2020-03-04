@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 10:59:13 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/02 18:59:29 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 21:11:21 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	help_text(void **mlx)
 	static int	width = 0;
 	static int	height = 0;
 
-	if (!color)
+	if (is_key_down(0, 4))
+		fade = 0;
+	if (is_key_down(0, 4))
+		color = 0xFFFFFF;
+	else if (!color)
 		return ;
 	if (!width)
 		width = get_width(NULL);
 	if (!height)
 		height = get_height(NULL);
-	if (fade > 1000)
-	{
-		color -= 0xF0000;
-		color -= 0xF00;
-		color -= 0xF;
-	}
+	if (fade > 500)
+		color -= 0xF0F0F;
 	else
 		fade++;
 	mlx_string_put(mlx[0], mlx[1], width / 2 - (14 / 2 * 9) - 5,

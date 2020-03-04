@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/03 20:10:51 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 21:16:57 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	draw(t_xyz *nodes, void **mlx)
 
 	if (!settings)
 		settings = get_settings();
+	settings[1] = 1;
 	int origo_len = 900;
 	if (!map_len)
 		map_len = get_map_len(0);
@@ -139,92 +140,58 @@ void	draw(t_xyz *nodes, void **mlx)
 		slider(mlx, &focal_len, 0);
 }
 
-int		mouse_movement(int call, int x, int y, t_xyz *nodes)
+void	matrix_transform(t_xyz *nodes, int amount, int allow_to_move)
 {
-	static int	m1_down = 0;
-	static int	m3_down = 0;
-	static int	oldy = 0;
-	static int	oldx = 0;
-	static int	asd = 0;
-	static int	amount = 0;
+	static int	x = 0;
+	static int	y = 0;
+	t_xyz		cursor;
+	int			i;
 
-	if (!amount)
-		amount = get_map_len(0);
-	if (asd == 1)
-	{
-		oldx = x;
-		oldy = y;
-		asd = 0;
-	}
-	if (call == 4 && x == 1)
-	{
-		m1_down = 1;
-		asd = 1;
-	}
-	if (call == 10 || (call == 5 && x == 1))
-		m1_down = 0;
-	if (call == 4 && x == 3)
-		m3_down = 1;
-	if (call == 10 || (call == 5 && x == 3))
-		m3_down = 0;
-	if (call == 4 && x == 5)
-		for (int i = 0; i < amount; i++)
-			nodes[i].z += 50;
-	if (call == 4 && x == 4)
-		for (int i = 0; i < amount; i++)
-			nodes[i].z -= 50;
-	if (call == 6 && m3_down)
-	{
-		for (int i = 0; i < amount; i++)
+	cursor = get_cursor(0, 0, NULL);
+	if (allow_to_move && is_mouse_down(0, 1))
+		rotate_y(-1 * (float)0.01 * (x - cursor.x), nodes, amount);
+	if (allow_to_move && is_mouse_down(0, 1))
+		rotate_x((float)0.01 * (y - cursor.y), nodes, amount);
+	if (allow_to_move && is_mouse_down(0, 3) && !(i = 0))
+		while (i < amount)
 		{
-			nodes[i].x -= oldx - x;
-			nodes[i].y -= oldy - y;
+			nodes[i].x -= x - cursor.x;
+			nodes[i].y -= y - cursor.y;
+			i++;
 		}
-		oldx = x;
-		oldy = y;
-	}
-	if (call == 6 && m1_down)
-	{
-		rotate_y(-1 * (float)0.01 * (oldx - x), nodes, amount);
-		rotate_x((float)0.01 * (oldy - y), nodes, amount);
-		oldx = x;
-		oldy = y;
-	}
-	static int *settings = NULL;
-	if (!settings)
-		settings = get_settings();
-	if (settings[3])
-	{
-		rotate_x(0.01, nodes, amount);
-		rotate_y(0.01, nodes, amount);
-		rotate_z(0.01, nodes, amount);
-	}
-	return (asd);
+	if (allow_to_move && is_mouse_down(0, 4) && (i = -1))
+		while (i++ < amount)
+			nodes[i].z += 50;
+	if (allow_to_move && is_mouse_down(0, 5) && (i = -1))
+		while (i++ < amount)
+			nodes[i].z -= 50;
+	x = cursor.x;
+	y = cursor.y;
 }
 
-int		matrix(int call, int x, int y, void **mlx)
+int		matrix(void **mlx, int allow_to_move)
 {
 	static t_xyz	*nodes = NULL;
+	static int		amount = 0;
 
 	if (!nodes)
 		nodes = make_map(NULL);
-	mouse_movement(call, x, y, nodes);
+	if (!amount)
+		amount = get_map_len(0);
 	mlx_clear_window(mlx[0], mlx[1]);
 	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
 	mlx_clear_image(mlx);
+	matrix_transform(nodes, amount, allow_to_move);
 	draw(nodes, mlx);
 	return (0);
 }
 
-int		fdf(int call, int x, int y, void **mlx)
+int		fdf(void **mlx)
 {
 	static int	allow_rotate = 1;
 
-	if (allow_rotate)
-		matrix(call, x, y, mlx);
-	else
-		matrix(10, x, y, mlx);
-	allow_rotate = buttons_loop(call, x, y, mlx);
+	matrix(mlx, allow_rotate);
+	allow_rotate = buttons_loop(mlx);
 	help_text(mlx);
 	return (0);
 }

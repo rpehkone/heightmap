@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/03 18:13:00 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 21:14:16 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ t_button	set_b_spin(void)
 	return (b);
 }
 
-int			buttons_loop(int call, int x, int y, void **mlx)
+int			buttons_loop(void **mlx)
 {
 	static int		oldy = 0;
 	static int		oldx = 0;
@@ -186,14 +186,12 @@ int			buttons_loop(int call, int x, int y, void **mlx)
 			i++;
 		}
 	}
-	oldx = call == 6 ? x : oldx;
-	oldy = call == 6 ? y : oldy;
 	i = 1;
 	while (i < 9)
 	{
 		if (handle_button(mlx, all_b[i], oldx, oldy))
 		{
-			if (call == 4 && x == 1)
+			if (is_mouse_down(0, 1))
 			{
 				if (i == 8)
 					exit(0);
@@ -211,7 +209,7 @@ int			buttons_loop(int call, int x, int y, void **mlx)
 				settings[0] = 0;
 			}
 		}
-		if (call == 5 && x == 1)
+		if (!is_mouse_down(0, 1))
 			settings[0] = 1;
 		i++;
 	}
