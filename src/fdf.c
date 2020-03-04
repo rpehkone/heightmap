@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 22:28:10 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 00:41:02 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,36 +75,58 @@ void	rotate_z(float angle, t_xyz *nodes, int amount)
 	}
 }
 
-void	draw(t_xyz *nodes, int *settings, int map_len, void **mlx)
+void	center_image(t_xyz *start, t_xyz *stop)
 {
-	t_xyz		start;
-	t_xyz		stop;
-	static int	width = 0;
-	static t_xyz	color = {.x = 0xFFFFFF, .y = 0xFF0000};
-	static int focal_len = 1000;
+	static int x = 0;
+	static int y = 0;
 
-	int origo_len = 900;
-	if (!map_len)
-		map_len = get_map_len(0);
-	if(!width)
-		width = get_map_width(0);
-	for (int i = 0; i < map_len; i++)
+	if (!x)
 	{
-		nodes[i].z += origo_len;
+		x = get_width(NULL) / 2;
+		y = get_height(NULL) / 2;
 	}
-	for (int i = 0; i < map_len - 1; i++)
+	start->x += x;
+	start->y += y;
+	stop->x += x;
+	stop->y += y;
+}
+
+void	add_perspective(t_xyz *start, t_xyz *stop, int *settings, void **mlx)
+{
+	static int		focal_len = 1000;
+
+	start->x /= ((start->z) / focal_len);
+	start->y /= ((start->z) / focal_len);
+	stop->x /= ((stop->z) / focal_len);
+	stop->y /= ((stop->z) / focal_len);
+	if (settings[4])
+		slider(mlx, &focal_len, 0);
+}
+
+void	draw2(t_xyz *nodes, int *settings, int map_len, void **mlx)
+{
+	t_xyz			start;
+	t_xyz			stop;
+	static int		width = 0;
+	static t_xyz	color;
+	int				i;
+
+	if (!width)
+	{
+		width = get_map_width(0);
+		color.x = 0xFFFFFF;
+		color.y = 0xFF0000;
+	}
+	i = -1;
+	while (++i < map_len)
 	{
 		if ((i + 1) % width)
 		{
 			start = nodes[i];
 			stop = nodes[i + 1];
 			if (!settings[1])
-			{
-				start.x /= ((start.z) / focal_len);
-				start.y /= ((start.z) / focal_len);
-				stop.x /= ((stop.z) / focal_len);
-				stop.y /= ((stop.z) / focal_len);
-			}
+				add_perspective(&start, &stop, settings, mlx);
+			center_image(&start, &stop);
 			print_line(start, stop, color, mlx);
 		}
 		if (i + width < map_len)
@@ -112,27 +134,32 @@ void	draw(t_xyz *nodes, int *settings, int map_len, void **mlx)
 			start = nodes[i];
 			stop = nodes[i + width];
 			if (!settings[1])
-			{
-				start.x /= ((start.z) / focal_len);
-				start.y /= ((start.z) / focal_len);
-				stop.x /= ((stop.z) / focal_len);
-				stop.y /= ((stop.z) / focal_len);
-			}
+				add_perspective(&start, &stop, settings, mlx);
+			center_image(&start, &stop);
 			print_line(start, stop, color, mlx);
 		}
 	}
-	for (int i = 0; i < map_len; i++)
-	{
-		nodes[i].z -= origo_len;
-	}
 	if (settings[5])
 		gradient(mlx);
-	if (settings[6])
+	else if (settings[6])
 		cycle_colors(&color);
+}
+
+void	draw(t_xyz *nodes, int *settings, int map_len, void **mlx)
+{
+	int		origo_len;
+	int		i;
+
+	origo_len = 900;
+	i = -1;
+	while (i++ < map_len)
+		nodes[i].z += origo_len;
+	draw2(nodes, settings, map_len, mlx);
+	i = -1;
+	while (i++ < map_len)
+		nodes[i].z -= origo_len;
 	if (settings[2])
-		slider(mlx, NULL, 0);
-	else if (settings[4])
-		slider(mlx, &focal_len, 0);
+		slider(mlx, &origo_len, 0);
 }
 
 void	matrix_transform(t_xyz *nodes, int amount, int allow_to_move)

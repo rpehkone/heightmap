@@ -6,13 +6,13 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 22:04:47 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 00:27:15 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	print_button2(t_xyz *start, t_xyz *stop, int color, void **mlx)
+void		print_button2(t_xyz *start, t_xyz *stop, int color, void **mlx)
 {
 	t_xyz	step;
 	t_xyz	pos;
@@ -33,7 +33,29 @@ void	print_button2(t_xyz *start, t_xyz *stop, int color, void **mlx)
 	}
 }
 
-void	print_button(t_button *b, void **mlx)
+void		print_edge(t_xyz start, t_xyz stop, t_button *b, void **mlx)
+{
+	start.x = b->x;
+	start.y = b->y;
+	stop.x = b->x + b->size_x;
+	stop.y = b->y;
+	print_button2(&start, &stop, b->edge_color, mlx);
+	stop.x = b->x;
+	stop.y = b->y + b->size_y;
+	print_button2(&start, &stop, b->edge_color, mlx);
+	start.x = b->x;
+	start.y = b->y + b->size_y;
+	stop.x = b->x + b->size_x;
+	stop.y = b->y + b->size_y;
+	print_button2(&start, &stop, b->edge_color, mlx);
+	start.x = b->x + b->size_x;
+	start.y = b->y;
+	stop.x = b->x + b->size_x;
+	stop.y = b->y + b->size_y;
+	print_button2(&start, &stop, b->edge_color, mlx);
+}
+
+void		print_button(t_button *b, void **mlx)
 {
 	t_xyz start;
 	t_xyz stop;
@@ -52,31 +74,12 @@ void	print_button(t_button *b, void **mlx)
 			b->x + b->size_x / 2 - (ft_strlen(b->text) / 2 * 9) - 5,
 			b->y + b->size_y / 2 - 12, b->t_color, b->text);
 	if (b->edge)
-	{
-		start.x = b->x;
-		start.y = b->y;
-		stop.x = b->x + b->size_x;
-		stop.y = b->y;
-		print_button2(&start, &stop, b->edge_color, mlx);
-		stop.x = b->x;
-		stop.y = b->y + b->size_y;
-		print_button2(&start, &stop, b->edge_color, mlx);
-		start.x = b->x;
-		start.y = b->y + b->size_y;
-		stop.x = b->x + b->size_x;
-		stop.y = b->y + b->size_y;
-		print_button2(&start, &stop, b->edge_color, mlx);
-		start.x = b->x + b->size_x;
-		start.y = b->y;
-		stop.x = b->x + b->size_x;
-		stop.y = b->y + b->size_y;
-		print_button2(&start, &stop, b->edge_color, mlx);
-	}
+		print_edge(start, stop, b, mlx);
 }
 
-int		*get_settings(void)
+int			*get_settings(void)
 {
-	static int *st = NULL;
+	static int	*st = NULL;
 	int			i;
 
 	if (!st)
@@ -93,44 +96,54 @@ int		*get_settings(void)
 	return (st);
 }
 
-int		handle_button(void **mlx, t_button b)
+int			handle_button(void **mlx, t_button b)
 {
-	int ret;
-	int tmp;
-	int tmp2;
+	int		res;
 	t_xyz	cursor;
 
+	res = 0;
 	cursor = get_cursor(0, 0, NULL);
-	tmp = b.size_x;
-	tmp2 = b.size_y;
-	ret = 0;
-	if (b.type == 1)
+	if (cursor.x > b.x && cursor.x < b.x + b.size_x &&
+	cursor.y > b.y && cursor.y < b.y + b.size_y)
 	{
-		tmp *= 2;
-		tmp2 *= 2;
+		res = 1;
+		b.b_color = b.bc_color;
+		b.t_color = b.tc_color;
 	}
 	if (b.is_down)
 	{
-		b.b_color = b.bc_color;
-		b.t_color = b.tc_color;
+		b.b_color = b.bd_color;
+		b.t_color = b.td_color;
 	}
-	if (cursor.x > b.x && cursor.x < b.x + tmp &&
-	cursor.y > b.y && cursor.y < b.y + tmp2)
-	{
-		b.b_color = b.bc_color;
-		b.t_color = b.tc_color;
-		ret = 1;
-		if (b.is_down)
-			b.t_color = 0x707070;
-	}
-	if (b.type == 0)
-		print_button(&b, mlx);
-	return (ret);
+	print_button(&b, mlx);
+	return (res);
+}
+
+void		set_button_text(t_button *b)
+{
+	static int	i = 0;
+
+	if (i == 1)
+		ft_strcpy(b->text, "projection");
+	if (i == 2)
+		ft_strcpy(b->text, "depth");
+	if (i == 3)
+		ft_strcpy(b->text, "spin");
+	if (i == 4)
+		ft_strcpy(b->text, "focal lenght");
+	if (i == 5)
+		ft_strcpy(b->text, "color");
+	if (i == 6)
+		ft_strcpy(b->text, "cycle colors");
+	if (i == 7)
+		ft_strcpy(b->text, "height coloring");
+	if (i == 8)
+		ft_strcpy(b->text, "reset");
+	i++;
 }
 
 t_button	init_buttons(void)
 {
-	static int	i = 0;
 	static int	x = 0;
 	t_button	b;
 
@@ -138,34 +151,38 @@ t_button	init_buttons(void)
 	b.y = 0;
 	b.size_y = 30;
 	b.b_color = 0x000000;
-	b.bc_color = 0xFFFFFF;
+	b.bc_color = 0;
+	b.bd_color = 0xFFFFFF;
 	b.t_color = 0xFFFFFF;
-	b.tc_color = 0x000000;
-	b.type = 0;
+	b.tc_color = 0x707070;
+	b.td_color = 0;
 	b.edge = 1;
 	b.edge_color = 0xFFFFFF;
 	b.stay_down = 1;
 	b.is_down = 0;
-	if (i == 1)
-		ft_strcpy(b.text, "projection");
-	if (i == 2)
-		ft_strcpy(b.text, "depth");
-	if (i == 3)
-		ft_strcpy(b.text, "spin");
-	if (i == 4)
-		ft_strcpy(b.text, "focal lenght");
-	if (i == 5)
-		ft_strcpy(b.text, "color");
-	if (i == 6)
-		ft_strcpy(b.text, "cycle colors");
-	if (i == 7)
-		ft_strcpy(b.text, "height coloring");
-	if (i == 8)
-		ft_strcpy(b.text, "reset");
+	set_button_text(&b);
 	b.size_x = ft_strlen(b.text) * 12;
 	x += ft_strlen(b.text) * 12;
-	i++;
 	return (b);
+}
+
+void		on_click(int *settings, t_button *all_b, int i, int *click)
+{
+	if (i == 8)
+		exit(0);
+	else if (all_b[i].is_down == 0 && (i == 2 || i == 4 | i == 5))
+	{
+		settings[2] = 0;
+		settings[4] = 0;
+		settings[5] = 0;
+		all_b[2].is_down = 0;
+		all_b[4].is_down = 0;
+		all_b[5].is_down = 0;
+	}
+	all_b[i].is_down = all_b[i].is_down ? 0 : 1;
+	settings[i] = settings[i] ? 0 : 1;
+	settings[0] = 0;
+	click[i] = 0;
 }
 
 int			buttons_loop(void **mlx)
@@ -175,56 +192,24 @@ int			buttons_loop(void **mlx)
 	static int		click[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int				i;
 
-	i = 0;
+	if (!all_b)
+		all_b = (t_button*)malloc(sizeof(t_button) * 9);
+	if ((i = -1) && !settings)
+		while (++i < 9)
+			all_b[i] = init_buttons();
 	if (!settings)
 		settings = get_settings();
-	if (!all_b)
-	{
-		all_b = (t_button*)malloc(sizeof(t_button) * 9);
-		while (i < 9)
-		{
-			all_b[i] = init_buttons();
-			i++;
-		}
-	}
-	i = 1;
-	if (!is_mouse_down(0, 1) && !is_mouse_down(0, 3))
+	if (!(i = 0) && !is_mouse_down(0, 1) && !is_mouse_down(0, 3))
 		settings[0] = 1;
-	while (i < 9)
-	{
-		if (handle_button(mlx, all_b[i]))
+	while (++i < 9)
+		if (handle_button(mlx, all_b[i]) || (click[i] = 0))
 		{
-			if (click[i] == 2 && !is_mouse_down(0, 1))
-				click[i]++;
-			else if (click[i] == 1 && is_mouse_down(0, 1))
-				click[i]++;
-			else if (click[i] == 0 && !is_mouse_down(0, 1))
+			if ((!(settings[0] = 0) && click[i] == 2 && !is_mouse_down(0, 1)) ||
+				(click[i] == 1 && is_mouse_down(0, 1)) ||
+				(click[i] == 0 && !is_mouse_down(0, 1)))
 				click[i]++;
 			else if (click[i] == 3)
-			{
-				if (i == 8)
-					exit(0);
-				else if (all_b[i].is_down == 0 && (i == 2 || i == 4 | i == 5))
-				{
-					settings[2] = 0;
-					settings[4] = 0;
-					settings[5] = 0;
-					all_b[2].is_down = 0;
-					all_b[4].is_down = 0;
-					all_b[5].is_down = 0;
-				}
-				all_b[i].is_down = all_b[i].is_down ? 0 : 1;
-				settings[i] = settings[i] ? 0 : 1;
-				settings[0] = 0;
-				click[i] = 0;
-			}
-			settings[0] = 0;
+				on_click(settings, all_b, i, click);
 		}
-		else
-			click[i] = 0;
-		i++;
-	}
-	//laita settings[0] ei saa liikuttaa
-	//tai return settings[0]
 	return (settings[0]);
 }

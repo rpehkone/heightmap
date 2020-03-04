@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/03 19:27:37 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 23:38:26 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		get_color(int x, int y)
 	return (0);
 }
 
-void		cycle_colors(t_xyz *color)
+void	cycle_colors(t_xyz *color)
 {
 	static int	i = 0;
 	static int	old = 0;

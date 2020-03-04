@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 21:15:37 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 00:11:20 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ typedef struct	s_button {
 	int			size_y;
 	int			b_color;
 	int			bc_color;
+	int			bd_color;
 	int			t_color;
 	int			tc_color;
-	int			type;
+	int			td_color;
 	int			edge;
 	int			edge_color;
 	int			stay_down;
@@ -43,10 +44,6 @@ typedef struct	s_button {
 	int			mouse_down;
 	char		text[20];
 }				t_button;
-
-typedef struct	s_bool {
-	unsigned	ean:1;
-}				t_bool;
 
 int				handle_loop(void **mlx);
 int				handle_keyboard_down(int key, void **mlx);
@@ -69,13 +66,13 @@ double			ft_abs(double n);
 
 int				buttons_loop(void **mlx);
 
-int				handle_button(void **mlx, t_button b, int x, int y);
 int				*get_settings(void);
 int				gradient(void **mlx);
 void			cycle_colors(t_xyz *color);
 void			slider(void **mlx, int *n, int move);
 t_xyz			get_cursor(int x, int y, void **mlx);
-int		is_mouse_down(int call, int button);
-int		is_key_down(int call, int key);
+int				is_mouse_down(int call, int button);
+int				is_key_down(int call, int key);
+void			ft_error(char *str);
 
 #endif
