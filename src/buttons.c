@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 21:14:16 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 22:04:47 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,14 @@ int		*get_settings(void)
 	return (st);
 }
 
-int		handle_button(void **mlx, t_button b, int x, int y)
+int		handle_button(void **mlx, t_button b)
 {
 	int ret;
 	int tmp;
 	int tmp2;
+	t_xyz	cursor;
 
+	cursor = get_cursor(0, 0, NULL);
 	tmp = b.size_x;
 	tmp2 = b.size_y;
 	ret = 0;
@@ -112,8 +114,8 @@ int		handle_button(void **mlx, t_button b, int x, int y)
 		b.b_color = b.bc_color;
 		b.t_color = b.tc_color;
 	}
-	if (x > b.x && x < b.x + tmp &&
-	y > b.y && y < b.y + tmp2)
+	if (cursor.x > b.x && cursor.x < b.x + tmp &&
+	cursor.y > b.y && cursor.y < b.y + tmp2)
 	{
 		b.b_color = b.bc_color;
 		b.t_color = b.tc_color;
@@ -126,7 +128,7 @@ int		handle_button(void **mlx, t_button b, int x, int y)
 	return (ret);
 }
 
-t_button	set_b_spin(void)
+t_button	init_buttons(void)
 {
 	static int	i = 0;
 	static int	x = 0;
@@ -168,11 +170,10 @@ t_button	set_b_spin(void)
 
 int			buttons_loop(void **mlx)
 {
-	static int		oldy = 0;
-	static int		oldx = 0;
 	static t_button	*all_b = NULL;
 	static int		*settings = NULL;
-	int				i;;
+	static int		click[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int				i;
 
 	i = 0;
 	if (!settings)
@@ -182,20 +183,28 @@ int			buttons_loop(void **mlx)
 		all_b = (t_button*)malloc(sizeof(t_button) * 9);
 		while (i < 9)
 		{
-			all_b[i] = set_b_spin();
+			all_b[i] = init_buttons();
 			i++;
 		}
 	}
 	i = 1;
+	if (!is_mouse_down(0, 1) && !is_mouse_down(0, 3))
+		settings[0] = 1;
 	while (i < 9)
 	{
-		if (handle_button(mlx, all_b[i], oldx, oldy))
+		if (handle_button(mlx, all_b[i]))
 		{
-			if (is_mouse_down(0, 1))
+			if (click[i] == 2 && !is_mouse_down(0, 1))
+				click[i]++;
+			else if (click[i] == 1 && is_mouse_down(0, 1))
+				click[i]++;
+			else if (click[i] == 0 && !is_mouse_down(0, 1))
+				click[i]++;
+			else if (click[i] == 3)
 			{
 				if (i == 8)
 					exit(0);
-				if (all_b[i].is_down == 0 && (i == 2 || i == 4 | i == 5))
+				else if (all_b[i].is_down == 0 && (i == 2 || i == 4 | i == 5))
 				{
 					settings[2] = 0;
 					settings[4] = 0;
@@ -207,10 +216,12 @@ int			buttons_loop(void **mlx)
 				all_b[i].is_down = all_b[i].is_down ? 0 : 1;
 				settings[i] = settings[i] ? 0 : 1;
 				settings[0] = 0;
+				click[i] = 0;
 			}
+			settings[0] = 0;
 		}
-		if (!is_mouse_down(0, 1))
-			settings[0] = 1;
+		else
+			click[i] = 0;
 		i++;
 	}
 	//laita settings[0] ei saa liikuttaa

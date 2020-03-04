@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 21:16:57 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/04 22:28:10 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,14 @@ void	rotate_z(float angle, t_xyz *nodes, int amount)
 	}
 }
 
-void	draw(t_xyz *nodes, void **mlx)
+void	draw(t_xyz *nodes, int *settings, int map_len, void **mlx)
 {
 	t_xyz		start;
 	t_xyz		stop;
-	static int	map_len = 0;
 	static int	width = 0;
-	static int	*settings = NULL;
 	static t_xyz	color = {.x = 0xFFFFFF, .y = 0xFF0000};
 	static int focal_len = 1000;
 
-	if (!settings)
-		settings = get_settings();
-	settings[1] = 1;
 	int origo_len = 900;
 	if (!map_len)
 		map_len = get_map_len(0);
@@ -103,7 +98,7 @@ void	draw(t_xyz *nodes, void **mlx)
 		{
 			start = nodes[i];
 			stop = nodes[i + 1];
-			if (settings[1])
+			if (!settings[1])
 			{
 				start.x /= ((start.z) / focal_len);
 				start.y /= ((start.z) / focal_len);
@@ -116,7 +111,7 @@ void	draw(t_xyz *nodes, void **mlx)
 		{
 			start = nodes[i];
 			stop = nodes[i + width];
-			if (settings[1])
+			if (!settings[1])
 			{
 				start.x /= ((start.z) / focal_len);
 				start.y /= ((start.z) / focal_len);
@@ -172,17 +167,20 @@ void	matrix_transform(t_xyz *nodes, int amount, int allow_to_move)
 int		matrix(void **mlx, int allow_to_move)
 {
 	static t_xyz	*nodes = NULL;
+	static int		*settings = NULL;
 	static int		amount = 0;
 
 	if (!nodes)
 		nodes = make_map(NULL);
 	if (!amount)
 		amount = get_map_len(0);
+	if (!settings)
+		settings = get_settings();
 	mlx_clear_window(mlx[0], mlx[1]);
 	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
 	mlx_clear_image(mlx);
 	matrix_transform(nodes, amount, allow_to_move);
-	draw(nodes, mlx);
+	draw(nodes, settings, amount, mlx);
 	return (0);
 }
 
