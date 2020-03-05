@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 01:34:18 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 14:47:22 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int		get_height(char *filename)
 	{
 		if (height * 50 < 500)
 			return (500);
-		else if (height * 50 > 1000)
-			return (1000);
+		else if (height * 50 > 1200)
+			return (1200);
 		else
 			return (height * 50);
 	}
@@ -74,10 +74,10 @@ int		get_width(char *filename)
 
 	if (!(i = 0) && width != 0)
 	{
-		if (width * 50 < 500)
-			return (500);
-		else if (width * 50 > 1000)
-			return (1000);
+		if (width * 50 < 862)
+			return (862);
+		else if (width * 50 > 2000)
+			return (2000);
 		else
 			return (width * 50);
 	}
@@ -126,7 +126,8 @@ t_xyz	*make_map(char *filename)
 		return (map);
 	width = get_width(filename);
 	height = get_height(filename);
-	map = (t_xyz*)malloc(sizeof(t_xyz) * (width * height));
+	if (!(map = (t_xyz*)malloc(sizeof(t_xyz) * (width * height))))
+		ft_error(NULL);
 	fd = open(filename, O_RDONLY);
 	get_map_len(width * height);
 	get_map_width(width);

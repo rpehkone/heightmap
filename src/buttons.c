@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 13:18:28 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 14:47:35 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,8 @@ void		buttons_loop(void **mlx)
 
 	if ((i = -1) && !all_b)
 	{
-		all_b = (t_button*)malloc(sizeof(t_button) * 10);
+		if (!(all_b = (t_button*)malloc(sizeof(t_button) * 10)))
+			ft_error(NULL);
 		while (++i < 10)
 			all_b[i] = init_buttons();
 		get_settings(0, all_b);

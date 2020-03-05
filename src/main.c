@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 12:08:08 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 14:44:27 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ void	win_init(char *filename, void **mlx_ptr, void **win_ptr, void **img_ptr)
 		ft_error(NULL);
 	if (height < 500)
 		height = 500;
-	if (width < 500)
-		width = 500;
-	if (width > 1000)
-		width = 1000;
-	if (height > 1000)
-		height = 1000;
+	if (width < 862)
+		width = 862;
+	if (width > 2000)
+		width = 2000;
+	if (height > 1200)
+		height = 1200;
 	i = ft_strlen(filename);
 	while (i > 0 && filename[i] != '/')
 		i--;
