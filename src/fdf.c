@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 00:41:02 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 11:34:43 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,29 @@ int		matrix(void **mlx, int allow_to_move)
 	return (0);
 }
 
+#include <sys/time.h>
+
+void	fps(void **mlx)
+{
+	struct timeval	time;
+	static long		s = 0;
+	static int		i = 0;
+	static int		fps = 0;
+	static int		height = 0;
+
+	i++;
+	if (!height)
+		height = get_height(NULL);
+	gettimeofday(&time, NULL);
+	mlx_string_put(mlx[0], mlx[1], 10, height - 30, 0xFFFF00, ft_itoa(fps));
+	if (s != time.tv_sec)
+	{
+		s = time.tv_sec;
+		fps = i;
+		i = 0;
+	}
+}
+
 int		fdf(void **mlx)
 {
 	static int	allow_rotate = 1;
@@ -218,5 +241,6 @@ int		fdf(void **mlx)
 	matrix(mlx, allow_rotate);
 	allow_rotate = buttons_loop(mlx);
 	help_text(mlx);
+	fps(mlx);
 	return (0);
 }
