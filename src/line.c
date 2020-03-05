@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:19:28 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 14:14:26 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:55:37 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 	t_xyz	step;
 	t_xyz	pos;
 	int		i;
+	//int		cur_color;
 
 	i = 0;
 	if (start.z < 0 || stop.z < 0)
@@ -37,12 +38,19 @@ void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 	step.y = (stop.y - start.y) / (float)step.z;
 	while (pos.z <= step.z && i < 1000)
 	{
-		image_pixel_put(mlx, pos.x + 500, pos.y + 500, color.x);
+	/*printf("step.x = %f\n", step.x);
+	printf("step.y = %f\n", step.y);
+	printf("step.z = %f\n", step.z);
+	printf("pos.x = %f\n", pos.x);
+	printf("pos.y = %f\n", pos.y);
+	printf("pos.z = %f\n\n", pos.z);
+	*/	image_pixel_put(mlx, pos.x + 000, pos.y + 000, color.x);
 		pos.x += step.x;
 		pos.y += step.y;
 		pos.z++;
 		i++;
 	}
+	//exit(0);
 }
 
 /*

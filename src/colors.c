@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 16:28:38 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:43:31 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,15 @@ int		set_gradient_color(int x, int y)
 	double	grn;
 	double	blu;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
-	y += 20;
 	while (i < 310)
 	{
 		red = sin(0.02 * i + 0) * 127 + 128;
 		grn = sin(0.02 * i + 2) * 127 + 128;
 		blu = sin(0.02 * i + 4) * 127 + 128;
-		j = 0;
-		while (j < 310)
-		{
-			if (i == x && j == y)
-				return ((int)red * 65536 + (int)grn * 256 + (int)blu);
-			j++;
-		}
+		if (i == x && y < 450 && y > 30)
+			return ((int)red * 65536 + (int)grn * 256 + (int)blu);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 14:47:22 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:34:15 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,25 @@ int		get_map_width(int n)
 	return (0);
 }
 
+t_xyz	*map_copy(t_xyz *map)
+{
+	int	i;
+	int len;
+	static t_xyz	*map_copy = NULL;
+
+	len = get_map_len(0);
+	if (!map_copy)
+		if (!(map_copy = (t_xyz*)malloc(sizeof(t_xyz) * len)))
+			ft_error(NULL);
+	i = 0;
+	while (i < len)
+	{
+		map_copy[i] = map[i];
+		i++;
+	}
+	return (map_copy);
+}
+
 t_xyz	*make_map(char *filename)
 {
 	int				width;
@@ -123,7 +142,7 @@ t_xyz	*make_map(char *filename)
 	int				fd;
 
 	if (map)
-		return (map);
+		return (map_copy(map));
 	width = get_width(filename);
 	height = get_height(filename);
 	if (!(map = (t_xyz*)malloc(sizeof(t_xyz) * (width * height))))
@@ -135,5 +154,5 @@ t_xyz	*make_map(char *filename)
 	rotate_x(-1, map, width * height);
 	rotate_y(1, map, width * height);
 	close(fd);
-	return (map);
+	return (map_copy(map));
 }

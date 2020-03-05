@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 16:45:03 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:41:04 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,29 @@ void	matrix_transform(t_xyz *nodes, int amount)
 	y = cursor.y;
 }
 
+void		reset(void)
+{
+	int i;
+
+	i = 1;
+	while (i <= 9)
+	{
+		get_settings(-1 * i, NULL);
+		i++;
+	}
+	get_color(0xFFFFFF);
+}
+
 int		matrix(void **mlx)
 {
 	static t_xyz	*nodes = NULL;
 	static int		amount = 0;
 
-	if (!nodes)
+	if (!nodes || get_settings(9, NULL))
+	{
 		nodes = make_map(NULL);
+		reset();
+	}
 	if (!amount)
 		amount = get_map_len(0);
 	mlx_clear_window(mlx[0], mlx[1]);
@@ -72,26 +88,11 @@ void	fps(void **mlx)
 	}
 }
 
-void		reset(void)
-{
-	int i;
-
-	i = 1;
-	while (i <= 9)
-	{
-		get_settings(-1 * i, NULL);
-		get_color(0xFFFFFF);
-		i++;
-	}
-}
-
 int		fdf(void **mlx)
 {
 	matrix(mlx);
 	buttons_loop(mlx);
 	help_text(mlx);
 	fps(mlx);
-	if (get_settings(9, NULL))
-		reset();
 	return (0);
 }
