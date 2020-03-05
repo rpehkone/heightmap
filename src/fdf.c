@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 12:11:32 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 14:31:55 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,7 @@ void	rotate_z(float angle, t_xyz *nodes, int amount)
 	}
 }
 
-void	center_image(t_xyz *start, t_xyz *stop)
-{
-	static int x = 0;
-	static int y = 0;
-
-	if (!x)
-	{
-		x = get_width(NULL) / 2;
-		y = get_height(NULL) / 2;
-	}
-	start->x += x;
-	start->y += y;
-	stop->x += x;
-	stop->y += y;
-}
-
-void	add_perspective(t_xyz *start, t_xyz *stop, void **mlx)
+void	add_perspective(t_xyz *start, t_xyz *stop)
 {
 	static int		focal_len = 1000;
 
@@ -99,8 +83,67 @@ void	add_perspective(t_xyz *start, t_xyz *stop, void **mlx)
 	start->y /= ((start->z) / focal_len);
 	stop->x /= ((stop->z) / focal_len);
 	stop->y /= ((stop->z) / focal_len);
-	if (get_settings(4, NULL))
-		slider(mlx, &focal_len, 0);
+}
+
+t_xyz	get_color(int set)
+{
+	static t_xyz	color = {.x = -1};
+
+	if (color.x == -1)
+	{
+		color.x = 0xFFFFFF;
+		color.y = 0xFFFFFF;
+		color.z = 0;
+	}
+	if (set == -2)
+		cycle_colors(&color);
+	else if (set)
+		color.x = set;
+	return (color);
+}
+
+void	move_center(t_xyz *start, t_xyz *stop, void **mlx)
+{
+	static double	zoom = -500;
+
+	if (get_settings(0, NULL) && is_mouse_down(0, 4))
+		zoom += 0.1;
+	if (get_settings(0, NULL) && is_mouse_down(0, 5))
+		zoom -= 0.1;
+	start->z -= zoom;
+	stop->z -= zoom;
+	if (!get_settings(1, NULL))
+		add_perspective(start, stop);
+	print_line(*start, *stop, get_color(0), mlx);
+}
+
+void	center_image(t_xyz *start, t_xyz *stop, void **mlx)
+{
+	static int	x = 0;
+	static int	y = 0;
+	static int	coordx = 0;
+	static int	coordy = 0;
+	t_xyz		cursor;
+
+	cursor = get_cursor(0, 0, NULL);
+	if (!x)
+	{
+		x = get_width(NULL) / 2;
+		y = get_height(NULL) / 2;
+		x = 0;
+		y = -200;
+	}
+	if (get_settings(0, NULL) && is_mouse_down(0, 3))
+		x -= coordx - cursor.x;
+	if (get_settings(0, NULL) && is_mouse_down(0, 3))
+		y -= coordy - cursor.y;
+	coordx = cursor.x;
+	coordy = cursor.y;
+	start->x += x;
+	start->y += y;
+	stop->x += x;
+	stop->y += y;
+	move_center(start, stop, mlx);
 }
 
 void	draw2(t_xyz *nodes, int map_len, void **mlx)
@@ -108,15 +151,10 @@ void	draw2(t_xyz *nodes, int map_len, void **mlx)
 	t_xyz			start;
 	t_xyz			stop;
 	static int		width = 0;
-	static t_xyz	color;
 	int				i;
 
 	if (!width)
-	{
 		width = get_map_width(0);
-		color.x = 0xFFFFFF;
-		color.y = 0xFF0000;
-	}
 	i = -1;
 	while (++i < map_len)
 	{
@@ -124,25 +162,17 @@ void	draw2(t_xyz *nodes, int map_len, void **mlx)
 		{
 			start = nodes[i];
 			stop = nodes[i + 1];
-			if (!get_settings(1, NULL))
-				add_perspective(&start, &stop, mlx);
-			center_image(&start, &stop);
-			print_line(start, stop, color, mlx);
+			center_image(&start, &stop, mlx);
 		}
 		if (i + width < map_len)
 		{
 			start = nodes[i];
 			stop = nodes[i + width];
-			if (!get_settings(1, NULL))
-				add_perspective(&start, &stop, mlx);
-			center_image(&start, &stop);
-			print_line(start, stop, color, mlx);
+			center_image(&start, &stop, mlx);
 		}
 	}
-	if (get_settings(5, NULL))
-		gradient(mlx);
-	else if (get_settings(6, NULL))
-		cycle_colors(&color);
+	if (get_settings(6, NULL))
+		get_color(-2);
 }
 
 void	draw(t_xyz *nodes, int map_len, void **mlx)
@@ -160,6 +190,10 @@ void	draw(t_xyz *nodes, int map_len, void **mlx)
 		nodes[i].z -= origo_len;
 	if (get_settings(2, NULL))
 		slider(mlx, &origo_len, 0);
+	else if (get_settings(4, NULL))
+		slider(mlx, &i, 0);//add_perspective(NULL, focal_len)
+	else if (get_settings(5, NULL))
+		gradient(mlx);
 }
 
 void	matrix_transform(t_xyz *nodes, int amount)
@@ -167,26 +201,14 @@ void	matrix_transform(t_xyz *nodes, int amount)
 	static int	x = 0;
 	static int	y = 0;
 	t_xyz		cursor;
-	int			i;
 
 	cursor = get_cursor(0, 0, NULL);
+	if (get_settings(3, NULL))
+		rotate_y((float)0.01, nodes, amount);
 	if (get_settings(0, NULL) && is_mouse_down(0, 1))
 		rotate_y(-1 * (float)0.01 * (x - cursor.x), nodes, amount);
 	if (get_settings(0, NULL) && is_mouse_down(0, 1))
 		rotate_x((float)0.01 * (y - cursor.y), nodes, amount);
-	if (get_settings(0, NULL) && is_mouse_down(0, 3) && !(i = 0))
-		while (i < amount)
-		{
-			nodes[i].x -= x - cursor.x;
-			nodes[i].y -= y - cursor.y;
-			i++;
-		}
-	if (get_settings(0, NULL) && is_mouse_down(0, 4) && (i = -1))
-		while (i++ < amount)
-			nodes[i].z += 50;
-	if (get_settings(0, NULL) && is_mouse_down(0, 5) && (i = -1))
-		while (i++ < amount)
-			nodes[i].z -= 50;
 	x = cursor.x;
 	y = cursor.y;
 }
@@ -208,8 +230,6 @@ int		matrix(void **mlx)
 	return (0);
 }
 
-#include <sys/time.h>
-
 void	fps(void **mlx)
 {
 	struct timeval	time;
@@ -222,7 +242,9 @@ void	fps(void **mlx)
 	if (!height)
 		height = get_height(NULL);
 	gettimeofday(&time, NULL);
-	mlx_string_put(mlx[0], mlx[1], 10, height - 30, 0xFFFF00, ft_itoa(fps));
+	if (get_settings(8, NULL))
+		mlx_string_put(mlx[0], mlx[1], 10,
+		height - 30, 0xFFFF00, ft_itoa(fps));
 	if (s != time.tv_sec)
 	{
 		s = time.tv_sec;

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 12:13:01 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 13:18:28 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void		print_button(t_button *b, void **mlx)
 		start.y++;
 		stop.y++;
 	}
-	//if (i == 1 || i == 4 || i == 5)
-	//	;//b.size_x -= 5;
 	mlx_string_put(mlx[0], mlx[1], b->x + 6,
 			b->y + 3, b->t_color, b->text);
 	if (b->edge)
@@ -89,8 +87,11 @@ int			handle_button(void **mlx, t_button b)
 	cursor.y > b.y && cursor.y < b.y + b.size_y)
 	{
 		res = 1;
-		b.b_color = b.bc_color;
-		b.t_color = b.tc_color;
+		if (is_mouse_down(0, 1))
+		{
+			b.b_color = b.bc_color;
+			b.t_color = b.tc_color;
+		}
 	}
 	if (b.is_down)
 	{
@@ -139,9 +140,9 @@ t_button	init_buttons(void)
 	b.x = x;
 	b.y = 0;
 	b.size_y = 30;
-	b.b_color = 0xFFFFFF;
-	b.bc_color = 0;
-	b.bd_color = 0x000000;
+	b.b_color = 0xaeacad;
+	b.bc_color = 0x807e7f;
+	b.bd_color = 0x2755b2;
 	b.t_color = 0;
 	b.tc_color = 0x707070;
 	b.td_color = 0xFFFFFF;
@@ -158,9 +159,7 @@ t_button	init_buttons(void)
 
 void		on_click(t_button *all_b, int i, int *click)
 {
-	if (i == 8)
-		exit(0);
-	else if (all_b[i].is_down == 0 && (i == 2 || i == 4 | i == 5))
+	if (all_b[i].is_down == 0 && (i == 2 || i == 4 | i == 5))
 	{
 		all_b[2].is_down = 0;
 		all_b[4].is_down = 0;
@@ -185,21 +184,19 @@ int			get_settings(int i, t_button *all_b)
 void		buttons_loop(void **mlx)
 {
 	static t_button	*all_b = NULL;
-	static int		click[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	static int		click[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int				i;
 
-	i = 0;
-	if (!all_b)
+	if ((i = -1) && !all_b)
 	{
-		all_b = (t_button*)malloc(sizeof(t_button) * 9);
-		i = -1;
-		while (++i < 9)
+		all_b = (t_button*)malloc(sizeof(t_button) * 10);
+		while (++i < 10)
 			all_b[i] = init_buttons();
 		get_settings(0, all_b);
 	}
 	if (!(i = 0) && !is_mouse_down(0, 1) && !is_mouse_down(0, 3))
 		all_b[0].is_down = 1;
-	while (++i < 9)
+	while (++i < 10)
 		if (handle_button(mlx, all_b[i]) || (click[i] = 0))
 		{
 			all_b[0].is_down = 0;

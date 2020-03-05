@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 23:38:26 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 13:12:54 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		gradient(void **mlx)
 	return (1);
 }
 
-int		get_color(int x, int y)
+int		set_gradient_color(int x, int y)
 {
 	double	red;
 	double	grn;
