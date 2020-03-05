@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 01:31:00 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:09:39 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int				get_map_len(int n);
 int				get_map_width(int n);
 double			ft_abs(double n);
 
-int				buttons_loop(void **mlx);
+void			buttons_loop(void **mlx);
 
-int				*get_settings(void);
+int				get_settings(int i, t_button *st);
 int				gradient(void **mlx);
 void			cycle_colors(t_xyz *color);
 void			slider(void **mlx, int *n, int move);

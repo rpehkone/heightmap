@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 01:29:35 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:08:08 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int		main(int argc, char **argv)
 	mlx_hook(win_ptr, 5, 0, handle_mouse_up, mlx);
 	mlx_hook(win_ptr, 6, 0, handle_cursor, mlx);
 	mlx_loop_hook(mlx_ptr, fdf, mlx);
+	buttons_loop(mlx);
 	mlx_loop(mlx_ptr);
 	return (0);
 }
