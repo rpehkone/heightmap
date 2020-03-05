@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 13:12:54 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 16:28:38 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,6 @@ void	make_gradient(void *image_ptr)
 	}
 }
 
-int		gradient(void **mlx)
-{
-	static void *gradient = NULL;
-
-	if (!gradient)
-	{
-		gradient = mlx_new_image(mlx[0], 310, 310);
-		make_gradient(gradient);
-	}
-	else
-		mlx_put_image_to_window(mlx[0], mlx[1], gradient, 0, 31);
-	return (1);
-}
-
 int		set_gradient_color(int x, int y)
 {
 	double	red;
@@ -97,6 +83,26 @@ int		set_gradient_color(int x, int y)
 		i++;
 	}
 	return (0);
+}
+
+int		gradient(void **mlx)
+{
+	static void *gradient = NULL;
+	t_xyz		cursor;
+
+	if (!gradient)
+	{
+		gradient = mlx_new_image(mlx[0], 310, 310);
+		make_gradient(gradient);
+	}
+	else
+		mlx_put_image_to_window(mlx[0], mlx[1], gradient, 0, 31);
+	if (is_mouse_down(0, 1))
+	{
+		cursor = get_cursor(0, 0, NULL);
+		get_color(set_gradient_color(cursor.x, cursor.y));
+	}
+	return (1);
 }
 
 void	cycle_colors(t_xyz *color)

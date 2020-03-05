@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 14:47:35 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 16:39:54 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,10 @@ int			get_settings(int i, t_button *all_b)
 	{
 		st = all_b;
 		return (0);
+	}
+	if (i < 0)
+	{
+		st[i * -1].is_down = 0;
 	}
 	return (st[i].is_down);
 }

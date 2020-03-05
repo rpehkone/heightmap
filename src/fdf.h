@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 14:51:52 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/05 16:29:46 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,7 @@ void			rotate_x(float angle, t_xyz *nodes, int amount);
 void			rotate_y(float angle, t_xyz *nodes, int amount);
 void			rotate_z(float angle, t_xyz *nodes, int amount);
 void			add_perspective(t_xyz *start, t_xyz *stop);
+t_xyz			get_color(int set);
+
 #endif
+
