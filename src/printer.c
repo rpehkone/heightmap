@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 16:44:10 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 16:44:45 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 21:01:54 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ t_xyz	get_color(int set)
 	if (set == -2)
 		cycle_colors(&color);
 	else if (set)
+	{
 		color.x = set;
+		color.y = set;
+	}
+	if (get_settings(7, NULL))
+		return (add_color_height(color));
 	return (color);
 }
 
@@ -85,12 +90,14 @@ void	draw2(t_xyz *nodes, int map_len, void **mlx)
 	i = -1;
 	while (++i < map_len)
 	{
+		save_coord(i, i + 1, 0);
 		if ((i + 1) % width)
 		{
 			start = nodes[i];
 			stop = nodes[i + 1];
 			center_image(&start, &stop, mlx);
 		}
+		save_coord(i, i + width, 0);
 		if (i + width < map_len)
 		{
 			start = nodes[i];
@@ -98,8 +105,6 @@ void	draw2(t_xyz *nodes, int map_len, void **mlx)
 			center_image(&start, &stop, mlx);
 		}
 	}
-	if (get_settings(6, NULL))
-		get_color(-2);
 }
 
 void	draw(t_xyz *nodes, int map_len, void **mlx)
@@ -118,7 +123,9 @@ void	draw(t_xyz *nodes, int map_len, void **mlx)
 	if (get_settings(2, NULL))
 		slider(mlx, &origo_len, 0);
 	else if (get_settings(4, NULL))
-		slider(mlx, &i, 0);//add_perspective(NULL, focal_len)
+		slider(mlx, &i, 0);
 	else if (get_settings(5, NULL))
 		gradient(mlx);
+	if (get_settings(6, NULL))
+		get_color(-2);
 }

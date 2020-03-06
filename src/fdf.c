@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 17:41:04 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:53:59 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	matrix_transform(t_xyz *nodes, int amount)
 	if (get_settings(3, NULL))
 		rotate_y((float)0.01, nodes, amount);
 	if (get_settings(0, NULL) && is_mouse_down(0, 1))
-		rotate_y(-1 * (float)0.01 * (x - cursor.x), nodes, amount);
+		rotate_y((float)0.01 * (x - cursor.x), nodes, amount);
 	if (get_settings(0, NULL) && is_mouse_down(0, 1))
-		rotate_x((float)0.01 * (y - cursor.y), nodes, amount);
+		rotate_x(-1 * (float)0.01 * (y - cursor.y), nodes, amount);
 	x = cursor.x;
 	y = cursor.y;
 }
@@ -49,7 +49,9 @@ int		matrix(void **mlx)
 
 	if (!nodes || get_settings(9, NULL))
 	{
-		nodes = make_map(NULL);
+		nodes = make_map(NULL, 0);
+		rotate_x(-1, nodes, get_map_len(0));
+		rotate_y(1, nodes, get_map_len(0));
 		reset();
 	}
 	if (!amount)

@@ -6,13 +6,13 @@
 #    By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/30 20:09:24 by rpehkone          #+#    #+#              #
-#    Updated: 2020/03/05 18:00:12 by rpehkone         ###   ########.fr        #
+#    Updated: 2020/03/06 21:01:19 by rpehkone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 LIB = libft/libft.a
-FILES = fdf.c help_text.c image.c line.c main.c read_map.c handle_hook.c buttons.c colors.c slider.c input_state.c rotate.c printer.c
+FILES = fdf.c help_text.c image.c line.c main.c read_map.c handle_hook.c buttons.c colors.c slider.c input_state.c rotate.c printer.c height_color.c
 .PHONY: clean fclean re all
 
 all: $(NAME)

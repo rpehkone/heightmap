@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 17:34:15 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:50:55 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_map(t_xyz *map, int fd, int width)
 		{
 			map[x].x = 50 * ((x - (y * width)) - width / 2);
 			map[x].y = 50 * (y - height);
-			map[x].z = 10 * ft_atoi(&line[i]);
+			map[x].z = -10 * ft_atoi(&line[i]);
 			while (line[i] && line[i] == ' ')
 				i++;
 			while (line[i] && line[i] != ' ')
@@ -134,7 +134,7 @@ t_xyz	*map_copy(t_xyz *map)
 	return (map_copy);
 }
 
-t_xyz	*make_map(char *filename)
+t_xyz	*make_map(char *filename, int which)
 {
 	int				width;
 	int				height;
@@ -142,7 +142,11 @@ t_xyz	*make_map(char *filename)
 	int				fd;
 
 	if (map)
+	{
+		if (which)
+			return (map);
 		return (map_copy(map));
+	}
 	width = get_width(filename);
 	height = get_height(filename);
 	if (!(map = (t_xyz*)malloc(sizeof(t_xyz) * (width * height))))
@@ -151,8 +155,6 @@ t_xyz	*make_map(char *filename)
 	get_map_len(width * height);
 	get_map_width(width);
 	set_map(map, fd, width);
-	rotate_x(-1, map, width * height);
-	rotate_y(1, map, width * height);
 	close(fd);
 	return (map_copy(map));
 }

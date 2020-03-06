@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 16:48:27 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 21:02:28 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx);
 int				fdf(void **mlx);
 void			mlx_clear_image(void **mlx);
 int				get_height(char *filename);
-t_xyz			*make_map(char *filename);
+t_xyz			*make_map(char *filename, int which);
 int				get_width(char *filename);
 void			init_image(void **mlx);
 void			help_text(void **mlx);
@@ -86,6 +86,8 @@ void			rotate_z(float angle, t_xyz *nodes, int amount);
 void			add_perspective(t_xyz *start, t_xyz *stop);
 t_xyz			get_color(int set);
 void			draw(t_xyz *nodes, int map_len, void **mlx);
+t_xyz			add_color_height(t_xyz color);
+int				save_coord(int start_i, int stop_i, int which);
 
 #endif
 

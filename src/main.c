@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 14:44:27 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:03:17 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		main(int argc, char **argv)
 
 	if (argc != 2)
 		ft_error(argv[0]);
-	make_map(argv[1]);
+	make_map(argv[1], 0);
 	check_file(argv[1]);
 	mlx_ptr = mlx_init();
 	win_init(argv[1], &mlx_ptr, &win_ptr, &img_ptr);
