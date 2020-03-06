@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 20:53:59 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 23:45:03 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	matrix_transform(t_xyz *nodes, int amount)
 	y = cursor.y;
 }
 
-void		reset(void)
+void	reset(void)
 {
 	int i;
 
@@ -62,32 +62,6 @@ int		matrix(void **mlx)
 	matrix_transform(nodes, amount);
 	draw(nodes, amount, mlx);
 	return (0);
-}
-
-void	fps(void **mlx)
-{
-	struct timeval	time;
-	static long		s = 0;
-	static int		i = 0;
-	static int		fps = 0;
-	static int		height = 0;
-	char			*str;
-
-	i++;
-	if (!height)
-		height = get_height(NULL);
-	gettimeofday(&time, NULL);
-	str = ft_itoa(fps);
-	if (get_settings(8, NULL))
-		mlx_string_put(mlx[0], mlx[1], 10,
-		height - 30, 0xFFFF00, str);
-	free(str);
-	if (s != time.tv_sec)
-	{
-		s = time.tv_sec;
-		fps = i;
-		i = 0;
-	}
 }
 
 int		fdf(void **mlx)

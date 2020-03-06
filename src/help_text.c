@@ -6,11 +6,43 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 10:59:13 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 21:11:21 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 23:44:38 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	put_fps(void **mlx, int fps)
+{
+	static int		height = 0;
+	char			*str;
+
+	if (!height)
+		height = get_height(NULL);
+	str = ft_itoa(fps);
+	mlx_string_put(mlx[0], mlx[1], 10,
+	height - 30, 0xFFFF00, str);
+	free(str);
+}
+
+void	fps(void **mlx)
+{
+	struct timeval	time;
+	static long		s = 0;
+	static int		i = 0;
+	static int		fps = 0;
+
+	i++;
+	gettimeofday(&time, NULL);
+	if (get_settings(8, NULL))
+		put_fps(mlx, fps);
+	if (s != time.tv_sec)
+	{
+		s = time.tv_sec;
+		fps = i;
+		i = 0;
+	}
+}
 
 void	help_text(void **mlx)
 {

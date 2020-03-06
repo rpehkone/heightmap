@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 14:10:55 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 23:45:58 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,7 @@ void	cycle_colors(t_xyz *color)
 			old = ((int)red * 65536 + (int)grn * 256 + (int)blu);
 			i++;
 		}
-	if (i > 310)
-		i = 0;
+	i = i > 310 ? 0 : i;
 	red = sin(0.02 * i + 0) * 127 + 128;
 	grn = sin(0.02 * i + 2) * 127 + 128;
 	blu = sin(0.02 * i + 4) * 127 + 128;

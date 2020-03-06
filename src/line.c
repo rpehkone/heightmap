@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:19:28 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 23:29:27 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/06 23:35:28 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ double	ft_abs(double n)
 	return (n);
 }
 
-int		make_fade(t_xyz color, unsigned fade, unsigned fadeout, signed xred)
+int		make_fade(t_xyz color, unsigned fade, signed xred)
 {
 	signed xgrn;
 	signed xblu;
@@ -38,25 +38,12 @@ int		make_fade(t_xyz color, unsigned fade, unsigned fadeout, signed xred)
 	yred = (int)(((double)fade / 0xFF) * yred);
 	ygrn = (int)(((double)fade / 0xFF) * ygrn);
 	yblu = (int)(((double)fade / 0xFF) * yblu);
-	fadeout++;
-
 	xred = xred < 0 ? 0 : xred;
 	xgrn = xgrn < 0 ? 0 : xgrn;
 	xblu = xblu < 0 ? 0 : xblu;
 	yred = yred > 0xFF ? 0xFF : yred;
 	ygrn = ygrn > 0xFF ? 0xFF : ygrn;
 	yblu = yblu > 0xFF ? 0xFF : yblu;
-	//printf("%d\n", 0xFF - fade);	
-	/*printf("xred = 0x%x\n", xred);
-	printf("xgrn = 0x%x\n", xgrn);
-	printf("xblu = 0x%x\n", xblu);
-	printf("yred = 0x%x\n", yred);
-	printf("ygrn = 0x%x\n", ygrn);
-	printf("yblu = 0x%x\n\n", yblu);
-	printf("fade = 0x%x\n", fade);
-	*/
-	//printf("%x\n\n\n", (xred << 4 * 4) + (xgrn << 4 * 2) + xblu +
-	//		(yred << 4 * 4) + (ygrn << 4 * 2) + yblu);
 	return ((xred << 4 * 4) + (xgrn << 4 * 2) + xblu +
 			(yred << 4 * 4) + (ygrn << 4 * 2) + yblu);
 }
@@ -93,8 +80,7 @@ void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 	while (pos.z <= step.z && i < 1000)
 	{
 		adjust_to_middle(mlx, pos.x, pos.y,
-				make_fade(color, 0xFF * ((pos.z) / (step.z)),
-					0xFF * ((step.z - pos.z) / (step.z)), 0));
+				make_fade(color, 0xFF * ((pos.z) / (step.z)), 0));
 		pos.x += step.x;
 		pos.y += step.y;
 		pos.z++;
