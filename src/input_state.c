@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 22:35:09 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 15:50:45 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 22:27:23 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int		is_key_down(int call, int key)
 	if (!keyb)
 	{
 		i = 0;
-		if (!(keyb = (int*)malloc(sizeof(int) * 1000)))
+		if (!(keyb = (int*)malloc(sizeof(int) * 310)))
 			ft_error(NULL);
-		while (i < 1000)
+		while (i < 300)
 		{
 			keyb[i] = 0;
 			i++;
@@ -57,7 +57,7 @@ int		is_mouse_down(int call, int button)
 	if (!mouse)
 	{
 		i = 0;
-		if (!(mouse = (int*)malloc(sizeof(int) * 1000)))
+		if (!(mouse = (int*)malloc(sizeof(int) * 7)))
 			ft_error(NULL);
 		while (i < 6)
 		{
