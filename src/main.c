@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 21:28:53 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 21:53:27 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_error(char *str)
 void	check_first(char *filename)
 {
 	char	*line;
-	int 	fd;
+	int		fd;
 	int		i;
 
 	fd = open(filename, O_RDONLY);
