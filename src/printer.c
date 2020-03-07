@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 16:44:10 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 12:44:21 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:02:09 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@ t_xyz	get_color(int set)
 	return (color);
 }
 
-void	move_center(t_xyz *start, t_xyz *stop, void **mlx)
+void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 {
 	static double	zoom = -500;
 	static int		w_move = 0;
 	static int		h_move = 0;
 
+	if (reset)
+		zoom = -500;
+	if (reset)
+		return ;
 	if (get_settings(0, NULL) && is_mouse_down(0, 4))
 		zoom += 0.1;
 	if (get_settings(0, NULL) && is_mouse_down(0, 5))
@@ -86,7 +90,7 @@ void	center_image(t_xyz *start, t_xyz *stop, void **mlx)
 	start->y += y;
 	stop->x += x;
 	stop->y += y;
-	move_center(start, stop, mlx);
+	move_center(start, stop, 0, mlx);
 }
 
 void	draw2(t_xyz *nodes, int map_len, void **mlx)

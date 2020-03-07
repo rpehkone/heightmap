@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 23:45:58 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:15:48 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ int		gradient(void **mlx)
 	if (is_mouse_down(0, 1))
 	{
 		cursor = get_cursor(0, 0, NULL);
-		get_color(set_gradient_color(cursor.x, cursor.y));
+		if (cursor.x < 311 && (cursor.y < 341 && cursor.y > 30))
+			get_color(set_gradient_color(cursor.x, cursor.y));
+		else if (cursor.y > 30)
+			get_settings(-5, NULL);
 	}
 	return (1);
 }

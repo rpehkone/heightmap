@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 12:50:17 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:22:31 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ void	matrix_transform(t_xyz *nodes, int amount)
 	cursor = get_cursor(0, 0, NULL);
 	if (get_settings(3, NULL))
 		rotate_y((float)0.01, nodes, amount);
-	if (get_settings(0, NULL) && is_mouse_down(0, 1))
+	if ((!get_settings(5, NULL) && get_settings(0, NULL) && is_mouse_down(0, 1)))
+	{
 		rotate_y((float)0.01 * (x - cursor.x), nodes, amount);
-	if (get_settings(0, NULL) && is_mouse_down(0, 1))
 		rotate_x(-1 * (float)0.01 * (y - cursor.y), nodes, amount);
+	}
 	x = cursor.x;
 	y = cursor.y;
 }
 
-void	reset(void)
+void	reset(void **mlx)
 {
 	int i;
 
@@ -40,6 +41,7 @@ void	reset(void)
 		i++;
 	}
 	get_color(0xFFFFFF);
+	move_center(NULL, NULL, 1, mlx);
 }
 
 int		matrix(void **mlx)
@@ -52,7 +54,7 @@ int		matrix(void **mlx)
 		nodes = make_map(NULL, 0);
 		rotate_x(-1, nodes, get_map_len(0));
 		rotate_y(1, nodes, get_map_len(0));
-		reset();
+		reset(mlx);
 	}
 	if (!amount)
 		amount = get_map_len(0);
