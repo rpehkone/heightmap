@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 19:50:06 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 20:42:32 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int		get_width(char *filename)
 	}
 	open(filename, O_RDONLY);
 	get_next_line(3, &line);
-	while (line[i])
+	while (line[i] && (width = width + 1))
 	{
 		while (line[i] && line[i] == ' ')
 			i++;
 		while (line[i] && line[i] != ' ')
 			i++;
-		width++;
 	}
+	width = line[i - 1] == ' ' ? width - 1 : width;
 	free(line);
 	return (width);
 }
@@ -105,7 +105,7 @@ t_xyz	*make_map(char *filename, int which)
 	fd = open(filename, O_RDONLY);
 	get_map_len(width * height);
 	get_map_width(width);
-	set_map(map, fd, width);
+	set_map(map, fd, width, get_map_len(0) / width / 2);
 	close(fd);
 	return (map_copy(map));
 }
