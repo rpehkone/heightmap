@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 22:35:09 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/04 22:36:04 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:50:45 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,25 @@ int		is_mouse_down(int call, int button)
 		mouse[button] = 1;
 	else if (call == 2)
 		mouse[button] = 0;
+	return (0);
+}
+
+int		get_map_len(int n)
+{
+	static int	len = 0;
+
+	if (!n)
+		return (len);
+	len = n;
+	return (0);
+}
+
+int		get_map_width(int n)
+{
+	static int	len = 0;
+
+	if (!n)
+		return (len);
+	len = n;
 	return (0);
 }

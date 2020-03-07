@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 16:44:10 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 14:08:21 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:49:08 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,9 @@ void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 	start->z -= zoom;
 	stop->z -= zoom;
 	if (!get_settings(1, NULL))
-		add_perspective(start, stop);
-	if (!w_move)
-		w_move = get_width(NULL) / 2;
-	if (!h_move)
-		h_move = get_height(NULL) / 2 + 30;
+		add_perspective(start, stop, mlx);
+	w_move = w_move ? w_move : get_width(NULL) / 2;
+	h_move = h_move ? h_move : get_height(NULL) / 2 + 30;
 	start->x += w_move;
 	start->y += h_move;
 	stop->x += w_move;
@@ -125,23 +123,22 @@ void	draw2(t_xyz *nodes, int map_len, void **mlx)
 
 void	draw(t_xyz *nodes, int map_len, void **mlx)
 {
-	int		origo_len;
-	int		i;
+	static int	origo_len = 900;
+	int			i;
 
-	origo_len = 900;
+	if (get_settings(2, NULL))
+		slider(mlx, &i);
+	else if (get_settings(4, NULL))
+		slider(mlx, &origo_len);
+	else if (get_settings(5, NULL))
+		gradient(mlx);
 	i = -1;
-	while (i++ < map_len)
+	while (++i < map_len)
 		nodes[i].z += origo_len;
 	draw2(nodes, map_len, mlx);
 	i = -1;
-	while (i++ < map_len)
+	while (++i < map_len)
 		nodes[i].z -= origo_len;
-	if (get_settings(2, NULL))
-		slider(mlx, &origo_len, 0);
-	else if (get_settings(4, NULL))
-		slider(mlx, &i, 0);
-	else if (get_settings(5, NULL))
-		gradient(mlx);
 	if (get_settings(6, NULL))
 		get_color(-2);
 }

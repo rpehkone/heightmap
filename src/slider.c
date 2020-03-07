@@ -6,36 +6,26 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 19:28:22 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/05 17:23:04 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:49:26 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	slider_button(void **mlx, int *n, int move)
+void	print_slider_button(void **mlx, int x)
 {
 	t_xyz	start;
 	t_xyz	stop;
 	t_xyz	color;
-	t_xyz	cursor;
 	int		i;
 
 	color.x = 0xFFFFFF;
 	color.y = 0xFFFFFF;
 	color.z = 1;
-	cursor = get_cursor(0, 0, NULL);
-	start.x = cursor.x;
+	start.x = x;
 	start.y = 38;
-	stop.x = cursor.x;
+	stop.x = x;
 	stop.y = 49;
-	if (start.x < 5)
-		start.x = 5;
-	if (start.x > 150)
-		start.x = 150;
-	if (stop.x < 5)
-		stop.x = 5;
-	if (stop.x > 150)
-		stop.x = 150;
 	print_line(start, stop, color, mlx);
 	i = 0;
 	while (i < 5)
@@ -45,32 +35,79 @@ void	slider_button(void **mlx, int *n, int move)
 		print_line(start, stop, color, mlx);
 		i++;
 	}
-	(void)n;
-	(void)move;
 }
 
-void	slider(void **mlx, int *n, int move)
+void	slider_button(void **mlx, int *n)
 {
-	t_xyz start;
-	t_xyz stop;
-	t_xyz color;
+	static int	slider_x = 5;
+	static int	allow_move = 0;
+	t_xyz		cursor;
+
+	cursor = get_cursor(0, 0, NULL);
+	if (cursor.x < 5)
+		cursor.x = 5;
+	if (cursor.x > 205)
+		cursor.x = 205;
+	if (cursor.x < 110 && cursor.x > 100)
+		cursor.x = 105;
+	if (cursor.x < slider_x + 10 && cursor.x > slider_x - 5 &&
+		cursor.y > 30 && cursor.y < 55)
+		allow_move = 1;
+	if (!is_mouse_down(0, 1))
+		allow_move = 0;
+	if (allow_move)
+		slider_x = cursor.x;
+	printf("%d\n", (int)slider_x - 5);
+	(*n) = slider_x * 10;
+	print_slider_button(mlx, slider_x);
+}
+
+void	print_mid(void **mlx)
+{
+	t_xyz	start;
+	t_xyz	stop;
+	t_xyz	color;
+	int		i;
 
 	color.x = 0x707070;
 	color.y = 0x707070;
 	color.z = 1;
+	start.x = 106;
+	start.y = 40;
+	stop.x = 106;
+	stop.y = 47;
+	i = 0;
+	while (i < 3)
+	{
+		start.x++;
+		stop.x++;
+		print_line(start, stop, color, mlx);
+		i++;
+	}
+}
+
+void	slider(void **mlx, int *n)
+{
+	t_xyz	start;
+	t_xyz	stop;
+	t_xyz	color;
+	int		i;
+
+	print_mid(mlx);
+	color.x = 0x707070;
+	color.y = 0x707070;
+	color.z = 1;
 	start.x = 5;
-	start.y = 42;
-	stop.x = 155;
-	stop.y = 42;
-	print_line(start, stop, color, mlx);
-	start.y++;
-	stop.y++;
-	print_line(start, stop, color, mlx);
-	start.y++;
-	stop.y++;
-	print_line(start, stop, color, mlx);
-	start.y++;
-	stop.y++;
-	print_line(start, stop, color, mlx);
-	slider_button(mlx, n, move);
+	start.y = 41;
+	stop.x = 210;
+	stop.y = 41;
+	i = 0;
+	while (i < 4)
+	{
+		start.y++;
+		stop.y++;
+		print_line(start, stop, color, mlx);
+		i++;
+	}
+	slider_button(mlx, n);
 }

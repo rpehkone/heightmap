@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 13:57:37 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:50:41 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,6 @@ int		get_width(char *filename)
 	}
 	free(line);
 	return (width);
-}
-
-int		get_map_len(int n)
-{
-	static int	len = 0;
-
-	if (!n)
-		return (len);
-	len = n;
-	return (0);
-}
-
-int		get_map_width(int n)
-{
-	static int	len = 0;
-
-	if (!n)
-		return (len);
-	len = n;
-	return (0);
 }
 
 t_xyz	*map_copy(t_xyz *map)

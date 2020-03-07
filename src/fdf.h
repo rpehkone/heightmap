@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 14:00:48 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:10:00 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			buttons_loop(void **mlx);
 int				get_settings(int i, t_button *st);
 int				gradient(void **mlx);
 void			cycle_colors(t_xyz *color);
-void			slider(void **mlx, int *n, int move);
+void			slider(void **mlx, int *n);
 t_xyz			get_cursor(int x, int y, void **mlx);
 int				is_mouse_down(int call, int button);
 int				is_key_down(int call, int key);
@@ -80,7 +80,7 @@ void			rotate_z(float angle, t_xyz *nodes, int amount);
 void			rotate_x(float angle, t_xyz *nodes, int amount);
 void			rotate_y(float angle, t_xyz *nodes, int amount);
 void			rotate_z(float angle, t_xyz *nodes, int amount);
-void			add_perspective(t_xyz *start, t_xyz *stop);
+void			add_perspective(t_xyz *start, t_xyz *stop, void **mlx);
 t_xyz			get_color(int set);
 void			draw(t_xyz *nodes, int map_len, void **mlx);
 t_xyz			add_color_height(t_xyz color);
