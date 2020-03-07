@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 16:44:10 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 21:01:54 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:44:21 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ t_xyz	get_color(int set)
 void	move_center(t_xyz *start, t_xyz *stop, void **mlx)
 {
 	static double	zoom = -500;
+	static int		w_move = 0;
+	static int		h_move = 0;
 
 	if (get_settings(0, NULL) && is_mouse_down(0, 4))
 		zoom += 0.1;
@@ -46,6 +48,15 @@ void	move_center(t_xyz *start, t_xyz *stop, void **mlx)
 	stop->z -= zoom;
 	if (!get_settings(1, NULL))
 		add_perspective(start, stop);
+	if (!w_move)
+	{
+		w_move = get_width(NULL) / 2;
+		h_move = get_height(NULL) / 2;
+	}
+	start->x += w_move;
+	start->y += h_move;
+	stop->x += w_move;
+	stop->y += h_move;
 	print_line(*start, *stop, get_color(0), mlx);
 }
 

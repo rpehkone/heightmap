@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 23:45:03 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:50:17 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,5 @@ int		fdf(void **mlx)
 	matrix(mlx);
 	buttons_loop(mlx);
 	help_text(mlx);
-	fps(mlx);
 	return (0);
 }

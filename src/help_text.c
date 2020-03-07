@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 10:59:13 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 23:44:38 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:51:37 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	help_text(void **mlx)
 	static int	width = 0;
 	static int	height = 0;
 
-	if (is_key_down(0, 4))
-		fade = 0;
+	fps(mlx);
+	fade = is_key_down(0, 4) ? 0 : fade;
 	if (is_key_down(0, 4))
 		color = 0xFFFFFF;
 	else if (!color)

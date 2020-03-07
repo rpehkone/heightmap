@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 20:03:17 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:48:36 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,10 @@ void	win_init(char *filename, void **mlx_ptr, void **win_ptr, void **img_ptr)
 		ft_error(NULL);
 	if (width == 1 && height > 5)
 		ft_error(NULL);
-	if (height < 500)
-		height = 500;
-	if (width < 862)
-		width = 862;
-	if (width > 2000)
-		width = 2000;
-	if (height > 1200)
-		height = 1200;
+	width = get_width(filename);
+	height = get_height(filename);
 	i = ft_strlen(filename);
-	while (i > 0 && filename[i] != '/')
+	while (i >= 0 && filename[i] != '/')
 		i--;
 	*win_ptr = mlx_new_window(*mlx_ptr, width, height, &filename[i + 1]);
 	*img_ptr = mlx_new_image(*mlx_ptr, width, height);
@@ -93,8 +87,8 @@ int		main(int argc, char **argv)
 
 	if (argc != 2)
 		ft_error(argv[0]);
-	make_map(argv[1], 0);
 	check_file(argv[1]);
+	make_map(argv[1], 0);
 	mlx_ptr = mlx_init();
 	win_init(argv[1], &mlx_ptr, &win_ptr, &img_ptr);
 	if (!(mlx = (void **)malloc(sizeof(void *) * 3)))

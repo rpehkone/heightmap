@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:19:28 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 23:35:28 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:36:02 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,6 @@ int		make_fade(t_xyz color, unsigned fade, signed xred)
 			(yred << 4 * 4) + (ygrn << 4 * 2) + yblu);
 }
 
-void	adjust_to_middle(void **mlx, int x, int y, int color)
-{
-	static int	w_move = 0;
-	static int	h_move = 0;
-
-	if (!w_move)
-	{
-		w_move = get_width(NULL) / 2;
-		h_move = get_height(NULL) / 1.3;
-	}
-	image_pixel_put(mlx, w_move + x, h_move + y, color);
-}
-
 void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 {
 	t_xyz	step;
@@ -79,7 +66,7 @@ void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 	step.y = (stop.y - start.y) / (float)step.z;
 	while (pos.z <= step.z && i < 1000)
 	{
-		adjust_to_middle(mlx, pos.x, pos.y,
+		image_pixel_put(mlx, pos.x, pos.y,
 				make_fade(color, 0xFF * ((pos.z) / (step.z)), 0));
 		pos.x += step.x;
 		pos.y += step.y;

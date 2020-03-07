@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 23:42:40 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:52:35 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_xyz			get_color(int set);
 void			draw(t_xyz *nodes, int map_len, void **mlx);
 t_xyz			add_color_height(t_xyz color);
 int				save_coord(int start_i, int stop_i, int which);
-void			fps(void **mlx);
 
 #endif
 
