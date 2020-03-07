@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 21:00:33 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 21:00:48 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 19:15:48 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ int		edit_i_height(int i, int which)
 		map = make_map(NULL, 1);
 	map_i = save_coord(-1, -1, which);
 	i += map[map_i].z;
-	while (i < 0 || i > 310)
-	{
-		if (i < 0)
-			i += 310;
-		else if (i > 310)
-			i -= 310;
-	}
 	return (i);
 }
 
@@ -56,7 +49,7 @@ int		color_add_height(int color, int which)
 	int		j;
 
 	j = 0;
-	i = 1000;
+	i = 0;
 	while (j < 312)
 	{
 		i++;
