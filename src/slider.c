@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 19:28:22 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 17:28:51 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 18:27:03 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,17 @@ void	print_slider_button(void **mlx, int x)
 	}
 }
 
-void	slider_button(void **mlx, int *n)
+void	slider_button(void **mlx, int *n, int reset)
 {
-	static int	slider_x = 105;
+	static int	slider_x = 205;
 	static int	allow_move = 0;
 	t_xyz		cursor;
 
+	if (reset)
+	{
+		slider_x = 205;
+		return ;
+	}
 	cursor = get_cursor(0, 0, NULL);
 	if (cursor.x < 5)
 		cursor.x = 5;
@@ -85,6 +90,20 @@ void	print_mid(void **mlx)
 	}
 }
 
+void	check_collision(void)
+{
+	t_xyz	cursor;
+
+	if (is_mouse_down(0, 1))
+	{
+		cursor = get_cursor(0, 0, NULL);
+		if (cursor.x < 311 && (cursor.y < 200 && cursor.y > 30))
+			return ;
+		else if (cursor.y > 30)
+			get_settings(-2, NULL);
+	}
+}
+
 void	slider(void **mlx, int *n)
 {
 	t_xyz	start;
@@ -108,5 +127,6 @@ void	slider(void **mlx, int *n)
 		print_line(start, stop, color, mlx);
 		i++;
 	}
-	slider_button(mlx, n);
+	check_collision();
+	slider_button(mlx, n, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 14:50:23 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 15:24:20 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 18:23:34 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,19 @@ void	rotate_z(float angle, t_xyz *nodes, int amount)
 	}
 }
 
-void	add_perspective(t_xyz *start, t_xyz *stop, void **mlx)
+void	add_perspective(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 {
-	static int		focal_len = 1000;
+	static int		focal_len = 1025;
 
+	if (reset)
+	{
+		focal_len = 1025;
+		return ;
+	}
 	start->x /= ((start->z) / (focal_len));
 	start->y /= ((start->z) / (focal_len));
 	stop->x /= ((stop->z) / (focal_len));
 	stop->y /= ((stop->z) / (focal_len));
-	if (get_settings(4, NULL))
+	if (get_settings(2, NULL))
 		slider(mlx, &focal_len);
 }

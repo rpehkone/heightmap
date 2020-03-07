@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 16:46:55 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 18:40:39 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <fcntl.h>
 # include <math.h>
 # include <sys/time.h>
-#include <stdio.h>
 
 typedef struct	s_xyz {
 	double		x;
@@ -80,13 +79,16 @@ void			rotate_z(float angle, t_xyz *nodes, int amount);
 void			rotate_x(float angle, t_xyz *nodes, int amount);
 void			rotate_y(float angle, t_xyz *nodes, int amount);
 void			rotate_z(float angle, t_xyz *nodes, int amount);
-void			add_perspective(t_xyz *start, t_xyz *stop, void **mlx);
+void			add_perspective(t_xyz *start, t_xyz *stop,
+					int reset, void **mlx);
 t_xyz			get_color(int set);
-void			draw(t_xyz *nodes, int map_len, void **mlx);
+void			draw(t_xyz *nodes, int map_len, int reset, void **mlx);
 t_xyz			add_color_height(t_xyz color);
 int				save_coord(int start_i, int stop_i, int which);
 void			move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx);
 void			print_edge(t_xyz start, t_xyz stop, t_button *b, void **mlx);
 void			print_button(t_button *b, void **mlx);
+void			slider_button(void **mlx, int *n, int reset);
+void			center_image(t_xyz *start, t_xyz *stop, int reset, void **mlx);
 
 #endif

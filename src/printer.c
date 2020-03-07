@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 16:44:10 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 17:34:34 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 18:40:08 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_xyz	get_color(int set)
 		color.x = set;
 		color.y = set;
 	}
-	if (get_settings(7, NULL))
+	if (get_settings(6, NULL))
 		return (add_color_height(color));
 	return (color);
 }
@@ -48,12 +48,12 @@ void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 		zoom += 0.07;
 	if (get_settings(0, NULL) && is_mouse_down(0, 5))
 		zoom -= 0.07;
-	zoom = zoom > 600 ?  600 : zoom;
+	zoom = zoom > 600 ? 600 : zoom;
 	zoom = zoom < -4000 ? -4000 : zoom;
 	start->z -= zoom;
 	stop->z -= zoom;
 	if (get_settings(1, NULL))
-		add_perspective(start, stop, mlx);
+		add_perspective(start, stop, 0, mlx);
 	w_move = w_move ? w_move : get_width(NULL) / 2;
 	h_move = h_move ? h_move : get_height(NULL) / 2 + 30;
 	start->x += w_move;
@@ -63,7 +63,7 @@ void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 	print_line(*start, *stop, get_color(0), mlx);
 }
 
-void	center_image(t_xyz *start, t_xyz *stop, void **mlx)
+void	center_image(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 {
 	static int	x = 0;
 	static int	y = 0;
@@ -71,14 +71,13 @@ void	center_image(t_xyz *start, t_xyz *stop, void **mlx)
 	static int	coordy = 0;
 	t_xyz		cursor;
 
-	cursor = get_cursor(0, 0, NULL);
-	if (!x)
+	if (reset)
 	{
-		x = get_width(NULL) / 2;
-		y = get_height(NULL) / 2;
 		x = 0;
 		y = 0;
+		return ;
 	}
+	cursor = get_cursor(0, 0, NULL);
 	if (get_settings(0, NULL) && is_mouse_down(0, 3))
 		x -= coordx - cursor.x;
 	if (get_settings(0, NULL) && is_mouse_down(0, 3))
@@ -109,28 +108,31 @@ void	draw2(t_xyz *nodes, int map_len, void **mlx)
 		{
 			start = nodes[i];
 			stop = nodes[i + 1];
-			center_image(&start, &stop, mlx);
+			center_image(&start, &stop, 0, mlx);
 		}
 		save_coord(i, i + width, 0);
 		if (i + width < map_len)
 		{
 			start = nodes[i];
 			stop = nodes[i + width];
-			center_image(&start, &stop, mlx);
+			center_image(&start, &stop, 0, mlx);
 		}
 	}
 }
 
-void	draw(t_xyz *nodes, int map_len, void **mlx)
+void	draw(t_xyz *nodes, int map_len, int reset, void **mlx)
 {
-	static int	origo_len = 900;
+	static int	origo_len = 1025;
 	int			i;
 
+	if (reset)
+	{
+		origo_len = 1025;
+		return ;
+	}
 	if (get_settings(2, NULL))
-		slider(mlx, &i);
-	else if (get_settings(4, NULL))
 		slider(mlx, &origo_len);
-	else if (get_settings(5, NULL))
+	else if (get_settings(4, NULL))
 		gradient(mlx);
 	i = -1;
 	while (++i < map_len)
@@ -139,6 +141,6 @@ void	draw(t_xyz *nodes, int map_len, void **mlx)
 	i = -1;
 	while (++i < map_len)
 		nodes[i].z -= origo_len;
-	if (get_settings(6, NULL))
+	if (get_settings(5, NULL))
 		get_color(-2);
 }

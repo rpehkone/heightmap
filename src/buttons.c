@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 14:02:35 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:56:16 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,18 @@ void		set_button_text(t_button *b)
 	else if (i == 1)
 		ft_strcpy(b->text, "projection");
 	else if (i == 2)
-		ft_strcpy(b->text, "depth");
+		ft_strcpy(b->text, "fov");
 	else if (i == 3)
 		ft_strcpy(b->text, "spin");
 	else if (i == 4)
-		ft_strcpy(b->text, "focal lenght");
-	else if (i == 5)
 		ft_strcpy(b->text, "color");
-	else if (i == 6)
+	else if (i == 5)
 		ft_strcpy(b->text, "cycle colors");
-	else if (i == 7)
+	else if (i == 6)
 		ft_strcpy(b->text, "height coloring");
-	else if (i == 8)
+	else if (i == 7)
 		ft_strcpy(b->text, "fps");
-	else if (i == 9)
+	else if (i == 8)
 		ft_strcpy(b->text, "reset");
 	i++;
 }
@@ -95,11 +93,10 @@ t_button	init_buttons(void)
 
 void		on_click(t_button *all_b, int i, int *click)
 {
-	if (all_b[i].is_down == 0 && (i == 2 || i == 4 | i == 5))
+	if (all_b[i].is_down == 0 && (i == 2 || i == 4))
 	{
 		all_b[2].is_down = 0;
 		all_b[4].is_down = 0;
-		all_b[5].is_down = 0;
 	}
 	all_b[i].is_down = all_b[i].is_down ? 0 : 1;
 	click[i] = 0;
@@ -113,15 +110,15 @@ void		buttons_loop(void **mlx)
 
 	if ((i = -1) && !all_b)
 	{
-		if (!(all_b = (t_button*)malloc(sizeof(t_button) * 10)))
+		if (!(all_b = (t_button*)malloc(sizeof(t_button) * 9)))
 			ft_error(NULL);
-		while (++i < 10)
+		while (++i < 9)
 			all_b[i] = init_buttons();
 		get_settings(0, all_b);
 	}
 	if (!(i = 0) && !is_mouse_down(0, 1) && !is_mouse_down(0, 3))
 		all_b[0].is_down = 1;
-	while (++i < 10)
+	while (++i < 9)
 		if (handle_button(mlx, all_b[i]) || (click[i] = 0))
 		{
 			all_b[0].is_down = 0;

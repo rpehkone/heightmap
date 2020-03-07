@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 10:59:13 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 12:51:37 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 18:29:40 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	put_fps(void **mlx, int fps)
 	static int		height = 0;
 	char			*str;
 
+	str = NULL;
 	if (!height)
 		height = get_height(NULL);
 	str = ft_itoa(fps);
 	mlx_string_put(mlx[0], mlx[1], 10,
 	height - 30, 0xFFFF00, str);
 	free(str);
+	str = NULL;
 }
 
 void	fps(void **mlx)
@@ -34,7 +36,7 @@ void	fps(void **mlx)
 
 	i++;
 	gettimeofday(&time, NULL);
-	if (get_settings(8, NULL))
+	if (get_settings(7, NULL))
 		put_fps(mlx, fps);
 	if (s != time.tv_sec)
 	{
