@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 13:22:31 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 14:02:50 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,30 @@ void	matrix_transform(t_xyz *nodes, int amount)
 	cursor = get_cursor(0, 0, NULL);
 	if (get_settings(3, NULL))
 		rotate_y((float)0.01, nodes, amount);
-	if ((!get_settings(5, NULL) && get_settings(0, NULL) && is_mouse_down(0, 1)))
+	if (is_mouse_down(0, 1) &&
+		!get_settings(5, NULL) && get_settings(0, NULL))
 	{
 		rotate_y((float)0.01 * (x - cursor.x), nodes, amount);
 		rotate_x(-1 * (float)0.01 * (y - cursor.y), nodes, amount);
 	}
 	x = cursor.x;
 	y = cursor.y;
+}
+
+int		get_settings(int i, t_button *all_b)
+{
+	static t_button	*st = NULL;
+
+	if (!st && all_b)
+	{
+		st = all_b;
+		return (0);
+	}
+	if (i < 0)
+	{
+		st[i * -1].is_down = 0;
+	}
+	return (st[i].is_down);
 }
 
 void	reset(void **mlx)

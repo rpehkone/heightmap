@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 13:02:31 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 14:00:48 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void			draw(t_xyz *nodes, int map_len, void **mlx);
 t_xyz			add_color_height(t_xyz color);
 int				save_coord(int start_i, int stop_i, int which);
 void			move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx);
+void			print_edge(t_xyz start, t_xyz stop, t_button *b, void **mlx);
+void			print_button(t_button *b, void **mlx);
 
 #endif
 

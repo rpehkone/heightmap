@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 16:44:10 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 13:02:09 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 14:08:21 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,28 @@ t_xyz	get_color(int set)
 
 void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 {
-	static double	zoom = -500;
+	static double	zoom = -600;
 	static int		w_move = 0;
 	static int		h_move = 0;
 
 	if (reset)
-		zoom = -500;
+		zoom = -1 * get_map_len(0) / 2;
 	if (reset)
 		return ;
 	if (get_settings(0, NULL) && is_mouse_down(0, 4))
 		zoom += 0.1;
 	if (get_settings(0, NULL) && is_mouse_down(0, 5))
 		zoom -= 0.1;
+	if (zoom > 600)
+		zoom = 600;
 	start->z -= zoom;
 	stop->z -= zoom;
 	if (!get_settings(1, NULL))
 		add_perspective(start, stop);
 	if (!w_move)
-	{
 		w_move = get_width(NULL) / 2;
-		h_move = get_height(NULL) / 2;
-	}
+	if (!h_move)
+		h_move = get_height(NULL) / 2 + 30;
 	start->x += w_move;
 	start->y += h_move;
 	stop->x += w_move;
@@ -78,7 +79,7 @@ void	center_image(t_xyz *start, t_xyz *stop, void **mlx)
 		x = get_width(NULL) / 2;
 		y = get_height(NULL) / 2;
 		x = 0;
-		y = -200;
+		y = 0;
 	}
 	if (get_settings(0, NULL) && is_mouse_down(0, 3))
 		x -= coordx - cursor.x;

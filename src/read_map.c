@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/06 20:50:55 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:57:37 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ int		get_map_width(int n)
 
 t_xyz	*map_copy(t_xyz *map)
 {
-	int	i;
-	int len;
 	static t_xyz	*map_copy = NULL;
+	int				len;
+	int				i;
 
 	len = get_map_len(0);
 	if (!map_copy)
