@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 19:45:07 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 19:57:08 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	set_rest(int *x, int y, int width, t_xyz *map)
 {
 	int		height;
 
+	y--;
 	height = get_map_len(0) / width / 2;
 	while ((*x) - y * width < width)
 	{
@@ -50,8 +51,7 @@ void	set_map(t_xyz *map, int fd, int width)
 				i++;
 			x++;
 		}
-		set_rest(&x, y, width, map);
-		y++;
+		set_rest(&x, ++y, width, map);
 		free(line);
 	}
 }
