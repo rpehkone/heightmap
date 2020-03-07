@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:06:50 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 20:42:32 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 21:27:40 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ int		get_width(char *filename)
 	char		*line;
 	static int	width = 0;
 
-	if (!(i = 0) && width != 0)
+	if (width != 0)
 	{
 		if (width * 50 < 694)
 			return (694);
 		else if (width * 50 > 2000)
 			return (2000);
-		else
-			return (width * 50);
+		return (width * 50);
 	}
-	open(filename, O_RDONLY);
-	get_next_line(3, &line);
+	i = open(filename, O_RDONLY);
+	get_next_line(i, &line);
+	i = 0;
 	while (line[i] && (width = width + 1))
 	{
 		while (line[i] && line[i] == ' ')
@@ -100,6 +100,9 @@ t_xyz	*make_map(char *filename, int which)
 	}
 	width = get_width(filename);
 	height = get_height(filename);
+	if ((width == 1 && height == 1) || (width > 5 && height == 1) ||
+		(width == 1 && height == 1) || (width == 1 && height > 5))
+		ft_error(NULL);
 	if (!(map = (t_xyz*)malloc(sizeof(t_xyz) * (width * height))))
 		ft_error(NULL);
 	fd = open(filename, O_RDONLY);

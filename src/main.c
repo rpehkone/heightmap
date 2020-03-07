@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 12:48:36 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 21:28:53 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,32 @@ void	ft_error(char *str)
 	exit(0);
 }
 
+void	check_first(char *filename)
+{
+	char	*line;
+	int 	fd;
+	int		i;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 2)
+		ft_error(NULL);
+	i = get_next_line(fd, &line);
+	if (i == -1)
+		ft_error(NULL);
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] >= '0' && line[i] <= '9')
+		{
+			free(line);
+			return ;
+		}
+		i++;
+	}
+	free(line);
+	ft_error(NULL);
+}
+
 void	check_file(char *filename)
 {
 	int		i;
@@ -34,8 +60,7 @@ void	check_file(char *filename)
 	char	*line;
 	char	c;
 
-	if (open(filename, O_RDONLY) < 2)
-		ft_error(NULL);
+	check_first(filename);
 	fd = open(filename, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
@@ -65,12 +90,6 @@ void	win_init(char *filename, void **mlx_ptr, void **win_ptr, void **img_ptr)
 	height = get_height(filename);
 	if (!width || !height)
 		ft_error(NULL);
-	if ((width == 1 && height == 1) || (width > 5 && height == 1))
-		ft_error(NULL);
-	if (width == 1 && height > 5)
-		ft_error(NULL);
-	width = get_width(filename);
-	height = get_height(filename);
 	i = ft_strlen(filename);
 	while (i >= 0 && filename[i] != '/')
 		i--;
