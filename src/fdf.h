@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 18:40:39 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 19:52:48 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct	s_button {
 	char		text[20];
 }				t_button;
 
-int				handle_loop(void **mlx);
 int				handle_keyboard_down(int key, void **mlx);
 int				handle_keyboard_up(int key, void **mlx);
 int				handle_mouse_down(int button, int x, int y, void **mlx);
@@ -76,9 +75,6 @@ void			ft_error(char *str);
 void			rotate_x(float angle, t_xyz *nodes, int amount);
 void			rotate_y(float angle, t_xyz *nodes, int amount);
 void			rotate_z(float angle, t_xyz *nodes, int amount);
-void			rotate_x(float angle, t_xyz *nodes, int amount);
-void			rotate_y(float angle, t_xyz *nodes, int amount);
-void			rotate_z(float angle, t_xyz *nodes, int amount);
 void			add_perspective(t_xyz *start, t_xyz *stop,
 					int reset, void **mlx);
 t_xyz			get_color(int set);
@@ -90,5 +86,6 @@ void			print_edge(t_xyz start, t_xyz stop, t_button *b, void **mlx);
 void			print_button(t_button *b, void **mlx);
 void			slider_button(void **mlx, int *n, int reset);
 void			center_image(t_xyz *start, t_xyz *stop, int reset, void **mlx);
+void			set_map(t_xyz *map, int fd, int width);
 
 #endif
