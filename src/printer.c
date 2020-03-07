@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 16:44:10 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 15:49:08 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:34:34 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 	if (reset)
 		return ;
 	if (get_settings(0, NULL) && is_mouse_down(0, 4))
-		zoom += 0.1;
+		zoom += 0.07;
 	if (get_settings(0, NULL) && is_mouse_down(0, 5))
-		zoom -= 0.1;
-	if (zoom > 600)
-		zoom = 600;
+		zoom -= 0.07;
+	zoom = zoom > 600 ?  600 : zoom;
+	zoom = zoom < -4000 ? -4000 : zoom;
 	start->z -= zoom;
 	stop->z -= zoom;
-	if (!get_settings(1, NULL))
+	if (get_settings(1, NULL))
 		add_perspective(start, stop, mlx);
 	w_move = w_move ? w_move : get_width(NULL) / 2;
 	h_move = h_move ? h_move : get_height(NULL) / 2 + 30;

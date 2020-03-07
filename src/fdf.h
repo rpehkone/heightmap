@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 20:49:05 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 15:10:00 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 16:46:55 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,3 @@ void			print_edge(t_xyz start, t_xyz stop, t_button *b, void **mlx);
 void			print_button(t_button *b, void **mlx);
 
 #endif
-

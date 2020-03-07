@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:19:28 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 12:36:02 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:10:00 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 	int		i;
 
 	i = 0;
-	if (start.z < 0 || stop.z < 0)
+	if (get_settings(1, NULL) && (start.z < 0 || stop.z < 0))
 		return ;
 	pos.x = start.x;
 	pos.y = start.y;

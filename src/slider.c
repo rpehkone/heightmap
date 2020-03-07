@@ -6,7 +6,7 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 19:28:22 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 15:49:26 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:28:51 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_slider_button(void **mlx, int x)
 
 void	slider_button(void **mlx, int *n)
 {
-	static int	slider_x = 5;
+	static int	slider_x = 105;
 	static int	allow_move = 0;
 	t_xyz		cursor;
 
@@ -57,8 +57,7 @@ void	slider_button(void **mlx, int *n)
 		allow_move = 0;
 	if (allow_move)
 		slider_x = cursor.x;
-	printf("%d\n", (int)slider_x - 5);
-	(*n) = slider_x * 10;
+	(*n) = slider_x * 5;
 	print_slider_button(mlx, slider_x);
 }
 
