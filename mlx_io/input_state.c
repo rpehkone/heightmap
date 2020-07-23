@@ -6,17 +6,17 @@
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 22:35:09 by rpehkone          #+#    #+#             */
-/*   Updated: 2020/03/07 22:27:23 by rpehkone         ###   ########.fr       */
+/*   Updated: 2020/03/12 20:04:53 by rpehkone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "mlx_io.h"
 
-t_xyz	get_cursor(int x, int y, void **mlx)
+t_int_xy	set_cursor(int call, int x, int y)
 {
-	static t_xyz	c = {.x = 0, .y = 0, .z = 0};
+	static t_int_xy	c = {.x = 0, .y = 0};
 
-	if (mlx)
+	if (call)
 	{
 		c.x = x;
 		c.y = y;
@@ -24,7 +24,7 @@ t_xyz	get_cursor(int x, int y, void **mlx)
 	return (c);
 }
 
-int		is_key_down(int call, int key)
+int			set_key(int call, int key)
 {
 	static int	*keyb = NULL;
 	int			i;
@@ -49,7 +49,7 @@ int		is_key_down(int call, int key)
 	return (0);
 }
 
-int		is_mouse_down(int call, int button)
+int			set_mouse(int call, int button)
 {
 	static int	*mouse = NULL;
 	int			i;
@@ -71,25 +71,5 @@ int		is_mouse_down(int call, int button)
 		mouse[button] = 1;
 	else if (call == 2)
 		mouse[button] = 0;
-	return (0);
-}
-
-int		get_map_len(int n)
-{
-	static int	len = 0;
-
-	if (!n)
-		return (len);
-	len = n;
-	return (0);
-}
-
-int		get_map_width(int n)
-{
-	static int	len = 0;
-
-	if (!n)
-		return (len);
-	len = n;
 	return (0);
 }

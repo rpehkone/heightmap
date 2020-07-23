@@ -12,6 +12,26 @@
 
 #include "fdf.h"
 
+int		get_map_len(int n)
+{
+	static int	len = 0;
+
+	if (!n)
+		return (len);
+	len = n;
+	return (0);
+}
+
+int		get_map_width(int n)
+{
+	static int	len = 0;
+
+	if (!n)
+		return (len);
+	len = n;
+	return (0);
+}
+
 int		get_height(char *filename)
 {
 	char		*line;

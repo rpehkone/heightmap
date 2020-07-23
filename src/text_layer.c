@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help_text.c                                        :+:      :+:    :+:   */
+/*   text_layer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -46,16 +46,31 @@ void	fps(void **mlx)
 	}
 }
 
-void	help_text(void **mlx)
+void	button_text(void **mlx)
+{
+	static t_button *b = NULL;
+
+	if (!b)
+		b = get_buttons(NULL);
+	for (int i = 0; i < 10; i++)
+		mlx_string_put(mlx[0], mlx[1], b[i].x + 6,
+			b[i].y + 3, b[i].t_color, b[i].text);
+}
+
+void	text_layer()
 {
 	static long	color = 0xFFFFFF;
 	static int	fade = 0;
 	static int	width = 0;
 	static int	height = 0;
+	static void	**mlx = NULL;
 
+	if (!mlx)
+		mlx = get_mlx(NULL);
+	button_text(mlx);
 	fps(mlx);
-	fade = is_key_down(0, 4) ? 0 : fade;
-	if (is_key_down(0, 4))
+	fade = is_key_down(4) ? 0 : fade;
+	if (is_key_down(4))
 		color = 0xFFFFFF;
 	else if (!color)
 		return ;

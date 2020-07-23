@@ -80,7 +80,7 @@ int		set_gradient_color(int x, int y)
 int		gradient(void **mlx)
 {
 	static void *gradient = NULL;
-	t_xyz		cursor;
+	t_int_xy	cursor;
 
 	if (!gradient)
 	{
@@ -89,9 +89,9 @@ int		gradient(void **mlx)
 	}
 	else
 		mlx_put_image_to_window(mlx[0], mlx[1], gradient, 0, 31);
-	if (is_mouse_down(0, 1))
+	if (is_mouse_down(1))
 	{
-		cursor = get_cursor(0, 0, NULL);
+		cursor = get_cursor();
 		if (cursor.x < 311 && (cursor.y < 341 && cursor.y > 30))
 			get_color(set_gradient_color(cursor.x, cursor.y));
 		else if (cursor.y > 30)

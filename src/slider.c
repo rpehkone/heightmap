@@ -41,14 +41,14 @@ void	slider_button(void **mlx, int *n, int reset)
 {
 	static int	slider_x = 205;
 	static int	allow_move = 0;
-	t_xyz		cursor;
+	t_int_xy	cursor;
 
 	if (reset)
 	{
 		slider_x = 205;
 		return ;
 	}
-	cursor = get_cursor(0, 0, NULL);
+	cursor = get_cursor();
 	if (cursor.x < 5)
 		cursor.x = 5;
 	if (cursor.x > 205)
@@ -58,7 +58,7 @@ void	slider_button(void **mlx, int *n, int reset)
 	if (cursor.x < slider_x + 10 && cursor.x > slider_x - 5 &&
 		cursor.y > 30 && cursor.y < 55)
 		allow_move = 1;
-	if (!is_mouse_down(0, 1))
+	if (!is_mouse_down(1))
 		allow_move = 0;
 	if (allow_move)
 		slider_x = cursor.x;
@@ -92,11 +92,11 @@ void	print_mid(void **mlx)
 
 void	check_collision(void)
 {
-	t_xyz	cursor;
+	t_int_xy	cursor;
 
-	if (is_mouse_down(0, 1))
+	if (is_mouse_down(1))
 	{
-		cursor = get_cursor(0, 0, NULL);
+		cursor = get_cursor();
 		if (cursor.x < 311 && (cursor.y < 200 && cursor.y > 30))
 			return ;
 		else if (cursor.y > 30)

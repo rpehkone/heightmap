@@ -19,7 +19,7 @@ double	ft_abs(double n)
 	return (n);
 }
 
-int		make_fade(t_xyz color, unsigned fade, signed xred)
+unsigned	make_fade(t_xyz color, unsigned fade, signed xred)
 {
 	signed xgrn;
 	signed xblu;
@@ -28,16 +28,16 @@ int		make_fade(t_xyz color, unsigned fade, signed xred)
 	signed yblu;
 
 	if (color.x == color.y)
-		return ((int)color.x);
-	xred = (((int)color.x % 0x1000000) >> 4 * 4) - fade;
-	xgrn = (((int)color.x % 0x10000) >> 4 * 2) - fade;
-	xblu = ((int)color.x % 0x100) - fade;
-	yred = (((int)color.y % 0x1000000) >> 4 * 4);
-	ygrn = (((int)color.y % 0x10000) >> 4 * 2);
-	yblu = ((int)color.y % 0x100);
-	yred = (int)(((double)fade / 0xFF) * yred);
-	ygrn = (int)(((double)fade / 0xFF) * ygrn);
-	yblu = (int)(((double)fade / 0xFF) * yblu);
+		return ((signed)color.x);
+	xred = (((signed)color.x % 0x1000000) >> 4 * 4) - fade;
+	xgrn = (((signed)color.x % 0x10000) >> 4 * 2) - fade;
+	xblu = ((signed)color.x % 0x100) - fade;
+	yred = (((signed)color.y % 0x1000000) >> 4 * 4);
+	ygrn = (((signed)color.y % 0x10000) >> 4 * 2);
+	yblu = ((signed)color.y % 0x100);
+	yred = (signed)(((double)fade / 0xFF) * yred);
+	ygrn = (signed)(((double)fade / 0xFF) * ygrn);
+	yblu = (signed)(((double)fade / 0xFF) * yblu);
 	xred = xred < 0 ? 0 : xred;
 	xgrn = xgrn < 0 ? 0 : xgrn;
 	xblu = xblu < 0 ? 0 : xblu;
@@ -54,6 +54,7 @@ void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 	t_xyz	pos;
 	int		i;
 
+	(void)mlx;
 	i = 0;
 	if (!get_settings(1, NULL) && (start.z < 0 || stop.z < 0))
 		return ;
@@ -66,8 +67,7 @@ void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
 	step.y = (stop.y - start.y) / (float)step.z;
 	while (pos.z <= step.z && i < 1000)
 	{
-		image_pixel_put(mlx, pos.x, pos.y,
-				make_fade(color, 0xFF * ((pos.z) / (step.z)), 0));
+		pixel_put(pos.x, pos.y, make_fade(color, 0xFF * ((pos.z) / (step.z)), 0));
 		pos.x += step.x;
 		pos.y += step.y;
 		pos.z++;

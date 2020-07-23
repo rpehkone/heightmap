@@ -44,9 +44,9 @@ void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 		zoom = -1 * get_map_len(0) / 2;
 	if (reset)
 		return ;
-	if (get_settings(0, NULL) && is_mouse_down(0, 4))
+	if (get_settings(0, NULL) && is_mouse_down(4))
 		zoom += 0.07;
-	if (get_settings(0, NULL) && is_mouse_down(0, 5))
+	if (get_settings(0, NULL) && is_mouse_down(5))
 		zoom -= 0.07;
 	zoom = zoom > 600 ? 600 : zoom;
 	zoom = zoom < -4000 ? -4000 : zoom;
@@ -69,7 +69,7 @@ void	center_image(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 	static int	y = 0;
 	static int	coordx = 0;
 	static int	coordy = 0;
-	t_xyz		cursor;
+	t_int_xy	cursor;
 
 	if (reset)
 	{
@@ -77,10 +77,10 @@ void	center_image(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 		y = 0;
 		return ;
 	}
-	cursor = get_cursor(0, 0, NULL);
-	if (get_settings(0, NULL) && is_mouse_down(0, 3))
+	cursor = get_cursor();
+	if (get_settings(0, NULL) && is_mouse_down(3))
 		x -= coordx - cursor.x;
-	if (get_settings(0, NULL) && is_mouse_down(0, 3))
+	if (get_settings(0, NULL) && is_mouse_down(3))
 		y -= coordy - cursor.y;
 	coordx = cursor.x;
 	coordy = cursor.y;
@@ -120,11 +120,12 @@ void	draw2(t_xyz *nodes, int map_len, void **mlx)
 	}
 }
 
-void	draw(t_xyz *nodes, int map_len, int reset, void **mlx)
+void	draw(t_xyz *nodes, int map_len, int reset)
 {
 	static int	origo_len = 1025;
 	int			i;
 
+	void **mlx = get_mlx(NULL);
 	if (reset)
 	{
 		origo_len = 1025;

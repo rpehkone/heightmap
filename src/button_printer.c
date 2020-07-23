@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void		print_button2(t_xyz *start, t_xyz *stop, int color, void **mlx)
+void		print_button2(t_xyz *start, t_xyz *stop, int color)
 {
 	t_xyz	step;
 	t_xyz	pos;
@@ -26,52 +26,53 @@ void		print_button2(t_xyz *start, t_xyz *stop, int color, void **mlx)
 	step.y = (stop->y - start->y) / (float)step.z;
 	while (pos.z <= step.z)
 	{
-		image_pixel_put(mlx, pos.x, pos.y, color);
+		pixel_put(pos.x, pos.y, color);
 		pos.x += step.x;
 		pos.y += step.y;
 		pos.z++;
 	}
 }
 
-void		print_edge(t_xyz start, t_xyz stop, t_button *b, void **mlx)
+void		print_edge(t_xyz start, t_xyz stop, t_button *b)
 {
 	start.x = b->x;
 	start.y = b->y;
 	stop.x = b->x + b->size_x;
 	stop.y = b->y;
-	print_button2(&start, &stop, b->edge_color, mlx);
+	print_button2(&start, &stop, b->edge_color);
 	stop.x = b->x;
 	stop.y = b->y + b->size_y;
-	print_button2(&start, &stop, b->edge_color, mlx);
+	print_button2(&start, &stop, b->edge_color);
 	start.x = b->x;
 	start.y = b->y + b->size_y;
 	stop.x = b->x + b->size_x;
 	stop.y = b->y + b->size_y;
-	print_button2(&start, &stop, b->edge_color, mlx);
+	print_button2(&start, &stop, b->edge_color);
 	start.x = b->x + b->size_x;
 	start.y = b->y;
 	stop.x = b->x + b->size_x;
 	stop.y = b->y + b->size_y;
-	print_button2(&start, &stop, b->edge_color, mlx);
+	print_button2(&start, &stop, b->edge_color);
 }
 
-void		print_button(t_button *b, void **mlx)
+void		print_button(t_button *b)
 {
+	static void	**mlx = NULL;
 	t_xyz start;
 	t_xyz stop;
 
+	if (!mlx)
+		mlx = get_mlx(NULL);
 	start.x = b->x;
 	start.y = b->y;
 	stop.x = b->x + b->size_x;
 	stop.y = b->y;
 	while (start.y < b->y + b->size_y)
 	{
-		print_button2(&start, &stop, b->b_color, mlx);
+		print_button2(&start, &stop, b->b_color);
 		start.y++;
 		stop.y++;
 	}
-	mlx_string_put(mlx[0], mlx[1], b->x + 6,
-			b->y + 3, b->t_color, b->text);
 	if (b->edge)
-		print_edge(start, stop, b, mlx);
+		print_edge(start, stop, b);
 }

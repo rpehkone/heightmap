@@ -14,21 +14,25 @@
 
 void	matrix_transform(t_xyz *nodes, int amount)
 {
-	static int	x = 0;
-	static int	y = 0;
-	t_xyz		cursor;
+	static float	x = 0;
+	static float	x2 = 0;
+	static float	y = 0;
+	static float	y2 = 0;
+	t_int_xy	cursor;
 
-	cursor = get_cursor(0, 0, NULL);
+	cursor = get_cursor();
 	if (get_settings(3, NULL))
-		rotate_y((float)0.01, nodes, amount);
-	if (is_mouse_down(0, 1) && get_settings(0, NULL) &&
+		y += 0.01;
+	if (is_mouse_down(1) && get_settings(0, NULL) &&
 		!get_settings(4, NULL) && !get_settings(2, NULL))
 	{
-		rotate_y((float)0.01 * (x - cursor.x), nodes, amount);
-		rotate_x(-1 * (float)0.01 * (y - cursor.y), nodes, amount);
+		x -= (cursor.y - y2) * 0.01;
+		y -= (cursor.x - x2) * 0.01;
 	}
-	x = cursor.x;
-	y = cursor.y;
+	x2 = cursor.x;
+	y2 = cursor.y;
+	rotate_x(-1 * x, nodes, amount);
+	rotate_y(y, nodes, amount);
 }
 
 int		get_settings(int i, t_button *all_b)
@@ -47,12 +51,14 @@ int		get_settings(int i, t_button *all_b)
 	return (st[i].is_down);
 }
 
-void	reset(void **mlx)
+void	reset(void)
 {
 	int i;
 
+
+	void **mlx = get_mlx(NULL);
 	i = 1;
-	while (i <= 9)
+	while (i <= 10)
 	{
 		get_settings(-1 * i, NULL);
 		i++;
@@ -60,37 +66,51 @@ void	reset(void **mlx)
 	get_color(0xFFFFFF);
 	move_center(NULL, NULL, 1, mlx);
 	add_perspective(NULL, NULL, 1, NULL);
-	draw(NULL, 0, 1, NULL);
+	draw(NULL, 0, 1);
 	slider_button(NULL, 0, 1);
 	center_image(NULL, NULL, 1, NULL);
 }
 
-int		matrix(void **mlx)
+void		render_layer(void)
 {
 	static t_xyz	*nodes = NULL;
+	static t_xyz	*nodes2 = NULL;
 	static int		amount = 0;
+	int		i;
 
 	if (!nodes || get_settings(8, NULL))
 	{
 		nodes = make_map(NULL, 0);
-		rotate_x(-1, nodes, get_map_len(0));
-		rotate_y(1, nodes, get_map_len(0));
-		reset(mlx);
-	}
-	if (!amount)
 		amount = get_map_len(0);
-	mlx_clear_window(mlx[0], mlx[1]);
-	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
-	mlx_clear_image(mlx);
-	matrix_transform(nodes, amount);
-	draw(nodes, amount, 0, mlx);
-	return (0);
+		nodes2 = (t_xyz*)malloc(sizeof(t_xyz) * amount);
+		//rotate_x(-1, nodes, get_map_len(0));
+		//rotate_y(1, nodes, get_map_len(0));
+		reset();
+	}
+	i = 0;
+	while (i < amount)
+	{
+		nodes2[i].x = nodes[i].x;
+		nodes2[i].y = nodes[i].y;
+		static int h = 100;
+		if (get_settings(9, NULL))
+			slider(get_mlx(NULL), &h);
+		nodes2[i].z = nodes[i].z * (h * 0.01);
+		i++;
+	}
+	matrix_transform(nodes2, amount);
+	draw(nodes2, amount, 0);
 }
 
-int		fdf(void **mlx)
+void		fdf(void)
 {
-	matrix(mlx);
-	buttons_loop(mlx);
-	help_text(mlx);
-	return (0);
+	if (is_key_down(53))
+		exit(0);
+	render_layer();
+	button_layer();
+	update_image();
+	text_layer();
+	if (!get_settings(2, NULL) && get_settings(4, NULL))
+		gradient(get_mlx(NULL));
+	clear_image();
 }

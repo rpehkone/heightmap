@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buttons.c                                          :+:      :+:    :+:   */
+/*   button_layer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,18 +12,18 @@
 
 #include "fdf.h"
 
-int			handle_button(void **mlx, t_button b)
+int			handle_button(t_button b)
 {
 	int		res;
-	t_xyz	cursor;
+	t_int_xy	cursor;
 
 	res = 0;
-	cursor = get_cursor(0, 0, NULL);
+	cursor = get_cursor();
 	if (cursor.x > b.x && cursor.x < b.x + b.size_x &&
 	cursor.y > b.y && cursor.y < b.y + b.size_y)
 	{
 		res = 1;
-		if (is_mouse_down(0, 1))
+		if (is_mouse_down(1))
 		{
 			b.b_color = b.bc_color;
 			b.t_color = b.tc_color;
@@ -37,7 +37,7 @@ int			handle_button(void **mlx, t_button b)
 	}
 	if (res)
 		b.t_color = b.tc_color;
-	print_button(&b, mlx);
+	print_button(&b);
 	return (res);
 }
 
@@ -45,6 +45,7 @@ void		set_button_text(t_button *b)
 {
 	static int	i = 0;
 
+	b->text = (char*)malloc(sizeof(char) * 20);
 	if (i == 0)
 		ft_strcpy(b->text, "");
 	else if (i == 1)
@@ -63,6 +64,8 @@ void		set_button_text(t_button *b)
 		ft_strcpy(b->text, "fps");
 	else if (i == 8)
 		ft_strcpy(b->text, "reset");
+	else if (i == 9)
+		ft_strcpy(b->text, "height");
 	i++;
 }
 
@@ -102,29 +105,41 @@ void		on_click(t_button *all_b, int i, int *click)
 	click[i] = 0;
 }
 
-void		buttons_loop(void **mlx)
+t_button	*get_buttons(t_button *b)
+{
+	static t_button *asd = NULL;
+
+	if (asd)
+		return (asd);
+	asd = b;
+	return (NULL);
+}
+
+void		button_layer(void)
 {
 	static t_button	*all_b = NULL;
-	static int		click[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	static int		click[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int				i;
 
 	if ((i = -1) && !all_b)
 	{
-		if (!(all_b = (t_button*)malloc(sizeof(t_button) * 9)))
+		if (!(all_b = (t_button*)malloc(sizeof(t_button) * 11)))
 			ft_error(NULL);
-		while (++i < 9)
+		while (++i < 11)
 			all_b[i] = init_buttons();
 		get_settings(0, all_b);
+		get_buttons(all_b);
+		return ;
 	}
-	if (!(i = 0) && !is_mouse_down(0, 1) && !is_mouse_down(0, 3))
+	if (!(i = 0) && !is_mouse_down(1) && !is_mouse_down(3))
 		all_b[0].is_down = 1;
-	while (++i < 9)
-		if (handle_button(mlx, all_b[i]) || (click[i] = 0))
+	while (++i < 11)
+		if (handle_button(all_b[i]) || (click[i] = 0))
 		{
 			all_b[0].is_down = 0;
-			if ((click[i] == 2 && !is_mouse_down(0, 1)) ||
-				(click[i] == 1 && is_mouse_down(0, 1)) ||
-				(click[i] == 0 && !is_mouse_down(0, 1)))
+			if ((click[i] == 2 && !is_mouse_down(1)) ||
+				(click[i] == 1 && is_mouse_down(1)) ||
+				(click[i] == 0 && !is_mouse_down(1)))
 				click[i]++;
 			else if (click[i] == 3)
 				on_click(all_b, i, click);
