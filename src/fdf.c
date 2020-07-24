@@ -105,11 +105,11 @@ void		fdf(void)
 {
 	if (is_key_down(53))
 		exit(0);
+	update_image();
+	clear_image();
 	render_layer();
 	button_layer();
-	update_image();
 	text_layer();
-	if (!get_settings(2, NULL) && get_settings(4, NULL))
-		gradient();
-	clear_image();
+	//if (!get_settings(2, NULL) && get_settings(4, NULL))
+	gradient();
 }

@@ -49,32 +49,7 @@ void	ft_error(char *error)
 	ft_putchar('\n');
 	exit(0);
 }
-/*
-void	init_window(char *title)
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img_ptr;
-	void	**mlx;
 
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, get_width(NULL), get_height(NULL), title);
-	img_ptr = mlx_new_image(mlx_ptr, get_width(NULL), get_height(NULL));
-	if (!(mlx = (void **)malloc(sizeof(void *) * 3)))
-		ft_error("malloc fail");
-	mlx[0] = mlx_ptr;
-	mlx[1] = win_ptr;
-	mlx[2] = img_ptr;
-	get_mlx(mlx);
-	mlx_hook(win_ptr, 2, 0, handle_keyboard_down, mlx);
-	mlx_hook(win_ptr, 3, 0, handle_keyboard_up, mlx);
-	mlx_hook(win_ptr, 4, 0, handle_mouse_down, mlx);
-	mlx_hook(win_ptr, 5, 0, handle_mouse_up, mlx);
-	mlx_hook(win_ptr, 6, 0, handle_cursor, mlx);
-	mlx_loop_hook(mlx_ptr, loop_hook, mlx);
-	mlx_loop(mlx_ptr);
-}
-*/
 int		main(int argc, char **argv)
 {
 	int	i;
@@ -91,8 +66,8 @@ int		main(int argc, char **argv)
 		make_map(argv[1], 0);
 		button_layer();
 		i = ft_strlen(argv[1]);
-			while (i >= 0 && argv[1][i] != '/')
-				i--;
+		while (i >= 0 && argv[1][i] != '/')
+			i--;
 		init_window(&argv[1][i + 1]);
 	}
 	return (0);

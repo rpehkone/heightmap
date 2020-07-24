@@ -12,49 +12,25 @@
 
 #include "fdf.h"
 
-void	put_gradient(void *gradient, int x, int y, int color)
-{
-	static char	*data = NULL;
-	static int	bpp = 0;
-	static int	width = 0;
-	static int	endian = 0;
-
-	if (x < 0 || y < 0)
-		return ;
-	if (x > 310 || y > 310)
-		return ;
-	if (!data)
-		data = mlx_get_data_addr(gradient, &bpp, &width, &endian);
-	data[(y * width) + (x * 4) + 3] = color >> 4 * 6;
-	data[(y * width) + (x * 4) + 2] = (color % 0x1000000) >> 4 * 4;
-	data[(y * width) + (x * 4) + 1] = (color % 0x1000000) >> 4 * 2;
-	data[(y * width) + (x * 4) + 0] = color % 0x1000000;
-}
-
-void	make_gradient(void *image_ptr)
+void	make_gradient(int **res)
 {
 	double	red;
 	double	grn;
 	double	blu;
-	int		i;
-	int		j;
+	int	i;
 
 	i = 0;
-	j = 0;
+	res[0] = (int*)malloc(sizeof(int) * (310 * 310));
 	while (i < 310)
 	{
 		red = sin(0.02 * i + 0) * 127 + 128;
 		grn = sin(0.02 * i + 2) * 127 + 128;
 		blu = sin(0.02 * i + 4) * 127 + 128;
-		j = 0;
-		while (j < 310)
-		{
-			put_gradient(image_ptr, i, j,
-					(int)red * 65536 + (int)grn * 256 + (int)blu);
-			j++;
-		}
+		for (int y = 0; y < 310; y++)
+			res[0][(i * 310) + y] = ((int)red * 65536 + (int)grn * 256 + (int)blu);
 		i++;
 	}
+	return ;
 }
 
 int		set_gradient_color(int x, int y)
@@ -79,18 +55,29 @@ int		set_gradient_color(int x, int y)
 
 int		gradient(void)
 {
-	static void *gradient = NULL;
-	static void **mlx = NULL;
+	static int	*gradient_img = NULL;
+	int		i;
 	t_int_xy	cursor;
 
-	if (!gradient)
-	{
-		mlx = get_mlx(NULL);
-		gradient = mlx_new_image(mlx[0], 310, 310);
-		make_gradient(gradient);
-	}
-	else
-		mlx_put_image_to_window(mlx[0], mlx[1], gradient, 0, 31);
+	//printf("1\n");
+	if (!gradient_img)
+		make_gradient(&gradient_img);
+	//printf("69\n");
+//	if gradient button down
+	//{
+		i = 1;
+		while (i < 310 * 310)
+		{
+			//printf("i=%d\n", i);
+			//printf("x=%d\n", i / 310);
+			//printf("y=%d\n", i % 310 + 31);
+			//printf("g=%d\n", gradient_img[i]);
+			pixel_put(i / 310, i % 310 + 31, gradient_img[i]);
+			i++;
+			//printf("i=%d\n", i);
+		}
+	//}
+	//printf("2\n");
 	if (is_mouse_down(1))
 	{
 		cursor = get_cursor();
@@ -99,6 +86,7 @@ int		gradient(void)
 		else if (cursor.y > 30)
 			get_settings(-4, NULL);
 	}
+	//printf("3\n");
 	return (1);
 }
 
