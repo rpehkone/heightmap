@@ -26,3 +26,12 @@ int			is_key_down(int key)
 {
 	return (set_key(0, key));
 }
+
+void	string_to_image(int x, int y, int color, char *str)
+{
+	static void **mlx = NULL;
+
+	if (!mlx)
+		mlx = get_mlx(NULL);
+	mlx_string_put(mlx[0], mlx[1], x, y, color, str);
+}

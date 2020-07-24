@@ -77,13 +77,15 @@ int		set_gradient_color(int x, int y)
 	return (0);
 }
 
-int		gradient(void **mlx)
+int		gradient(void)
 {
 	static void *gradient = NULL;
+	static void **mlx = NULL;
 	t_int_xy	cursor;
 
 	if (!gradient)
 	{
+		mlx = get_mlx(NULL);
 		gradient = mlx_new_image(mlx[0], 310, 310);
 		make_gradient(gradient);
 	}

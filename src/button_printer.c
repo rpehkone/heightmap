@@ -57,12 +57,9 @@ void		print_edge(t_xyz start, t_xyz stop, t_button *b)
 
 void		print_button(t_button *b)
 {
-	static void	**mlx = NULL;
 	t_xyz start;
 	t_xyz stop;
 
-	if (!mlx)
-		mlx = get_mlx(NULL);
 	start.x = b->x;
 	start.y = b->y;
 	stop.x = b->x + b->size_x;

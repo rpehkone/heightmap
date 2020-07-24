@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	put_fps(void **mlx, int fps)
+void	put_fps(int fps)
 {
 	static int		height = 0;
 	char			*str;
@@ -21,13 +21,12 @@ void	put_fps(void **mlx, int fps)
 	if (!height)
 		height = get_height(NULL);
 	str = ft_itoa(fps);
-	mlx_string_put(mlx[0], mlx[1], 10,
-	height - 30, 0xFFFF00, str);
+	string_to_image(10, height - 30, 0xFFFF00, str);
 	free(str);
 	str = NULL;
 }
 
-void	fps(void **mlx)
+void	fps(void)
 {
 	struct timeval	time;
 	static long		s = 0;
@@ -37,7 +36,7 @@ void	fps(void **mlx)
 	i++;
 	gettimeofday(&time, NULL);
 	if (get_settings(7, NULL))
-		put_fps(mlx, fps);
+		put_fps(fps);
 	if (s != time.tv_sec)
 	{
 		s = time.tv_sec;
@@ -46,15 +45,19 @@ void	fps(void **mlx)
 	}
 }
 
-void	button_text(void **mlx)
+void	button_text(void)
 {
 	static t_button *b = NULL;
+	int i;
 
 	if (!b)
 		b = get_buttons(NULL);
-	for (int i = 0; i < 10; i++)
-		mlx_string_put(mlx[0], mlx[1], b[i].x + 6,
-			b[i].y + 3, b[i].t_color, b[i].text);
+	i = 0;
+	while (i < 10)
+	{
+		string_to_image(b[i].x + 6, b[i].y + 3, b[i].t_color, b[i].text);
+		i++;
+	}
 }
 
 void	text_layer()
@@ -63,12 +66,9 @@ void	text_layer()
 	static int	fade = 0;
 	static int	width = 0;
 	static int	height = 0;
-	static void	**mlx = NULL;
 
-	if (!mlx)
-		mlx = get_mlx(NULL);
-	button_text(mlx);
-	fps(mlx);
+	button_text();
+	fps();
 	fade = is_key_down(4) ? 0 : fade;
 	if (is_key_down(4))
 		color = 0xFFFFFF;
@@ -82,10 +82,10 @@ void	text_layer()
 		color -= 0xF0F0F;
 	else
 		fade++;
-	mlx_string_put(mlx[0], mlx[1], width / 2 - (14 / 2 * 9) - 5,
+	string_to_image(width / 2 - (14 / 2 * 9) - 5,
 		height - 70, color, "Drag to Rotate");
-	mlx_string_put(mlx[0], mlx[1], width / 2 - (14 / 2 * 9) - 5,
+	string_to_image(width / 2 - (14 / 2 * 9) - 5,
 		height - 50, color, "Scroll to Zoom");
-	mlx_string_put(mlx[0], mlx[1], width / 2 - (21 / 2 * 9) - 5,
+	string_to_image(width / 2 - (21 / 2 * 9) - 5,
 		height - 30, color, "Middle-click to Move");
 }

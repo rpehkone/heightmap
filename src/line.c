@@ -48,13 +48,12 @@ unsigned	make_fade(t_xyz color, unsigned fade, signed xred)
 			(yred << 4 * 4) + (ygrn << 4 * 2) + yblu);
 }
 
-void	print_line(t_xyz start, t_xyz stop, t_xyz color, void **mlx)
+void	print_line(t_xyz start, t_xyz stop, t_xyz color)
 {
 	t_xyz	step;
 	t_xyz	pos;
 	int		i;
 
-	(void)mlx;
 	i = 0;
 	if (!get_settings(1, NULL) && (start.z < 0 || stop.z < 0))
 		return ;

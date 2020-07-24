@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	print_slider_button(void **mlx, int x)
+void	print_slider_button(int x)
 {
 	t_xyz	start;
 	t_xyz	stop;
@@ -26,18 +26,18 @@ void	print_slider_button(void **mlx, int x)
 	start.y = 38;
 	stop.x = x;
 	stop.y = 49;
-	print_line(start, stop, color, mlx);
+	print_line(start, stop, color);
 	i = 0;
 	while (i < 5)
 	{
 		start.x++;
 		stop.x++;
-		print_line(start, stop, color, mlx);
+		print_line(start, stop, color);
 		i++;
 	}
 }
 
-void	slider_button(void **mlx, int *n, int reset)
+void	slider_button(int *n, int reset)
 {
 	static int	slider_x = 205;
 	static int	allow_move = 0;
@@ -63,10 +63,10 @@ void	slider_button(void **mlx, int *n, int reset)
 	if (allow_move)
 		slider_x = cursor.x;
 	(*n) = slider_x * 5;
-	print_slider_button(mlx, slider_x);
+	print_slider_button(slider_x);
 }
 
-void	print_mid(void **mlx)
+void	print_mid()
 {
 	t_xyz	start;
 	t_xyz	stop;
@@ -85,7 +85,7 @@ void	print_mid(void **mlx)
 	{
 		start.x++;
 		stop.x++;
-		print_line(start, stop, color, mlx);
+		print_line(start, stop, color);
 		i++;
 	}
 }
@@ -104,14 +104,14 @@ void	check_collision(void)
 	}
 }
 
-void	slider(void **mlx, int *n)
+void	slider(int *n)
 {
 	t_xyz	start;
 	t_xyz	stop;
 	t_xyz	color;
 	int		i;
 
-	print_mid(mlx);
+	print_mid();
 	color.x = 0x707070;
 	color.y = 0x707070;
 	color.z = 1;
@@ -124,9 +124,9 @@ void	slider(void **mlx, int *n)
 	{
 		start.y++;
 		stop.y++;
-		print_line(start, stop, color, mlx);
+		print_line(start, stop, color);
 		i++;
 	}
 	check_collision();
-	slider_button(mlx, n, 0);
+	slider_button(n, 0);
 }

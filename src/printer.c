@@ -34,7 +34,7 @@ t_xyz	get_color(int set)
 	return (color);
 }
 
-void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
+void	move_center(t_xyz *start, t_xyz *stop, int reset)
 {
 	static double	zoom = -600;
 	static int		w_move = 0;
@@ -53,17 +53,17 @@ void	move_center(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 	start->z -= zoom;
 	stop->z -= zoom;
 	if (!get_settings(1, NULL))
-		add_perspective(start, stop, 0, mlx);
+		add_perspective(start, stop, 0);
 	w_move = w_move ? w_move : get_width(NULL) / 2;
 	h_move = h_move ? h_move : get_height(NULL) / 2 + 30;
 	start->x += w_move;
 	start->y += h_move;
 	stop->x += w_move;
 	stop->y += h_move;
-	print_line(*start, *stop, get_color(0), mlx);
+	print_line(*start, *stop, get_color(0));
 }
 
-void	center_image(t_xyz *start, t_xyz *stop, int reset, void **mlx)
+void	center_image(t_xyz *start, t_xyz *stop, int reset)
 {
 	static int	x = 0;
 	static int	y = 0;
@@ -88,10 +88,10 @@ void	center_image(t_xyz *start, t_xyz *stop, int reset, void **mlx)
 	start->y += y;
 	stop->x += x;
 	stop->y += y;
-	move_center(start, stop, 0, mlx);
+	move_center(start, stop, 0);
 }
 
-void	draw2(t_xyz *nodes, int map_len, void **mlx)
+void	draw2(t_xyz *nodes, int map_len)
 {
 	t_xyz			start;
 	t_xyz			stop;
@@ -108,14 +108,14 @@ void	draw2(t_xyz *nodes, int map_len, void **mlx)
 		{
 			start = nodes[i];
 			stop = nodes[i + 1];
-			center_image(&start, &stop, 0, mlx);
+			center_image(&start, &stop, 0);
 		}
 		save_coord(i, i + width, 0);
 		if (i + width < map_len)
 		{
 			start = nodes[i];
 			stop = nodes[i + width];
-			center_image(&start, &stop, 0, mlx);
+			center_image(&start, &stop, 0);
 		}
 	}
 }
@@ -125,20 +125,19 @@ void	draw(t_xyz *nodes, int map_len, int reset)
 	static int	origo_len = 1025;
 	int			i;
 
-	void **mlx = get_mlx(NULL);
 	if (reset)
 	{
 		origo_len = 1025;
 		return ;
 	}
 	if (get_settings(2, NULL))
-		slider(mlx, &origo_len);
+		slider(&origo_len);
 	else if (get_settings(4, NULL))
-		gradient(mlx);
+		gradient();
 	i = -1;
 	while (++i < map_len)
 		nodes[i].z += origo_len;
-	draw2(nodes, map_len, mlx);
+	draw2(nodes, map_len);
 	i = -1;
 	while (++i < map_len)
 		nodes[i].z -= origo_len;

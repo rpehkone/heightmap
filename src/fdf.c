@@ -56,7 +56,6 @@ void	reset(void)
 	int i;
 
 
-	void **mlx = get_mlx(NULL);
 	i = 1;
 	while (i <= 10)
 	{
@@ -64,11 +63,11 @@ void	reset(void)
 		i++;
 	}
 	get_color(0xFFFFFF);
-	move_center(NULL, NULL, 1, mlx);
-	add_perspective(NULL, NULL, 1, NULL);
+	move_center(NULL, NULL, 1);
+	add_perspective(NULL, NULL, 1);
 	draw(NULL, 0, 1);
-	slider_button(NULL, 0, 1);
-	center_image(NULL, NULL, 1, NULL);
+	slider_button(0, 1);
+	center_image(NULL, NULL, 1);
 }
 
 void		render_layer(void)
@@ -94,7 +93,7 @@ void		render_layer(void)
 		nodes2[i].y = nodes[i].y;
 		static int h = 100;
 		if (get_settings(9, NULL))
-			slider(get_mlx(NULL), &h);
+			slider(&h);
 		nodes2[i].z = nodes[i].z * (h * 0.01);
 		i++;
 	}
@@ -111,6 +110,6 @@ void		fdf(void)
 	update_image();
 	text_layer();
 	if (!get_settings(2, NULL) && get_settings(4, NULL))
-		gradient(get_mlx(NULL));
+		gradient();
 	clear_image();
 }

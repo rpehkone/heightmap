@@ -35,6 +35,7 @@ int				set_key(int call, int key);
 t_int_xy		get_cursor(void);
 int				is_key_down(int key);
 int				is_mouse_down(int button);
+void	string_to_image(int x, int y, int color, char *str);
 
 void			pixel_put(int x, int y, unsigned color);
 void			clear_image(void);
