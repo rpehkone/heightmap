@@ -103,7 +103,7 @@ void	check_collision(void)
 		else if (cursor.y > 30)
 		{
 			get_settings(-2, NULL);
-			get_settings(-9, NULL);
+			get_settings(-6, NULL);
 		}
 	}
 }

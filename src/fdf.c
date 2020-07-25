@@ -78,7 +78,7 @@ void		render_layer(void)
 	static float height_modifier = 1;
 	int		i;
 
-	if (!nodes || get_settings(8, NULL))
+	if (!nodes || get_settings(9, NULL))
 	{
 		nodes = make_map(NULL, NULL, NULL);
 		amount = get_map_len(0);
@@ -92,7 +92,7 @@ void		render_layer(void)
 	{
 		nodes2[i].x = nodes[i].x;
 		nodes2[i].y = nodes[i].y;
-		if (get_settings(9, NULL))
+		if (get_settings(6, NULL))
 			slider(&height_modifier);
 		nodes2[i].z = nodes[i].z * height_modifier;
 		i++;
@@ -106,10 +106,9 @@ void		fdf(void)
 	if (is_key_down(53))
 		exit(0);
 	update_image();
-	clear_image();
 	render_layer();
 	button_layer();
-	text_layer();
 	if (get_settings(4, NULL))
 		gradient();
+	text_layer();
 }

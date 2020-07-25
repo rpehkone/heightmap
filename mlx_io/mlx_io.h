@@ -15,7 +15,6 @@
 # include "mlx.h"
 # include "libft.h"
 
-//t_ivec2
 typedef struct	s_int_xy {
 	int			x;
 	int			y;
@@ -37,7 +36,6 @@ void				fdf(void);
 
 void				init_window(int widht, int height, char *filename);
 void				update_image(void);
-void				clear_image(void);// auto clear?
 void				pixel_put(int x, int y, unsigned color);
 void				string_to_image(int x, int y, int color, char *str);
 int				is_mouse_down(int button);

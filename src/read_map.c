@@ -65,8 +65,8 @@ int		get_width(char *filename)
 
 	if (width != 0)
 	{
-		if (width * 50 < 694)
-			return (694);
+		if (width * 50 < 768)
+			return (768);
 		else if (width * 50 > 2000)
 			return (2000);
 		return (width * 50);

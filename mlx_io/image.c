@@ -12,15 +12,6 @@
 
 #include "mlx_io.h"
 
-void	update_image(void)
-{
-	static void **mlx = NULL;
-
-	if (!mlx)
-		mlx = get_mlx(NULL);
-	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
-}
-
 void	clear_image(void)
 {
 	static char	*data = NULL;
@@ -36,6 +27,16 @@ void	clear_image(void)
 		pixels = window_size.x * window_size.y * 4;
 	}
 	ft_memset(data, 0, pixels);
+}
+
+void	update_image(void)
+{
+	static void **mlx = NULL;
+
+	if (!mlx)
+		mlx = get_mlx(NULL);
+	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
+	clear_image();
 }
 
 void	pixel_put(int x, int y, unsigned color)

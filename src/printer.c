@@ -29,7 +29,7 @@ t_xyz	get_color(int set)
 		color.x = set;
 		color.y = set;
 	}
-	if (get_settings(6, NULL))
+	if (get_settings(7, NULL))
 		return (add_color_height(color));
 	return (color);
 }

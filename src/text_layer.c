@@ -35,7 +35,7 @@ void	fps(void)
 
 	i++;
 	gettimeofday(&time, NULL);
-	if (get_settings(7, NULL))
+	if (get_settings(8, NULL))
 		put_fps(fps);
 	if (s != time.tv_sec)
 	{
