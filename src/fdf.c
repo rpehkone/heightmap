@@ -79,7 +79,7 @@ void		render_layer(void)
 
 	if (!nodes || get_settings(8, NULL))
 	{
-		nodes = make_map(NULL, 0);
+		nodes = make_map(NULL, NULL, NULL);
 		amount = get_map_len(0);
 		nodes2 = (t_xyz*)malloc(sizeof(t_xyz) * amount);
 		//rotate_x(-1, nodes, get_map_len(0));
@@ -110,6 +110,6 @@ void		fdf(void)
 	render_layer();
 	button_layer();
 	text_layer();
-	//if (!get_settings(2, NULL) && get_settings(4, NULL))
-	gradient();
+	if (get_settings(4, NULL))
+		gradient();
 }

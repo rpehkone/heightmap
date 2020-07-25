@@ -52,7 +52,9 @@ void	ft_error(char *error)
 
 int		main(int argc, char **argv)
 {
-	int	i;
+	int i;
+	int w;
+	int h;
 
 	if (argc != 2)
 	{
@@ -63,12 +65,13 @@ int		main(int argc, char **argv)
 	else
 	{
 		check_errors(argv[1]);
-		make_map(argv[1], 0);
+		make_map(&w, &h, argv[1]);
 		button_layer();
 		i = ft_strlen(argv[1]);
 		while (i >= 0 && argv[1][i] != '/')
 			i--;
-		init_window(&argv[1][i + 1]);
+		init_window(w, h, &argv[1][i + 1]);
 	}
+//jos klikkaa ennen kun liikuttaa hiirta
 	return (0);
 }

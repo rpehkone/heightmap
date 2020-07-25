@@ -86,49 +86,26 @@ int		get_width(char *filename)
 	return (width);
 }
 
-t_xyz	*map_copy(t_xyz *map)
+t_xyz	*make_map(int *width, int *height, char *filename)
 {
-	static t_xyz	*map_copy = NULL;
-	int				len;
-	int				i;
-
-	len = get_map_len(0);
-	if (!map_copy)
-		if (!(map_copy = (t_xyz*)malloc(sizeof(t_xyz) * len)))
-			ft_error(NULL);
-	i = 0;
-	while (i < len)
-	{
-		map_copy[i] = map[i];
-		i++;
-	}
-	return (map_copy);
-}
-
-t_xyz	*make_map(char *filename, int which)
-{
-	int				width;
-	int				height;
 	static t_xyz	*map = NULL;
 	int				fd;
 
 	if (map)
-	{
-		if (which)
-			return (map);
-		return (map_copy(map));
-	}
-	width = get_width(filename);
-	height = get_height(filename);
-	if ((width == 1 && height == 1) || (width > 5 && height == 1) ||
-		(width == 1 && height == 1) || (width == 1 && height > 5))
+		return (map);
+	*width = get_width(filename);
+	*height = get_height(filename);
+	if ((*width == 1 && *height == 1) || (*width > 5 && *height == 1) ||
+		(*width == 1 && *height == 1) || (*width == 1 && *height > 5))
 		ft_error(NULL);
-	if (!(map = (t_xyz*)malloc(sizeof(t_xyz) * (width * height))))
+	if (!(map = (t_xyz*)malloc(sizeof(t_xyz) * (*width * *height))))
 		ft_error(NULL);
 	fd = open(filename, O_RDONLY);
-	get_map_len(width * height);
-	get_map_width(width);
-	set_map(map, fd, width, get_map_len(0) / width / 2);
+	get_map_len(*width * *height);
+	get_map_width(*width);
+	set_map(map, fd, *width, get_map_len(0) / *width / 2);
 	close(fd);
-	return (map_copy(map));
+	*width = get_width(filename);
+	*height = get_height(filename);
+	return (map);
 }

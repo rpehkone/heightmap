@@ -59,25 +59,14 @@ int		gradient(void)
 	int		i;
 	t_int_xy	cursor;
 
-	//printf("1\n");
 	if (!gradient_img)
-		make_gradient(&gradient_img);
-	//printf("69\n");
-//	if gradient button down
-	//{
-		i = 1;
-		while (i < 310 * 310)
-		{
-			//printf("i=%d\n", i);
-			//printf("x=%d\n", i / 310);
-			//printf("y=%d\n", i % 310 + 31);
-			//printf("g=%d\n", gradient_img[i]);
-			pixel_put(i / 310, i % 310 + 31, gradient_img[i]);
-			i++;
-			//printf("i=%d\n", i);
-		}
-	//}
-	//printf("2\n");
+	make_gradient(&gradient_img);
+	i = 1;
+	while (i < 310 * 310)
+	{
+		pixel_put(i / 310, i % 310 + 31, gradient_img[i]);
+		i++;
+	}
 	if (is_mouse_down(1))
 	{
 		cursor = get_cursor();
@@ -86,7 +75,6 @@ int		gradient(void)
 		else if (cursor.y > 30)
 			get_settings(-4, NULL);
 	}
-	//printf("3\n");
 	return (1);
 }
 

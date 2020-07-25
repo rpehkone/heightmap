@@ -34,7 +34,7 @@ int		edit_i_height(int i, int which)
 	int				map_i;
 
 	if (!map)
-		map = make_map(NULL, 1);
+		map = make_map(NULL, NULL, NULL);
 	map_i = save_coord(-1, -1, which);
 	i += map[map_i].z;
 	return (i);

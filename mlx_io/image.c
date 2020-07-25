@@ -23,56 +23,49 @@ void	update_image(void)
 
 void	clear_image(void)
 {
-	static void	**mlx = NULL;
 	static char	*data = NULL;
 	static int	pixels;
-	static int	width = 0;
-	static int	height = 0;
-	int			a;
-	int			b;
+	void		**mlx;
+	t_int_xy	window_size;
 
 	if (!data)
 	{
-		width = get_width(NULL);
-		height = get_height(NULL);
 		mlx = get_mlx(NULL);
-		data = mlx_get_data_addr(mlx[2], &pixels, &a, &b);
-		pixels = width * height * 4;
+		data = mlx_get_data_addr(mlx[2], &pixels, &window_size.x, &window_size.y);
+		window_size = get_window_size();
+		pixels = window_size.x * window_size.y * 4;
 	}
 	ft_memset(data, 0, pixels);
 }
 
-void	**get_mlx(void **mlx)
-{
-	static void	**mlx_save = NULL;
-
-	if (!mlx)
-		return (mlx_save);
-	mlx_save = mlx;
-	return (mlx_save);
-}
-//move get width to mlx io
 void	pixel_put(int x, int y, unsigned color)
 {
-	static void	**mlx = NULL;
 	static char	*data = NULL;
-	static int	bpp = 0;
-	static int	width = 0;
-	static int	height = 0;
-	static int	endian = 0;
+	static t_int_xy	window_size;
+	void		**mlx;
+	int		dummy;
+
+	if (!data)
+	{
+		mlx = get_mlx(NULL);
+		data = mlx_get_data_addr(mlx[2], &window_size.y, &window_size.x, &dummy);
+		int a = window_size.x;
+		window_size = get_window_size();
+		window_size.x = a;
+	}
+	if (x * 4 >= window_size.x || y >= window_size.y || x < 0 || y < 0)
+		return ;
+	data[(y * window_size.x) + (x * 4) + 3] = color >> 4 * 6;
+	data[(y * window_size.x) + (x * 4) + 2] = (color % 0x1000000) >> 4 * 4;
+	data[(y * window_size.x) + (x * 4) + 1] = (color % 0x1000000) >> 4 * 2;
+	data[(y * window_size.x) + (x * 4) + 0] = color % 0x1000000;
+}
+
+void	string_to_image(int x, int y, int color, char *str)
+{
+	static void **mlx = NULL;
 
 	if (!mlx)
 		mlx = get_mlx(NULL);
-	if (!data)
-	{
-		data = mlx_get_data_addr(mlx[2], &bpp, &width, &endian);
-		height = get_height(NULL);
-		//remove bpp
-	}
-	if (x * 4 >= width || y >= height || x < 0 || y < 0)
-		return ;
-	data[(y * width) + (x * 4) + 3] = color >> 4 * 6;
-	data[(y * width) + (x * 4) + 2] = (color % 0x1000000) >> 4 * 4;
-	data[(y * width) + (x * 4) + 1] = (color % 0x1000000) >> 4 * 2;
-	data[(y * width) + (x * 4) + 0] = color % 0x1000000;
+	mlx_string_put(mlx[0], mlx[1], x, y, color, str);
 }

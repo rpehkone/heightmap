@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_loop.c                                        :+:      :+:    :+:   */
+/*   init_window.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpehkone <rpehkone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -18,7 +18,34 @@ int		loop_hook(void)
 	return (0);
 }
 
-void	init_window(char *title)
+void	**get_mlx(void **mlx)
+{
+	static void	**mlx_save = NULL;
+
+	if (!mlx)
+		return (mlx_save);
+	mlx_save = mlx;
+	return (mlx_save);
+}
+
+t_int_xy	set_window_size(int w, int h)
+{
+	static t_int_xy window_size = {.x = 0, .y = 0};
+
+	if (w)
+	{
+		window_size.x = w;
+		window_size.y = h;
+	}
+	return (window_size);
+}
+
+t_int_xy	get_window_size(void)
+{
+	return (set_window_size(0, 0));
+}
+
+void	init_window(int w, int h, char *title)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -26,8 +53,9 @@ void	init_window(char *title)
 	void	**mlx;
 
 	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, get_width(NULL), get_height(NULL), title);
-	img_ptr = mlx_new_image(mlx_ptr, get_width(NULL), get_height(NULL));
+	set_window_size(w, h);
+	win_ptr = mlx_new_window(mlx_ptr, w, h, title);
+	img_ptr = mlx_new_image(mlx_ptr, w, h);
 	if (!(mlx = (void **)malloc(sizeof(void *) * 3)))
 		ft_error("malloc fail");
 	mlx[0] = mlx_ptr;

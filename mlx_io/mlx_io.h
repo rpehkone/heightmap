@@ -44,8 +44,7 @@ void			init_image(void **mlx);
 void			ft_error(char *str);
 
 void			fdf(void);
-void		win_init(char *filename);
+void		init_window(int widht, int height, char *filename);
 void		button_layer(void);
-int				get_height(char *filename);
-int				get_width(char *filename);
+t_int_xy	get_window_size(void);
 #endif
