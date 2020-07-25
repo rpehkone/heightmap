@@ -49,9 +49,9 @@ void	pixel_put(int x, int y, unsigned color)
 	{
 		mlx = get_mlx(NULL);
 		data = mlx_get_data_addr(mlx[2], &window_size.y, &window_size.x, &dummy);
-		int a = window_size.x;
+		dummy = window_size.x;
 		window_size = get_window_size();
-		window_size.x = a;
+		window_size.x = dummy;
 	}
 	if (x * 4 >= window_size.x || y >= window_size.y || x < 0 || y < 0)
 		return ;

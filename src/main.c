@@ -73,5 +73,7 @@ int		main(int argc, char **argv)
 		init_window(w, h, &argv[1][i + 1]);
 	}
 //jos klikkaa ennen kun liikuttaa hiirta
+//min window size
+//
 	return (0);
 }

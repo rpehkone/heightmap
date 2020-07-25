@@ -57,8 +57,6 @@ void		print_button(t_button *b);
 int		get_settings(int i, t_button *st);
 t_button	*get_buttons(t_button *b);
 
-
-
 void			print_line(t_xyz start, t_xyz stop, t_xyz color);
 int				get_height(char *filename);
 t_xyz			*make_map(int *widht, int *height, char *filename);
@@ -68,7 +66,8 @@ int				get_map_width(int n);
 double			ft_abs(double n);
 int				gradient(void);
 void			cycle_colors(t_xyz *color);
-void			slider(int *n);
+//void			slider(int *n);
+void			slider(float *n);
 void			ft_error(char *str);
 void			rotate_x(float angle, t_xyz *nodes, int amount);
 void			rotate_y(float angle, t_xyz *nodes, int amount);
@@ -80,7 +79,8 @@ t_xyz			add_color_height(t_xyz color);
 int				save_coord(int start_i, int stop_i, int which);
 void			move_center(t_xyz *start, t_xyz *stop, int reset);
 void			print_edge(t_xyz start, t_xyz stop, t_button *b);
-void			slider_button(int *n, int reset);
+//void			slider_button(int *n, int reset);
+void			slider_button(float *n);
 void			center_image(t_xyz *start, t_xyz *stop, int reset);
 void			set_map(t_xyz *map, int fd, int width, int height);
 #endif

@@ -27,24 +27,21 @@ int				handle_mouse_down(int button, int x, int y);
 int				handle_mouse_up(int button, int x, int y);
 int				handle_cursor(int x, int y);
 int				loop_hook(void);
-void			**get_mlx(void **mlx);
 
-t_int_xy		set_cursor(int call, int x, int y);
+void				**get_mlx(void **mlx);
+t_int_xy			get_window_size(void);
+t_int_xy			set_cursor(int call, int x, int y);
 int				set_mouse(int call, int button);
 int				set_key(int call, int key);
-t_int_xy		get_cursor(void);
-int				is_key_down(int key);
+void				fdf(void);
+
+void				init_window(int widht, int height, char *filename);
+void				update_image(void);
+void				clear_image(void);// auto clear?
+void				pixel_put(int x, int y, unsigned color);
+void				string_to_image(int x, int y, int color, char *str);
 int				is_mouse_down(int button);
-void	string_to_image(int x, int y, int color, char *str);
+int				is_key_down(int key);
+t_int_xy			get_cursor(void);
 
-void			pixel_put(int x, int y, unsigned color);
-void			clear_image(void);
-void			update_image(void);
-void			init_image(void **mlx);
-void			ft_error(char *str);
-
-void			fdf(void);
-void		init_window(int widht, int height, char *filename);
-void		button_layer(void);
-t_int_xy	get_window_size(void);
 #endif

@@ -57,7 +57,7 @@ void	init_window(int w, int h, char *title)
 	win_ptr = mlx_new_window(mlx_ptr, w, h, title);
 	img_ptr = mlx_new_image(mlx_ptr, w, h);
 	if (!(mlx = (void **)malloc(sizeof(void *) * 3)))
-		ft_error("malloc fail");
+		exit(0);
 	mlx[0] = mlx_ptr;
 	mlx[1] = win_ptr;
 	mlx[2] = img_ptr;

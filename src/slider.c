@@ -37,17 +37,13 @@ void	print_slider_button(int x)
 	}
 }
 
-void	slider_button(int *n, int reset)
+void	slider_button(float *n)
 {
-	static int	slider_x = 205;
+	int	slider_x;
 	static int	allow_move = 0;
 	t_int_xy	cursor;
 
-	if (reset)
-	{
-		slider_x = 205;
-		return ;
-	}
+	slider_x = (((float)(*n + 2) / (float)4) * 200) + 5;
 	cursor = get_cursor();
 	if (cursor.x < 5)
 		cursor.x = 5;
@@ -60,10 +56,15 @@ void	slider_button(int *n, int reset)
 		allow_move = 1;
 	if (!is_mouse_down(1))
 		allow_move = 0;
+	//printf("1 %d\n", allow_move);
+	//printf("c %d\n", cursor.x);
 	if (allow_move)
 		slider_x = cursor.x;
-	(*n) = slider_x * 5;
+	//printf("3 %d\n", slider_x);
 	print_slider_button(slider_x);
+	*n = ((((float)(slider_x - 5) / (float)200) * (float)4)) - 2;
+	printf("2 %f\n", *n);
+	//exit(0);
 }
 
 void	print_mid()
@@ -97,14 +98,17 @@ void	check_collision(void)
 	if (is_mouse_down(1))
 	{
 		cursor = get_cursor();
-		if (cursor.x < 311 && (cursor.y < 200 && cursor.y > 30))
+		if (cursor.x < 220 && (cursor.y < 60 && cursor.y > 30))
 			return ;
 		else if (cursor.y > 30)
+		{
 			get_settings(-2, NULL);
+			get_settings(-9, NULL);
+		}
 	}
 }
 
-void	slider(int *n)
+void	slider(float *n)
 {
 	t_xyz	start;
 	t_xyz	stop;
@@ -128,5 +132,5 @@ void	slider(int *n)
 		i++;
 	}
 	check_collision();
-	slider_button(n, 0);
+	slider_button(n);
 }

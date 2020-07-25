@@ -96,10 +96,11 @@ t_button	init_buttons(void)
 
 void		on_click(t_button *all_b, int i, int *click)
 {
-	if (all_b[i].is_down == 0 && (i == 2 || i == 4))
+	if (all_b[i].is_down == 0 && (i == 2 || i == 4 || i == 9))
 	{
 		all_b[2].is_down = 0;
 		all_b[4].is_down = 0;
+		all_b[9].is_down = 0;
 	}
 	all_b[i].is_down = all_b[i].is_down ? 0 : 1;
 	click[i] = 0;

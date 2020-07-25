@@ -66,7 +66,7 @@ void	reset(void)
 	move_center(NULL, NULL, 1);
 	add_perspective(NULL, NULL, 1);
 	draw(NULL, 0, 1);
-	slider_button(0, 1);
+	//slider_button(0, 1);
 	center_image(NULL, NULL, 1);
 }
 
@@ -75,6 +75,7 @@ void		render_layer(void)
 	static t_xyz	*nodes = NULL;
 	static t_xyz	*nodes2 = NULL;
 	static int		amount = 0;
+	static float height_modifier = 1;
 	int		i;
 
 	if (!nodes || get_settings(8, NULL))
@@ -91,10 +92,9 @@ void		render_layer(void)
 	{
 		nodes2[i].x = nodes[i].x;
 		nodes2[i].y = nodes[i].y;
-		static int h = 100;
 		if (get_settings(9, NULL))
-			slider(&h);
-		nodes2[i].z = nodes[i].z * (h * 0.01);
+			slider(&height_modifier);
+		nodes2[i].z = nodes[i].z * height_modifier;
 		i++;
 	}
 	matrix_transform(nodes2, amount);

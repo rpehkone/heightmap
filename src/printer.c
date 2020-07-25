@@ -122,12 +122,12 @@ void	draw2(t_xyz *nodes, int map_len)
 
 void	draw(t_xyz *nodes, int map_len, int reset)
 {
-	static int	origo_len = 1025;
-	int			i;
-
-	if (reset)
+	static float	origo_len = 0;
+	//static int	origo_len = 1025;
+	int		i;
+if (reset)
 	{
-		origo_len = 1025;
+		//origo_len = 1025;
 		return ;
 	}
 	if (get_settings(2, NULL))
