@@ -102,8 +102,8 @@ void	check_collision(void)
 			return ;
 		else if (cursor.y > 30)
 		{
-			get_settings(-2, NULL);
-			get_settings(-6, NULL);
+			get_settings(- B_FOV, NULL);
+			get_settings(- B_HEIGHT, NULL);
 		}
 	}
 }

@@ -20,6 +20,15 @@
 # include <fcntl.h>
 # include <math.h>
 # include <sys/time.h>
+# define B_PROJECTION 1
+# define B_FOV 2
+# define B_SPIN 3
+# define B_COLOR 4
+# define B_CYCLE_COLORS 5
+# define B_HEIGHT 6
+# define B_HEIGHT_COLORING 7
+# define B_FPS 8
+# define B_RESET 9
 
 # include <stdio.h>
 

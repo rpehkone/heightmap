@@ -122,7 +122,7 @@ void	draw2(t_xyz *nodes, int map_len)
 
 void	draw(t_xyz *nodes, int map_len, int reset)
 {
-	static float	origo_len = 0;
+	static float	origo_len = 1;
 	//static int	origo_len = 1025;
 	int		i;
 if (reset)
@@ -136,11 +136,11 @@ if (reset)
 		gradient();
 	i = -1;
 	while (++i < map_len)
-		nodes[i].z += origo_len;
+		nodes[i].z += ((origo_len + 2) * 500);
 	draw2(nodes, map_len);
-	i = -1;
-	while (++i < map_len)
-		nodes[i].z -= origo_len;
+	//i = -1;
+	//while (++i < map_len)
+		//nodes[i].z -= origo_len;
 	if (get_settings(5, NULL))
 		get_color(-2);
 }

@@ -77,17 +77,18 @@ void	rotate_z(float angle, t_xyz *nodes, int amount)
 
 void	add_perspective(t_xyz *start, t_xyz *stop, int reset)
 {
-	static float		focal_len = 1025;
+	static float		focal_len = 1;
 
 	if (reset)
 	{
-		focal_len = 1025;
+		focal_len = 1;
 		return ;
 	}
-	//if (get_settings(2, NULL))
-	//	slider(&focal_len);
-	start->x /= ((start->z) / (focal_len));
-	start->y /= ((start->z) / (focal_len));
-	stop->x /= ((stop->z) / (focal_len));
-	stop->y /= ((stop->z) / (focal_len));
+	if (get_settings(2, NULL))
+		slider(&focal_len);
+	int focal_len2 = (focal_len + 2) * 500;
+	start->x /= ((start->z) / (focal_len2));
+	start->y /= ((start->z) / (focal_len2));
+	stop->x /= ((stop->z) / (focal_len2));
+	stop->y /= ((stop->z) / (focal_len2));
 }

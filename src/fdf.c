@@ -21,10 +21,10 @@ void	matrix_transform(t_xyz *nodes, int amount)
 	t_int_xy	cursor;
 
 	cursor = get_cursor();
-	if (get_settings(3, NULL))
+	if (get_settings(B_SPIN, NULL))
 		y += 0.01;
 	if (is_mouse_down(1) && get_settings(0, NULL) &&
-		!get_settings(4, NULL) && !get_settings(2, NULL))
+		!get_settings(B_COLOR, NULL) && !get_settings(B_FOV, NULL))
 	{
 		x -= (cursor.y - y2) * 0.01;
 		y -= (cursor.x - x2) * 0.01;
@@ -78,7 +78,7 @@ void		render_layer(void)
 	static float height_modifier = 1;
 	int		i;
 
-	if (!nodes || get_settings(9, NULL))
+	if (!nodes || get_settings(B_RESET, NULL))
 	{
 		nodes = make_map(NULL, NULL, NULL);
 		amount = get_map_len(0);
@@ -92,7 +92,7 @@ void		render_layer(void)
 	{
 		nodes2[i].x = nodes[i].x;
 		nodes2[i].y = nodes[i].y;
-		if (get_settings(6, NULL))
+		if (get_settings(B_HEIGHT, NULL))
 			slider(&height_modifier);
 		nodes2[i].z = nodes[i].z * height_modifier;
 		i++;
@@ -108,7 +108,7 @@ void		fdf(void)
 	update_image();
 	render_layer();
 	button_layer();
-	if (get_settings(4, NULL))
+	if (get_settings(B_COLOR, NULL))
 		gradient();
 	text_layer();
 }

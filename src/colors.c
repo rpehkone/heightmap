@@ -73,7 +73,7 @@ int		gradient(void)
 		if (cursor.x < 311 && (cursor.y < 341 && cursor.y > 30))
 			get_color(set_gradient_color(cursor.x, cursor.y));
 		else if (cursor.y > 30)
-			get_settings(-4, NULL);
+			get_settings(- B_COLOR, NULL);
 	}
 	return (1);
 }
