@@ -21,11 +21,11 @@ void	check_errors(char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 2)
-		ft_error(NULL);
+		ft_error();
 	while (get_next_line(fd, &line))
 	{
 		if (!(i = 0) && !line)
-			ft_error(NULL);
+			ft_error();
 		while (line[i])
 		{
 			c = line[i];
@@ -33,20 +33,16 @@ void	check_errors(char *filename)
 			c != 'a' && c != 'b' && c != 'c' && c != 'd' && c != 'e' &&
 			c != 'f' && c != 'A' && c != 'B' && c != 'C' && c != 'D' &&
 			c != 'E' && c != 'F' && c != 'x' && c != '\t' && c != ','))
-				ft_error(NULL);
+				ft_error();
 			i++;
 		}
 		free(line);
 	}
 }
 
-void	ft_error(char *error)
+void	ft_error(void)
 {
-	if (error)
-		ft_putstr(error);
-	else
-		ft_putstr("error");
-	ft_putchar('\n');
+	ft_putstr("error\n");
 	exit(0);
 }
 
@@ -66,14 +62,10 @@ int		main(int argc, char **argv)
 	{
 		check_errors(argv[1]);
 		make_map(&w, &h, argv[1]);
-		button_layer();
 		i = ft_strlen(argv[1]);
-		while (i >= 0 && argv[1][i] != '/')
+		while (i > 0 && argv[1][i - 1] != '/')
 			i--;
-		init_window(w, h, &argv[1][i + 1]);
+		init_window(w, h, &argv[1][i]);
 	}
-//jos klikkaa ennen kun liikuttaa hiirta
-//min window size
-//
 	return (0);
 }

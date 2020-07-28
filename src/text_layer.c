@@ -26,7 +26,7 @@ void	put_fps(int fps)
 	str = NULL;
 }
 
-void	fps(void)
+void	fps(struct s_settings *settings)
 {
 	struct timeval	time;
 	static long		s = 0;
@@ -35,7 +35,7 @@ void	fps(void)
 
 	i++;
 	gettimeofday(&time, NULL);
-	if (get_settings(8, NULL))
+	if (settings->fps_b)
 		put_fps(fps);
 	if (s != time.tv_sec)
 	{
@@ -45,30 +45,14 @@ void	fps(void)
 	}
 }
 
-void	button_text(void)
-{
-	static t_button *b = NULL;
-	int i;
-
-	if (!b)
-		b = get_buttons(NULL);
-	i = 0;
-	while (i < 10)
-	{
-		string_to_image(b[i].x + 6, b[i].y + 3, b[i].t_color, b[i].text);
-		i++;
-	}
-}
-
-void	text_layer()
+void	text_layer(struct s_settings *settings)
 {
 	static long	color = 0xFFFFFF;
 	static int	fade = 0;
 	static int	width = 0;
 	static int	height = 0;
 
-	button_text();
-	fps();
+	fps(settings);
 	fade = is_key_down(4) ? 0 : fade;
 	if (is_key_down(4))
 		color = 0xFFFFFF;

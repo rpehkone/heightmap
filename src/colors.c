@@ -53,14 +53,14 @@ int		set_gradient_color(int x, int y)
 	return (0);
 }
 
-int		gradient(void)
+int		gradient(struct s_settings *settings)
 {
 	static int	*gradient_img = NULL;
 	int		i;
 	t_int_xy	cursor;
 
 	if (!gradient_img)
-	make_gradient(&gradient_img);
+		make_gradient(&gradient_img);
 	i = 1;
 	while (i < 310 * 310)
 	{
@@ -70,10 +70,11 @@ int		gradient(void)
 	if (is_mouse_down(1))
 	{
 		cursor = get_cursor();
-		if (cursor.x < 311 && (cursor.y < 341 && cursor.y > 30))
-			get_color(set_gradient_color(cursor.x, cursor.y));
-		else if (cursor.y > 30)
-			get_settings(- B_COLOR, NULL);
+		if ((cursor.x >= 0 && cursor.x < 311) && (cursor.y < 341 && cursor.y > 30))
+		{
+			settings->color.x = set_gradient_color(cursor.x, cursor.y);
+			settings->color.y = set_gradient_color(cursor.x, cursor.y);
+		}
 	}
 	return (1);
 }

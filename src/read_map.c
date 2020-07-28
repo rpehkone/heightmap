@@ -97,9 +97,9 @@ t_xyz	*make_map(int *width, int *height, char *filename)
 	*height = get_height(filename);
 	if ((*width == 1 && *height == 1) || (*width > 5 && *height == 1) ||
 		(*width == 1 && *height == 1) || (*width == 1 && *height > 5))
-		ft_error(NULL);
+		ft_error();
 	if (!(map = (t_xyz*)malloc(sizeof(t_xyz) * (*width * *height))))
-		ft_error(NULL);
+		ft_error();
 	fd = open(filename, O_RDONLY);
 	get_map_len(*width * *height);
 	get_map_width(*width);

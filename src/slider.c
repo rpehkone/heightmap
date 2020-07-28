@@ -56,15 +56,10 @@ void	slider_button(float *n)
 		allow_move = 1;
 	if (!is_mouse_down(1))
 		allow_move = 0;
-	//printf("1 %d\n", allow_move);
-	//printf("c %d\n", cursor.x);
 	if (allow_move)
 		slider_x = cursor.x;
-	//printf("3 %d\n", slider_x);
 	print_slider_button(slider_x);
 	*n = ((((float)(slider_x - 5) / (float)200) * (float)4)) - 2;
-	printf("2 %f\n", *n);
-	//exit(0);
 }
 
 void	print_mid()
@@ -102,8 +97,8 @@ void	check_collision(void)
 			return ;
 		else if (cursor.y > 30)
 		{
-			get_settings(- B_FOV, NULL);
-			get_settings(- B_HEIGHT, NULL);
+			//get_settings(- B_FOV, NULL);
+			//get_settings(- B_HEIGHT, NULL);
 		}
 	}
 }

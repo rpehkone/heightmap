@@ -54,9 +54,9 @@ void	print_line(t_xyz start, t_xyz stop, t_xyz color)
 	t_xyz	pos;
 	int		i;
 
-	i = 0;
-	if (!get_settings(B_PROJECTION, NULL) && (start.z < 0 || stop.z < 0))
+	if (start.z < 0 || stop.z < 0)
 		return ;
+	i = 0;
 	pos.x = start.x;
 	pos.y = start.y;
 	pos.z = 0;

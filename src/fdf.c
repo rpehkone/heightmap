@@ -12,7 +12,35 @@
 
 #include "fdf.h"
 
-void	matrix_transform(t_xyz *nodes, int amount)
+void	rotate_vertices(float angle, t_xyz *vertices, int amount, int axis_x)
+{
+	float	sin_angle;
+	float	cos_angle;
+	float	a;
+	float	b;
+	int		n;
+
+	n = -1;
+	sin_angle = sin(angle);
+	cos_angle = cos(angle);
+	while (++n < amount)
+		if (axis_x)
+		{
+			a = vertices[n].y;
+			b = vertices[n].z;
+			vertices[n].y = a * cos_angle - b * sin_angle;
+			vertices[n].z = b * cos_angle + a * sin_angle;
+		}
+		else
+		{
+			a = vertices[n].x;
+			b = vertices[n].z;
+			vertices[n].x = a * cos_angle + b * sin_angle;
+			vertices[n].z = b * cos_angle - a * sin_angle;
+		}
+}
+
+void	rotate(t_xyz *vertices, int amount, struct s_settings *settings)
 {
 	static float	x = 0;
 	static float	x2 = 0;
@@ -21,94 +49,65 @@ void	matrix_transform(t_xyz *nodes, int amount)
 	t_int_xy	cursor;
 
 	cursor = get_cursor();
-	if (get_settings(B_SPIN, NULL))
+	if (settings->spin_b)
 		y += 0.01;
-	if (is_mouse_down(1) && get_settings(0, NULL) &&
-		!get_settings(B_COLOR, NULL) && !get_settings(B_FOV, NULL))
+	if (!settings->active_layer && is_mouse_down(1))
 	{
 		x -= (cursor.y - y2) * 0.01;
 		y -= (cursor.x - x2) * 0.01;
 	}
 	x2 = cursor.x;
 	y2 = cursor.y;
-	rotate_x(-1 * x, nodes, amount);
-	rotate_y(y, nodes, amount);
+	rotate_vertices(-1 * x, vertices, amount, 1);
+	rotate_vertices(y, vertices, amount, 0);
 }
 
-int		get_settings(int i, t_button *all_b)
+void		render_layer(struct s_settings *settings)
 {
-	static t_button	*st = NULL;
-
-	if (!st && all_b)
-	{
-		st = all_b;
-		return (0);
-	}
-	if (i < 0)
-	{
-		st[i * -1].is_down = 0;
-	}
-	return (st[i].is_down);
-}
-
-void	reset(void)
-{
-	int i;
-
-
-	i = 1;
-	while (i <= 10)
-	{
-		get_settings(-1 * i, NULL);
-		i++;
-	}
-	get_color(0xFFFFFF);
-	move_center(NULL, NULL, 1);
-	add_perspective(NULL, NULL, 1);
-	draw(NULL, 0, 1);
-	//slider_button(0, 1);
-	center_image(NULL, NULL, 1);
-}
-
-void		render_layer(void)
-{
-	static t_xyz	*nodes = NULL;
-	static t_xyz	*nodes2 = NULL;
+	static t_xyz	*vertices_save = NULL;
+	static t_xyz	*vertices = NULL;
 	static int		amount = 0;
-	static float height_modifier = 1;
 	int		i;
 
-	if (!nodes || get_settings(B_RESET, NULL))
+	if (!vertices_save)
 	{
-		nodes = make_map(NULL, NULL, NULL);
+		vertices_save = make_map(NULL, NULL, NULL);
 		amount = get_map_len(0);
-		nodes2 = (t_xyz*)malloc(sizeof(t_xyz) * amount);
-		//rotate_x(-1, nodes, get_map_len(0));
-		//rotate_y(1, nodes, get_map_len(0));
-		reset();
+		vertices = (t_xyz*)malloc(sizeof(t_xyz) * amount);
 	}
 	i = 0;
 	while (i < amount)
 	{
-		nodes2[i].x = nodes[i].x;
-		nodes2[i].y = nodes[i].y;
-		if (get_settings(B_HEIGHT, NULL))
-			slider(&height_modifier);
-		nodes2[i].z = nodes[i].z * height_modifier;
+		vertices[i].x = vertices_save[i].x;
+		vertices[i].y = vertices_save[i].y;
+		vertices[i].z = vertices_save[i].z * settings->height;
 		i++;
 	}
-	matrix_transform(nodes2, amount);
-	draw(nodes2, amount, 0);
+	rotate(vertices, amount, settings);
+	i = -1;
+	while (i++ < amount)
+		vertices[i].z += ((settings->fov + 2) * 500);
+	draw(vertices, amount, settings);
 }
 
 void		fdf(void)
 {
+	static struct s_settings	settings;
+	static int			first = 1;
+
 	if (is_key_down(53))
 		exit(0);
+	else if (first)
+	{
+		ft_bzero(&settings, sizeof(settings));
+		settings.fov = 1;
+		settings.color.x = 0xFFFFFF;
+		settings.color.y = 0xFFFFFF;
+		settings.height = 1;
+		first = 0;
+	}
 	update_image();
-	render_layer();
-	button_layer();
-	if (get_settings(B_COLOR, NULL))
-		gradient();
-	text_layer();
+	render_layer(&settings);
+	button_layer(&settings);
+	text_layer(&settings);
 }

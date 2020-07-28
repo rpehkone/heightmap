@@ -12,6 +12,17 @@
 
 #include "fdf.h"
 
+void	add_perspective(struct s_settings *settings, t_xyz *start, t_xyz *stop)
+{
+	float	fov;
+
+	fov = (settings->fov + 2) * 500;
+	start->x /= (start->z / fov);
+	start->y /= (start->z / fov);
+	stop->x /= (stop->z / fov);
+	stop->y /= (stop->z / fov);
+}
+
 t_xyz	get_color(int set)
 {
 	static t_xyz	color = {.x = -1};
@@ -22,48 +33,47 @@ t_xyz	get_color(int set)
 		color.y = 0xFFFFFF;
 		color.z = 0;
 	}
-	if (set == -2)
-		cycle_colors(&color);
+	//if (set == -2)
+	//	cycle_colors(&color);
 	else if (set)
 	{
 		color.x = set;
 		color.y = set;
 	}
-	if (get_settings(7, NULL))
-		return (add_color_height(color));
+	//if (get_settings(7, NULL))
+	//	return (add_color_height(color));
 	return (color);
 }
 
-void	move_center(t_xyz *start, t_xyz *stop, int reset)
+void	move_center(t_xyz *start, t_xyz *stop, struct s_settings *settings)
 {
 	static double	zoom = -600;
 	static int		w_move = 0;
 	static int		h_move = 0;
 
-	if (reset)
-		zoom = -1 * get_map_len(0) / 2;
-	if (reset)
-		return ;
-	if (get_settings(0, NULL) && is_mouse_down(4))
+	if (is_mouse_down(4))
 		zoom += 0.07;
-	if (get_settings(0, NULL) && is_mouse_down(5))
+	if (is_mouse_down(5))
 		zoom -= 0.07;
 	zoom = zoom > 600 ? 600 : zoom;
 	zoom = zoom < -4000 ? -4000 : zoom;
 	start->z -= zoom;
 	stop->z -= zoom;
-	if (!get_settings(1, NULL))
-		add_perspective(start, stop, 0);
+	if (settings->projection_b)
+		add_perspective(settings, start, stop);
 	w_move = w_move ? w_move : get_width(NULL) / 2;
 	h_move = h_move ? h_move : get_height(NULL) / 2 + 30;
 	start->x += w_move;
 	start->y += h_move;
 	stop->x += w_move;
 	stop->y += h_move;
-	print_line(*start, *stop, get_color(0));
+	if (settings->height_color_b)
+		print_line(*start, *stop, add_color_height(settings->color));
+	else
+		print_line(*start, *stop, settings->color);
 }
 
-void	center_image(t_xyz *start, t_xyz *stop, int reset)
+void	center_image(t_xyz *start, t_xyz *stop, int reset, struct s_settings *settings)
 {
 	static int	x = 0;
 	static int	y = 0;
@@ -78,9 +88,9 @@ void	center_image(t_xyz *start, t_xyz *stop, int reset)
 		return ;
 	}
 	cursor = get_cursor();
-	if (get_settings(0, NULL) && is_mouse_down(3))
+	if (is_mouse_down(3))
 		x -= coordx - cursor.x;
-	if (get_settings(0, NULL) && is_mouse_down(3))
+	if (is_mouse_down(3))
 		y -= coordy - cursor.y;
 	coordx = cursor.x;
 	coordy = cursor.y;
@@ -88,10 +98,10 @@ void	center_image(t_xyz *start, t_xyz *stop, int reset)
 	start->y += y;
 	stop->x += x;
 	stop->y += y;
-	move_center(start, stop, 0);
+	move_center(start, stop, settings);
 }
 
-void	draw2(t_xyz *nodes, int map_len)
+void	draw(t_xyz *vertices, int amount, struct s_settings *settings)
 {
 	t_xyz			start;
 	t_xyz			stop;
@@ -101,46 +111,21 @@ void	draw2(t_xyz *nodes, int map_len)
 	if (!width)
 		width = get_map_width(0);
 	i = -1;
-	while (++i < map_len)
+	while (++i < amount)
 	{
 		save_coord(i, i + 1, 0);
 		if ((i + 1) % width)
 		{
-			start = nodes[i];
-			stop = nodes[i + 1];
-			center_image(&start, &stop, 0);
+			start = vertices[i];
+			stop = vertices[i + 1];
+			center_image(&start, &stop, 0, settings);
 		}
 		save_coord(i, i + width, 0);
-		if (i + width < map_len)
+		if (i + width < amount)
 		{
-			start = nodes[i];
-			stop = nodes[i + width];
-			center_image(&start, &stop, 0);
+			start = vertices[i];
+			stop = vertices[i + width];
+			center_image(&start, &stop, 0, settings);
 		}
 	}
-}
-
-void	draw(t_xyz *nodes, int map_len, int reset)
-{
-	static float	origo_len = 1;
-	//static int	origo_len = 1025;
-	int		i;
-if (reset)
-	{
-		//origo_len = 1025;
-		return ;
-	}
-	if (get_settings(2, NULL))
-		slider(&origo_len);
-	else if (get_settings(4, NULL))
-		gradient();
-	i = -1;
-	while (++i < map_len)
-		nodes[i].z += ((origo_len + 2) * 500);
-	draw2(nodes, map_len);
-	//i = -1;
-	//while (++i < map_len)
-		//nodes[i].z -= origo_len;
-	if (get_settings(5, NULL))
-		get_color(-2);
 }
