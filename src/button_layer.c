@@ -140,7 +140,7 @@ void		reset(struct s_settings *s, struct s_button *b)
 		s->height = 1;
 		s->height_color_b = 0;
 		s->fps_b = 0;
-		s->reset_b = 0;
+	//	s->reset_b = 0;
 		s->color.x = 0xFFFFFF;
 		s->color.y = 0xFFFFFF;
 		i = -1;

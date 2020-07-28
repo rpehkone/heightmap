@@ -42,13 +42,21 @@ void	rotate_vertices(float angle, t_xyz *vertices, int amount, int axis_x)
 
 void	rotate(t_xyz *vertices, int amount, struct s_settings *settings)
 {
-	static float	x = 0;
+	static float	x = 0.5;
 	static float	x2 = 0;
-	static float	y = 0;
+	static float	y = 0.5;
 	static float	y2 = 0;
 	t_int_xy	cursor;
 
+	if (settings->reset_b)
+	{
+		x = 0.5;
+		y = 0.5;
+		settings->reset_b = 0;
+	}
 	cursor = get_cursor();
+	//tarviiko
+	//if ((!is_mouse_down(1) || (is_mouse_down(1) && cursor.y < 30)) && settings->spin_b)
 	if (settings->spin_b)
 		y += 0.01;
 	if (!settings->active_layer && is_mouse_down(1))
