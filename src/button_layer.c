@@ -68,7 +68,8 @@ int			handle_button(t_button b)
 
 void		set_button_text(t_button *b, int i)
 {
-	b->text = (char*)malloc(sizeof(char) * 20);
+	if (!(b->text = (char*)malloc(sizeof(char) * 20)))
+		ft_error();
 	if (i == 0)
 		ft_strcpy(b->text, "projection");
 	else if (i == 1)

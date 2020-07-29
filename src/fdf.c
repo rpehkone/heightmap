@@ -81,7 +81,8 @@ void		render_layer(struct s_settings *settings)
 	{
 		vertices_save = make_map(NULL, NULL, NULL);
 		amount = get_map_len(0);
-		vertices = (t_xyz*)malloc(sizeof(t_xyz) * amount);
+		if (!(vertices = (t_xyz*)malloc(sizeof(t_xyz) * amount)))
+			ft_error();
 	}
 	i = 0;
 	while (i < amount)
