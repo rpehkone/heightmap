@@ -14,7 +14,6 @@ NAME = fdf
 LIB = libft/libft.a
 HEADERS = minilibx libft mlx_io src
 MAIN_FILES = init_window.c handle_hook.c input_state.c input_state_wrappers.c image.c
-#FILES = main.c fdf.c button_layer.c button_printer.c text_layer.c rotate.c read_map.c set_map.c slider.c printer.c line.c colors.c height_color.c
 FILES = main.c read_map.c set_map.c fdf.c printer.c line.c button_layer.c slider.c text_layer.c colors.c height_color.c
 .PHONY: clean fclean re all
 
