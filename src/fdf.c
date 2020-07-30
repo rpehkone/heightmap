@@ -55,8 +55,6 @@ void	rotate(t_xyz *vertices, int amount, struct s_settings *settings)
 		settings->reset_b = 0;
 	}
 	cursor = get_cursor();
-	//tarviiko
-	//if ((!is_mouse_down(1) || (is_mouse_down(1) && cursor.y < 30)) && settings->spin_b)
 	if (settings->spin_b)
 		y += 0.01;
 	if (!settings->active_layer && is_mouse_down(1))
@@ -93,9 +91,6 @@ void		render_layer(struct s_settings *settings)
 		i++;
 	}
 	rotate(vertices, amount, settings);
-	i = -1;
-	while (i++ < amount)
-		vertices[i].z += ((settings->fov + 2) * 500);
 	draw(vertices, amount, settings);
 }
 
